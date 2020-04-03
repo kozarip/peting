@@ -8,17 +8,21 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@types/node": "^13.11.0",
     "expo": "~37.0.3",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.0.tar.gz",
     "react-native-screens": "~2.2.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@babel/preset-typescript": "^7.9.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@types/jest": "24.0.0",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
@@ -34,7 +38,9 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^2.5.1",
     "ghooks": "^2.0.4",
+    "jest": "24.0.0",
     "prettier": "^2.0.2",
+    "ts-jest": "24.0.0",
     "typescript": "~3.8.3"
   },
   "private": true,

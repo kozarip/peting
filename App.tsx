@@ -1,4 +1,5 @@
 import React from 'react';
+import MainScreen from './src/screens/mainScreen';
 import {
   StyleSheet,
   Text,
@@ -7,9 +8,7 @@ import {
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
+    <MainScreen />
   );
 }
 

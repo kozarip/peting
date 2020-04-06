@@ -9,6 +9,6 @@ import {
 
 export default function App() {
   return (
-    <AuthScreen />
+    <MainScreen />
   );
 }

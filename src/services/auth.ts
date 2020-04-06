@@ -14,13 +14,11 @@ export default class AuthService {
   public static async loginWithFacebook() {
     try {
       await Facebook.initializeAsync(config.facebook.appId);
-      const {
-        type,
-        token,
-        expires,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
+
+      // @ts-ignore
+      // prettier-ignore
+      const { type, token, expires, permissions, declinedPermissions }
+        = await Facebook.logInWithReadPermissionsAsync({
         permissions: ['public_profile'],
       });
       if (type === 'success') {

@@ -27,5 +27,9 @@ module.exports = {
     'no-trailing-spaces': [1, { skipBlankLines: true }],
     '@typescript-eslint/no-use-before-define': 0,
     'no-use-before-define': [2, { variables: false }],
+    'arrow-body-style': 0,
+    'react/jsx-wrap-multilines': 0,
+    'import/extensions': 0,
+    'global-require': 0,
   },
 };

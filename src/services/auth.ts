@@ -1,8 +1,8 @@
 import * as Facebook from 'expo-facebook';
+import { Alert } from 'react-native';
 
 import { config } from '../configs/index';
-import { Firebase } from '../integrations/firebase';
-import { Alert } from 'react-native';
+import Firebase from '../integrations/firebase';
 
 export default class AuthService {
   /**
@@ -17,16 +17,14 @@ export default class AuthService {
 
       // @ts-ignore
       // prettier-ignore
-      const { type, token, expires, permissions, declinedPermissions }
-        = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile'],
-      });
+      const { type, token } = await Facebook.logInWithReadPermissionsAsync({ permissions: ['public_profile'] });
       if (type === 'success') {
+        /*
         const response = await fetch(
-          `https://graph.facebook.com/me?access_token=${token}`
-        );
-        // Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-
+            `https://graph.facebook.com/me?access_token=${token}`
+          );
+          Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
+        */
         const credential = Firebase.auth.FacebookAuthProvider.credential(token);
         await Firebase.auth().signInWithCredential(credential);
       } else {
@@ -47,7 +45,7 @@ export default class AuthService {
    * @param callback Called with the current authenticated user as first argument
    */
   public static subscribeAuthChange(
-    callback: (user: firebase.User | null) => void
+    callback: (user: firebase.User | null) => void,
   ) {
     Firebase.auth().onAuthStateChanged(callback);
   }

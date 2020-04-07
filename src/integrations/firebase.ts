@@ -3,4 +3,5 @@ import { config } from '../configs/index';
 
 firebase.initializeApp(config.firebase);
 
-export const Firebase = firebase;
+const Firebase = firebase;
+export default Firebase;

@@ -2,7 +2,9 @@
   "expo": {
     "name": "Peting - az állatbarátok társkeresője",
     "slug": "peting",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios", "android", "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",

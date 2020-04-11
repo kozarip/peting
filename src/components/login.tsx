@@ -1,8 +1,7 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { StyleSheet, GestureResponderEvent } from 'react-native';
-import { Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button, Icon } from 'react-native-elements';
 
 type LoginProps = {
   loginWithFacebook: (event: GestureResponderEvent) => void
@@ -18,6 +17,7 @@ const Login = (props: LoginProps) => {
           name="facebook-square"
           size={30}
           color="white"
+          type="font-awesome"
         />
       }
       pressRetentionOffset={{

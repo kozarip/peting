@@ -1,10 +1,22 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import PetingHeader from '../components/petingHeader';
 
-const ChatScreen = () => {
+const ChatScreen = ({ route, navigation }) => {
+  const { name } = route.name;
+
   return (
-    <Text>This is your chat</Text>
+    <View>
+      <PetingHeader
+        navigation={navigation}
+      />
+      <Text>
+        You can chat with:
+        {name}
+      </Text>
+    </View>
   );
 };
+
 
 export default ChatScreen;

@@ -7,7 +7,6 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
-  TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
@@ -34,16 +33,16 @@ const ResultScreen = ({ navigation }) => {
 
   return (
     <ScrollView style={styles.userContainer}>
-      <ImageBackground
-        source={image}
-        style={styles.background}
-        resizeMode="repeat"
-        imageStyle={{ opacity: 0.04 }}
-      >
-        <PetingHeader
-          navigation={navigation}
-        />
-        <View style={styles.profileBox}>
+      <PetingHeader
+        navigation={navigation}
+      />
+      <View style={styles.profileBox}>
+        <ImageBackground
+          source={image}
+          style={styles.background}
+          resizeMode="repeat"
+          imageStyle={{ opacity: 0.04 }}
+        >
           <View style={styles.imageBox}>
             <TouchableOpacity style={styles.profileImageTouchBox} onPress={() => navigation.navigate('Pictures')}>
               <Image
@@ -92,28 +91,28 @@ const ResultScreen = ({ navigation }) => {
             <Icon
               name="times-circle"
               size={35}
-              color="black"
+              color="#000000"
               type="font-awesome"
               raised
             />
             <Icon
               name="heart"
               size={35}
-              color="red"
+              color="#FF0000"
               type="font-awesome"
               raised
             />
             <Icon
-              name="forward"
+              name="chevron-circle-right"
               size={35}
-              color="blue"
+              color="#008080"
               type="font-awesome"
               raised
             />
           </View>
-        </View>
-      </ImageBackground>
-    </ScrollView >
+        </ImageBackground>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
   },
   imageBox: {
     width: '100%',
-    marginTop: 30,
+    marginTop: 20,
     marginBottom: 20,
     paddingHorizontal: 10,
     position: 'relative',

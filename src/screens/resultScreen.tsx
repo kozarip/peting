@@ -58,6 +58,18 @@ const ResultScreen = ({ navigation }) => {
                 source={require('../assets/images/dog_sample.jpg')}
               />
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.moreImageIcon}
+              onPress={() => navigation.navigate('Pictures')}
+            >
+              <Icon
+                raised
+                name="ios-images"
+                size={20}
+                color="#21618C"
+                type="ionicon"
+              />
+            </TouchableOpacity>
           </View>
           <View style={styles.mainDataBox}>
             <Text style={styles.name}>
@@ -65,6 +77,9 @@ const ResultScreen = ({ navigation }) => {
               ,
             </Text>
             <Text style={styles.name}>30</Text>
+          </View>
+          <View>
+            <Text style={styles.dogName}>Zsömi</Text>
           </View>
           <View style={styles.bioBox}>
             <Text style={styles.bio}>
@@ -88,27 +103,33 @@ const ResultScreen = ({ navigation }) => {
             </View>
           </View>
           <View style={styles.reviewBox}>
-            <Icon
-              name="times-circle"
-              size={35}
-              color="#000000"
-              type="font-awesome"
-              raised
-            />
-            <Icon
-              name="heart"
-              size={35}
-              color="#FF0000"
-              type="font-awesome"
-              raised
-            />
-            <Icon
-              name="chevron-circle-right"
-              size={35}
-              color="#008080"
-              type="font-awesome"
-              raised
-            />
+            <TouchableOpacity>
+              <Icon
+                name="times-circle"
+                size={35}
+                color="#000000"
+                type="font-awesome"
+                raised
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon
+                name="heart"
+                size={35}
+                color="#FF0000"
+                type="font-awesome"
+                raised
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Icon
+                name="chevron-circle-right"
+                size={35}
+                color="#008080"
+                type="font-awesome"
+                raised
+              />
+            </TouchableOpacity>
           </View>
         </ImageBackground>
       </View>
@@ -140,11 +161,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   imageBox: {
+    position: 'relative',
     width: '100%',
     marginTop: 20,
     marginBottom: 20,
     paddingHorizontal: 10,
-    position: 'relative',
     height: width * 0.8,
   },
   profileImageTouchBox: {
@@ -166,6 +187,13 @@ const styles = StyleSheet.create({
     height: width * 0.4,
     borderRadius: width * 0.2,
   },
+  moreImageIcon: {
+    position: 'absolute',
+    bottom: 5,
+    right: 25,
+    height: 30,
+    width: 30,
+  },
   mainDataBox: {
     display: 'flex',
     flexDirection: 'row',
@@ -173,6 +201,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 28,
     marginRight: 10,
+  },
+  dogName: {
+    fontSize: 19,
   },
   bioBox: {
     display: 'flex',

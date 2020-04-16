@@ -118,18 +118,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexWrap: 'wrap',
     paddingHorizontal: 10,
-    marginTop: 5,
+    marginTop: 0,
     marginBottom: 0,
   },
   label: {
     flex: 1,
     width: width * 0.666,
     fontSize: 18,
+    fontWeight: 'bold',
   },
   rangeLabel: {
     flex: 1,
     width: width * 0.3,
     fontSize: 18,
+    fontWeight: 'bold',
   },
   fieldsetInput: {
     width: width * 0.3333,
@@ -146,9 +148,10 @@ const styles = StyleSheet.create({
   rangeInput: {
     minWidth: 40,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 18,
     borderBottomColor: '#888888',
     borderBottomWidth: 1,
+    marginBottom: 14,
   },
 });
 

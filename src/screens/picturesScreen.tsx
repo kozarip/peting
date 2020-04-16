@@ -1,10 +1,10 @@
 import React from 'react';
 import {
   Text,
-  View,
   StyleSheet,
   Dimensions,
   ImageBackground,
+  ScrollView,
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import PetingHeader from '../components/petingHeader';
@@ -13,7 +13,13 @@ const { width } = Dimensions.get('window');
 const image = require('../assets/images/pet_silhouettes2.jpg');
 
 const PicturesScreen = ({ navigation }) => {
-  const images = [
+  const personImages = [
+    'https://source.unsplash.com/1024x768/?water',
+    'https://source.unsplash.com/1024x768/?girl',
+    'https://source.unsplash.com/1024x768/?tree',
+  ];
+
+  const animalImages = [
     require('../assets/images/dog_sample.jpg'),
     'https://source.unsplash.com/1024x768/?nature',
     'https://source.unsplash.com/1024x768/?water',
@@ -22,7 +28,7 @@ const PicturesScreen = ({ navigation }) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ImageBackground
         source={image}
         style={{ width: '100%', flex: 1 }}
@@ -34,18 +40,22 @@ const PicturesScreen = ({ navigation }) => {
         />
         <Text style={styles.title}>Elza, 30</Text>
         <SliderBox
-          images={images}
+          images={personImages}
+          sliderBoxHeight={width}
+        />
+        <Text style={styles.title}>Zsömi</Text>
+        <SliderBox
+          images={animalImages}
           sliderBoxHeight={width}
         />
       </ImageBackground>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'stretch',
   },
   title: {
     fontSize: 22,

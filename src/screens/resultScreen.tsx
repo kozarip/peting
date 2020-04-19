@@ -8,28 +8,48 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import AuthService from '../services/auth';
 import PetingHeader from '../components/petingHeader';
+import LoveButtons from '../components/loveButtons';
+import Bio from '../components/bio';
+//import Detail from '../components/detail';
 
-const { width, height } = Dimensions.get('window');
-console.log(width, height);
+const { width } = Dimensions.get('window');
 
-const ResultScreen = ({ navigation }) => {
-  // @ts-ignore
-  const [user, setUser] = useState<{ user: null | object }>({});
-
-  useEffect(() => {
-    AuthService.subscribeAuthChange((receivedUser) => setUser(receivedUser));
-  });
-
+const ResultScreen: React.FC = ({ navigation }) => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
+  const name = 'sad';
 
-  const name = user.displayName;
-  /* const avatar = user.photoURL && (
-    <Image style={{ width: 50, height: 50 }} source={{ uri: user.photoURL }} />
-  ); */
+  const user = {
+    images: {
+      profile: [
+        'https://source.unsplash.com/1024x768/?water',
+        'https://source.unsplash.com/1024x768/?girl',
+        'https://source.unsplash.com/1024x768/?tree',
+
+      ],
+      animal: [
+        require('../assets/images/dog_sample.jpg'),
+        'https://source.unsplash.com/1024x768/?nature',
+        'https://source.unsplash.com/1024x768/?water',
+        'https://source.unsplash.com/1024x768/?girl',
+        'https://source.unsplash.com/1024x768/?tree',
+
+      ],
+    },
+    userName: 'Peti',
+    animalName: 'Zsömi',
+    age: 30,
+    bio: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of',
+    details: [
+      { magasság: '188cm' },
+      { dohányzás: 'Alkalmanként' },
+      { hobbi: 'Utazás, tenisz' },
+    ],
+  };
 
   return (
     <ScrollView style={styles.userContainer}>
@@ -81,56 +101,21 @@ const ResultScreen = ({ navigation }) => {
           <View>
             <Text style={styles.dogName}>Zsömi</Text>
           </View>
-          <View style={styles.bioBox}>
-            <Text style={styles.bio}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-              Lorem Ipsum has been the industrys standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-            </Text>
+          <Bio bio={user.bio} />
+          <View style={styles.detail}>
+            <Text style={styles.detailKey}>Magasság</Text>
+            <Text style={styles.detailValue}>188 cm</Text>
           </View>
-          <View style={styles.detailsBox}>
-            <View style={styles.detail}>
-              <Text style={styles.detailKey}>Magasság</Text>
-              <Text style={styles.detailValue}>188 cm</Text>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailKey}>Dohányzás</Text>
-              <Text style={styles.detailValue}>Alkalmanként</Text>
-            </View>
-            <View style={styles.detail}>
-              <Text style={styles.detailKey}>Hobbi</Text>
-              <Text style={styles.detailValue}>utazás, kirándulás, kosár</Text>
-            </View>
+          <View style={styles.detail}>
+            <Text style={styles.detailKey}>Dohányzás</Text>
+            <Text style={styles.detailValue}>Alkalmanként</Text>
           </View>
-          <View style={styles.reviewBox}>
-            <TouchableOpacity>
-              <Icon
-                name="times-circle"
-                size={35}
-                color="#000000"
-                type="font-awesome"
-                raised
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Icon
-                name="heart"
-                size={35}
-                color="#FF0000"
-                type="font-awesome"
-                raised
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Icon
-                name="chevron-circle-right"
-                size={35}
-                color="#008080"
-                type="font-awesome"
-                raised
-              />
-            </TouchableOpacity>
+          <View style={styles.detail}>
+            <Text style={styles.detailKey}>Hobbi</Text>
+            <Text style={styles.detailValue}>utazás, kirándulás, kosár</Text>
           </View>
+          <Button title="Logout" onPress={AuthService.logout} />
+          <LoveButtons />
         </ImageBackground>
       </View>
     </ScrollView>
@@ -205,39 +190,11 @@ const styles = StyleSheet.create({
   dogName: {
     fontSize: 19,
   },
-  bioBox: {
-    display: 'flex',
-    marginTop: 10,
-  },
-  bio: {
-    fontSize: 15,
-  },
   detailsBox: {
     display: 'flex',
     marginTop: 20,
     flexWrap: 'wrap',
     flexDirection: 'column',
-  },
-  detail: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#bbbbbb',
-  },
-  detailKey: {
-    fontSize: 16,
-  },
-  detailValue: {
-    fontSize: 16,
-  },
-  reviewBox: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
   },
 });
 

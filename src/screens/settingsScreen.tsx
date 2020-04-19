@@ -14,12 +14,12 @@ import AppSettings from '../components/appSettings';
 
 const searchRoute = () => (
   // @ts-ignore
-  <UserData isWithRange={true} isFullForm={false} />
+  <UserData isWithRange isFullForm={false} />
 );
 
 const profileRoute = () => (
   // @ts-ignore
-  <UserData isWithRange={false} isFullForm={true} />
+  <UserData isWithRange={false} isFullForm />
 );
 
 const appSettingsRoute = () => (

@@ -1,6 +1,6 @@
-export function setUser(user) {
+export function setLogedInUser(logedInUser) {
   return {
-    type: 'Set_User',
-    user,
+    type: 'Set_LogedIn_User',
+    logedInUser,
   };
 }

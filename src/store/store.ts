@@ -1,6 +1,13 @@
-import { createStore } from 'redux';
-import { reducer } from './redux';
+import { createStore, combineReducers } from 'redux';
+import { firebaseReducer } from 'react-redux-firebase';
+import { reducer } from './petingReducer';
 
-const store = createStore(reducer);
+const rootReducer = combineReducers({
+  firebase: firebaseReducer,
+  reducer,
+});
+
+const initialState = {};
+const store = createStore(rootReducer, initialState);
 
 export default store;

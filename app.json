@@ -19,6 +19,21 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "facebookAppId": "583951345538571",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "host.exp.exponent.ios",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "987658316582-alluojp12vglaf7n3m6c3r4gunhphbka.apps.googleusercontent.com"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+        "package": "host.exp.exponent.android",
+        "googleServicesFile": "google-services.json"
     }
   }
 }

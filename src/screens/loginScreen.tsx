@@ -3,7 +3,6 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import Welcome from '../components/welcome';
 import Login from '../components/login';
-import AuthService from '../services/auth';
 
 const LoginScreen = () => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
@@ -14,6 +13,7 @@ const LoginScreen = () => {
       <ImageBackground
         source={image}
         style={styles.container}
+        resizeMode="repeat"
       >
         <Overlay
           isVisible={isOverlayVisible}
@@ -24,7 +24,7 @@ const LoginScreen = () => {
         >
           <View>
             <Welcome />
-            <Login loginWithFacebook={AuthService.loginWithFacebook} />
+            <Login />
           </View>
         </Overlay>
       </ImageBackground>

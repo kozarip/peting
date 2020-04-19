@@ -1,4 +1,6 @@
 import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
+
 import { Alert } from 'react-native';
 
 import { config } from '../configs/index';
@@ -19,12 +21,6 @@ export default class AuthService {
       // prettier-ignore
       const { type, token } = await Facebook.logInWithReadPermissionsAsync({ permissions: ['public_profile'] });
       if (type === 'success') {
-        /*
-        const response = await fetch(
-            `https://graph.facebook.com/me?access_token=${token}`
-          );
-          Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`);
-        */
         const credential = Firebase.auth.FacebookAuthProvider.credential(token);
         await Firebase.auth().signInWithCredential(credential);
       } else {
@@ -35,8 +31,28 @@ export default class AuthService {
     }
   }
 
+  static async loginWithGoogle() {
+    try {
+      const result = await Google.logInAsync({
+        androidClientId: '987658316582-rvkudgpoho1oeochlv7sti2136sccaqh.apps.googleusercontent.com',
+        iosClientId: '987658316582-alluojp12vglaf7n3m6c3r4gunhphbka.apps.googleusercontent.com',
+      });
+      if (result.type === 'success') {
+        const credential = Firebase.auth
+          .GoogleAuthProvider.credential(result.idToken, result.accessToken);
+        Firebase.auth().signInWithCredential(credential);
+      } else {
+        console.log({ cancelled: true });
+      }
+    } catch (e) {
+      console.log({ error: true });
+    }
+  }
+
+
   public static async logout() {
-    return Firebase.auth().signOut();
+    // await fetch(`https://graph.facebook.com/me?access_token=${AuthService.token}`);
+    Firebase.auth().signOut();
   }
 
   /**
@@ -44,9 +60,7 @@ export default class AuthService {
    *
    * @param callback Called with the current authenticated user as first argument
    */
-  public static subscribeAuthChange(
-    callback: (user: firebase.User | null) => void,
-  ) {
+  public static subscribeAuthChange(callback : (user : firebase.User | null) => void) {
     Firebase.auth().onAuthStateChanged(callback);
   }
 }

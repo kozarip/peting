@@ -29,8 +29,11 @@ module.exports = {
     'arrow-body-style': 0,
     'react/jsx-wrap-multilines': 0,
     'import/extensions': 0,
+    'react/jsx-props-no-spreading': 0,
     'global-require': 0,
     'import/prefer-default-export': 0,
     'react/prop-types': 0,
+    'no-else-return': 0,
+    'no-console': 0,
   },
 };

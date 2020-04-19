@@ -1,35 +1,35 @@
 import React from 'react';
 // eslint-disable-next-line no-unused-vars
-import { StyleSheet, GestureResponderEvent } from 'react-native';
+import { StyleSheet, GestureResponderEvent, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
+import AuthService from '../services/auth';
 
-type LoginProps = {
-  loginWithFacebook: (event: GestureResponderEvent) => void
-}
 
-const Login = (props: LoginProps) => {
-  const { loginWithFacebook } = props;
+const Login = () => {
   return (
-    <Button
-      icon={
-        <Icon
-          style={styles.icon}
-          name="facebook-square"
-          size={30}
-          color="white"
-          type="font-awesome"
-        />
-      }
-      pressRetentionOffset={{
-        top: 10,
-        left: 10,
-        bottom: 10,
-        right: 10,
-      }}
-      style={styles.button}
-      onPress={loginWithFacebook}
-      title="Facebook bejelentkezés"
-    />
+    <View>
+      <Button
+        icon={
+          <Icon
+            style={styles.icon}
+            name="facebook-square"
+            size={30}
+            color="white"
+            type="font-awesome"
+          />
+        }
+        pressRetentionOffset={{
+          top: 10,
+          left: 10,
+          bottom: 10,
+          right: 10,
+        }}
+        style={styles.button}
+        onPress={AuthService.loginWithFacebook}
+        title="Facebook bejelentkezés"
+      />
+      <Button title="Google bejelentkezés" onPress={AuthService.loginWithGoogle} />
+    </View>
 
   );
 };

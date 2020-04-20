@@ -5,7 +5,7 @@ import Welcome from '../components/welcome';
 import Login from '../components/login';
 
 const LoginScreen = () => {
-  const image = require('../assets/images/pet_silhouettes2.jpg');
+  const image = require('../assets/images/pet_silhouettes3.jpg');
   const isOverlayVisible = true;
 
   return (
@@ -41,7 +41,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
+  background: {
+    flex: 1,
+    width: '100%',
+  },
 });
 
 export default LoginScreen;

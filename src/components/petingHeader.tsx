@@ -1,7 +1,11 @@
 import React from 'react';
 import { Header } from 'react-native-elements';
 
-const PetingHeader = ({ navigation }) => {
+type PetingHeaderProps = {
+  navigation: any,
+}
+
+const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
   return (
     <Header
       containerStyle={{ paddingTop: 0, height: 60 }}

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   View,
-  Image,
-  Text,
   ImageBackground,
   ScrollView,
   Dimensions,
@@ -15,39 +13,30 @@ import AuthService from '../services/auth';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import Bio from '../components/bio';
-//import Detail from '../components/detail';
+import Details from '../components/details';
+import ProfileTitle from '../components/profileTitle';
+import ImageBox from '../components/imageBox';
 
 const { width } = Dimensions.get('window');
 
-const ResultScreen: React.FC = ({ navigation }) => {
+type ResultScreenProps = {
+  navigation: any;
+}
+
+const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
-  const name = 'sad';
 
   const user = {
-    images: {
-      profile: [
-        'https://source.unsplash.com/1024x768/?water',
-        'https://source.unsplash.com/1024x768/?girl',
-        'https://source.unsplash.com/1024x768/?tree',
-
-      ],
-      animal: [
-        require('../assets/images/dog_sample.jpg'),
-        'https://source.unsplash.com/1024x768/?nature',
-        'https://source.unsplash.com/1024x768/?water',
-        'https://source.unsplash.com/1024x768/?girl',
-        'https://source.unsplash.com/1024x768/?tree',
-
-      ],
-    },
     userName: 'Peti',
     animalName: 'Zsömi',
+    userProfileImage: require('../assets/images/elsa.jpg'),
+    animalProfileImage: require('../assets/images/dog_sample.jpg'),
     age: 30,
     bio: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of',
     details: [
-      { magasság: '188cm' },
-      { dohányzás: 'Alkalmanként' },
-      { hobbi: 'Utazás, tenisz' },
+      { height: '188 cm' },
+      { smoke: 'Alkalmanként' },
+      { hobby: 'Utazás, tenisz' },
     ],
   };
 
@@ -63,21 +52,17 @@ const ResultScreen: React.FC = ({ navigation }) => {
           resizeMode="repeat"
           imageStyle={{ opacity: 0.04 }}
         >
-          <View style={styles.imageBox}>
-            <TouchableOpacity style={styles.profileImageTouchBox} onPress={() => navigation.navigate('Pictures')}>
-              <Image
-                resizeMode="contain"
-                style={styles.profileImage}
-                source={require('../assets/images/elsa.jpg')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.dogImageTouchBox} onPress={() => navigation.navigate('Pictures')}>
-              <Image
-                resizeMode="contain"
-                style={styles.dogImage}
-                source={require('../assets/images/dog_sample.jpg')}
-              />
-            </TouchableOpacity>
+          <View style={styles.imageContainer}>
+            <ImageBox
+              type="person"
+              source={user.userProfileImage}
+              navigation={navigation}
+            />
+            <ImageBox
+              type="animal"
+              source={user.animalProfileImage}
+              navigation={navigation}
+            />
             <TouchableOpacity
               style={styles.moreImageIcon}
               onPress={() => navigation.navigate('Pictures')}
@@ -91,29 +76,16 @@ const ResultScreen: React.FC = ({ navigation }) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={styles.mainDataBox}>
-            <Text style={styles.name}>
-              {name}
-              ,
-            </Text>
-            <Text style={styles.name}>30</Text>
-          </View>
-          <View>
-            <Text style={styles.dogName}>Zsömi</Text>
-          </View>
+          <ProfileTitle
+            name={user.userName}
+            age={user.age}
+          />
+          <ProfileTitle
+            name={user.animalName}
+            smallFont
+          />
           <Bio bio={user.bio} />
-          <View style={styles.detail}>
-            <Text style={styles.detailKey}>Magasság</Text>
-            <Text style={styles.detailValue}>188 cm</Text>
-          </View>
-          <View style={styles.detail}>
-            <Text style={styles.detailKey}>Dohányzás</Text>
-            <Text style={styles.detailValue}>Alkalmanként</Text>
-          </View>
-          <View style={styles.detail}>
-            <Text style={styles.detailKey}>Hobbi</Text>
-            <Text style={styles.detailValue}>utazás, kirándulás, kosár</Text>
-          </View>
+          <Details details={user.details} />
           <Button title="Logout" onPress={AuthService.logout} />
           <LoveButtons />
         </ImageBackground>
@@ -145,7 +117,7 @@ const styles = StyleSheet.create({
   profileBox: {
     paddingHorizontal: 10,
   },
-  imageBox: {
+  imageContainer: {
     position: 'relative',
     width: '100%',
     marginTop: 20,
@@ -153,39 +125,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: width * 0.8,
   },
-  profileImageTouchBox: {
-    position: 'absolute',
-    bottom: 0,
-  },
-  dogImageTouchBox: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-  },
-  profileImage: {
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.4,
-  },
-  dogImage: {
-    width: width * 0.4,
-    height: width * 0.4,
-    borderRadius: width * 0.2,
-  },
   moreImageIcon: {
     position: 'absolute',
     bottom: 5,
     right: 25,
     height: 30,
     width: 30,
-  },
-  mainDataBox: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  name: {
-    fontSize: 28,
-    marginRight: 10,
   },
   dogName: {
     fontSize: 19,

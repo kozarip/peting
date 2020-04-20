@@ -1,7 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-const Bio = ({ bio }) => {
+type BioProps = {
+  bio: string
+}
+
+const Bio: React.FC<BioProps> = ({ bio }) => {
   return (
     <View style={styles.bioBox}>
       <Text style={styles.bio}>{bio}</Text>

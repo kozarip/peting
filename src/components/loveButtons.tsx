@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-const LoveButtons = () => {
+const LoveButtons: React.FC = () => {
   return (
     <View style={styles.reviewBox}>
       <TouchableOpacity>

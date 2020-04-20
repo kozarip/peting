@@ -2,6 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSelector } from 'react-redux';
+import Firebase from '../integrations/firebase';
 
 import MatchScreen from './matchScreen';
 import ResultScreen from './resultScreen';
@@ -9,7 +10,8 @@ import PicturesScreen from './picturesScreen';
 import ChatScreen from './chatScreen';
 import SettingsScreen from './settingsScreen';
 import LoginScreen from './loginScreen';
-import Firebase from '../integrations/firebase';
+
+require('../services/clearGlobalSetTimeout');
 
 const AuthScreen: React.FC = () => {
   const Stack = createStackNavigator();
@@ -27,7 +29,9 @@ const AuthScreen: React.FC = () => {
   ); */
 
   if (!user.auth.isEmpty) {
-    Firebase.database().ref(`/users/${1234}`).set({
+    // eslint-disable-next-line prefer-destructuring
+    const uid = user.auth.providerData[0].uid;
+    Firebase.database().ref(`/users/${uid}`).set({
       name: user.auth.displayName,
     });
     return (

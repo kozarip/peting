@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 
-const AppSettings = () => {
+const AppSettings: React.FC = () => {
   const [hasNotification, setHasNotification] = useState(true);
   return (
     <View>

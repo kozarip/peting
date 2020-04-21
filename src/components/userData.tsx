@@ -5,17 +5,15 @@ import {
   Picker,
   StyleSheet,
   ScrollView,
-  Dimensions,
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { TextInput } from 'react-native-gesture-handler';
-
-const { width } = Dimensions.get('window');
+import { styleContainer, styleBox } from '../assets/styles/base';
+import { dimensions, fonts } from '../assets/styles/variables';
 
 const UserData = ({ isFullForm, isWithRange }) => {
   const [heightRange, setHeightRange] = useState(['140', '210']);
-  const [ageRange, setAgeRange] = useState(['18', '80']);
-
+  const [ageRange, setAgeRange] = useState(['20', '80']);
 
   return (
     <ScrollView>
@@ -103,19 +101,15 @@ const UserData = ({ isFullForm, isWithRange }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
+    ...styleContainer as any,
     alignItems: 'stretch',
   },
   textInputBox: {
-    flex: 1,
+    ...styleBox as any,
   },
   fieldset: {
-    display: 'flex',
-    flexDirection: 'row',
+    ...styleContainer as any,
     justifyContent: 'flex-start',
-    alignItems: 'center',
     flexWrap: 'wrap',
     paddingHorizontal: 10,
     marginTop: 0,
@@ -123,32 +117,30 @@ const styles = StyleSheet.create({
   },
   label: {
     flex: 1,
-    width: width * 0.666,
-    fontSize: 18,
+    width: dimensions.fullWidth * 0.666,
+    fontSize: fonts.heading3,
     fontWeight: 'bold',
   },
   rangeLabel: {
     flex: 1,
-    width: width * 0.3,
-    fontSize: 18,
+    width: dimensions.third,
+    fontSize: fonts.heading3,
     fontWeight: 'bold',
   },
   fieldsetInput: {
-    width: width * 0.3333,
+    width: dimensions.third,
     fontSize: 16,
   },
   rangeInputBox: {
-    flex: 1,
-    width: width * 0.33,
+    ...styleContainer as any,
     display: 'flex',
-    flexDirection: 'row',
+    width: dimensions.third,
     justifyContent: 'space-around',
-    alignItems: 'center',
   },
   rangeInput: {
     minWidth: 40,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: fonts.heading3,
     borderBottomColor: '#888888',
     borderBottomWidth: 1,
     marginBottom: 14,

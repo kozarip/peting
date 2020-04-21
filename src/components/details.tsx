@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { margins, colors, fonts } from '../assets/styles/variables';
+import { styleContainer } from '../assets/styles/base';
 
 type DetailProps = {
   details
@@ -28,22 +30,20 @@ const Details: React.FC<DetailProps> = ({ details }) => {
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    marginTop: 10,
+    marginTop: margins.sm,
   },
   detail: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
+    ...styleContainer as any,
     justifyContent: 'space-between',
-    paddingBottom: 5,
+    paddingBottom: margins.xsm,
     borderBottomWidth: 1,
-    borderBottomColor: '#bbbbbb',
+    borderBottomColor: colors.separator,
   },
   detailKey: {
-    fontSize: 16,
+    fontSize: fonts.default,
   },
   detailValue: {
-    fontSize: 16,
+    fontSize: fonts.default,
   },
 });
 

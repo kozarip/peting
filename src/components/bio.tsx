@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { fonts } from '../assets/styles/variables';
+import { styleBox } from '../assets/styles/base';
 
 type BioProps = {
   bio: string
@@ -7,7 +9,7 @@ type BioProps = {
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
   return (
-    <View style={styles.bioBox}>
+    <View style={styleBox}>
       <Text style={styles.bio}>{bio}</Text>
     </View>
 
@@ -15,12 +17,8 @@ const Bio: React.FC<BioProps> = ({ bio }) => {
 };
 
 const styles = StyleSheet.create({
-  bioBox: {
-    display: 'flex',
-    marginTop: 10,
-  },
   bio: {
-    fontSize: 15,
+    fontSize: fonts.default,
   },
 });
 

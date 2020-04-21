@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+import { styleContainer } from '../assets/styles/base';
+import { fonts, margins } from '../assets/styles/variables';
 
 type ProfileTitleProps = {
   name: string,
@@ -22,15 +24,14 @@ const ProfileTitle: React.FC<ProfileTitleProps> = ({ name, age, smallFont = fals
 
 const styles = StyleSheet.create({
   titleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+    ...styleContainer as any,
   },
   title: {
-    fontSize: 28,
-    marginRight: 10,
+    fontSize: fonts.heading1,
+    marginRight: margins.md,
   },
   smallTitle: {
-    fontSize: 19,
+    fontSize: fonts.heading2,
   },
 });
 

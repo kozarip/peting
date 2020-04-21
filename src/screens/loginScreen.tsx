@@ -3,6 +3,7 @@ import { StyleSheet, View, ImageBackground } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import Welcome from '../components/welcome';
 import Login from '../components/login';
+import { styleBackground, styleContainer } from '../assets/styles/base';
 
 const LoginScreen = () => {
   const image = require('../assets/images/pet_silhouettes3.jpg');
@@ -34,16 +35,12 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
+    ...styleContainer as any,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
   background: {
-    flex: 1,
-    width: '100%',
+    ...styleBackground as any,
   },
 });
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { styleContainer } from '../assets/styles/base';
+import { margins } from '../assets/styles/variables';
 
 const LoveButtons: React.FC = () => {
   return (
@@ -38,10 +40,9 @@ const LoveButtons: React.FC = () => {
 
 const styles = StyleSheet.create({
   reviewBox: {
-    display: 'flex',
-    flexDirection: 'row',
+    ...styleContainer as any,
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: margins.sm,
   },
 });
 

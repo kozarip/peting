@@ -10,6 +10,8 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import PetingHeader from '../components/petingHeader';
 import UserData from '../components/userData';
 import AppSettings from '../components/appSettings';
+import { styleTitle, styleBackground } from '../assets/styles/base';
+import { margins } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
@@ -49,7 +51,7 @@ const SettingsScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground
         source={image}
-        style={{ width: '100%', flex: 1 }}
+        style={styleBackground}
         resizeMode="repeat"
         imageStyle={{ opacity: 0.04 }}
       >
@@ -78,10 +80,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 22,
-    paddingHorizontal: 10,
-    marginTop: 20,
-    marginBottom: 10,
+    ...styleTitle as any,
+    marginTop: margins.md,
   },
 });
 

@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, GestureResponderEvent, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import AuthService from '../services/auth';
+import { margins, colors } from '../assets/styles/variables';
 
 const Login: React.FC = () => {
   return (
@@ -54,15 +55,15 @@ const Login: React.FC = () => {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 5,
-    marginBottom: 10,
-    backgroundColor: '#4267B2',
+    padding: margins.xsm,
+    marginBottom: margins.sm,
+    backgroundColor: colors.facebook,
   },
   googleButton: {
-    backgroundColor: '#DB4437',
+    backgroundColor: colors.google,
   },
   icon: {
-    marginRight: 10,
+    marginRight: margins.sm,
   },
 });
 

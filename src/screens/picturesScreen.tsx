@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { SliderBox } from 'react-native-image-slider-box';
 import PetingHeader from '../components/petingHeader';
+import { styleBox, styleTitle, styleBackground } from '../assets/styles/base';
+import { margins } from '../assets/styles/variables';
 
 const { width } = Dimensions.get('window');
 const image = require('../assets/images/pet_silhouettes2.jpg');
@@ -31,7 +33,7 @@ const PicturesScreen = ({ navigation }) => {
     <ScrollView style={styles.container}>
       <ImageBackground
         source={image}
-        style={{ width: '100%', flex: 1 }}
+        style={styleBackground}
         resizeMode="repeat"
         imageStyle={{ opacity: 0.04 }}
       >
@@ -55,13 +57,11 @@ const PicturesScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    ...styleBox as any,
   },
   title: {
-    fontSize: 22,
-    paddingHorizontal: 10,
-    marginTop: 20,
-    marginBottom: 10,
+    ...styleTitle as any,
+    marginTop: margins.sm,
   },
 });
 

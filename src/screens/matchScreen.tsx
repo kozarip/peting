@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import PetingHeader from '../components/petingHeader';
+import { margins } from '../assets/styles/variables';
+import { styleTitle, styleBackground } from '../assets/styles/base';
 
 const MatchScreen = ({ navigation }) => {
   const list = [
@@ -44,7 +46,7 @@ const MatchScreen = ({ navigation }) => {
     <View style={styles.container}>
       <ImageBackground
         source={image}
-        style={{ width: '100%', flex: 1 }}
+        style={styleBackground}
         resizeMode="repeat"
         imageStyle={{ opacity: 0.04 }}
       >
@@ -68,10 +70,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   title: {
-    fontSize: 22,
-    paddingHorizontal: 10,
-    marginTop: 20,
-    marginBottom: 10,
+    ...styleTitle as any,
+    paddingHorizontal: margins.sm,
+    marginTop: margins.md,
   },
 });
 

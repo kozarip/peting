@@ -5,6 +5,7 @@ import {
   Text,
   Image,
 } from 'react-native';
+import { fonts, margins } from '../assets/styles/variables';
 
 const Welcome = () => {
   const logo = require('../assets/images/peting_logo.png');
@@ -26,12 +27,12 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     fontSize: 64,
-    marginBottom: 20,
+    marginBottom: margins.md,
   },
   motto: {
     textAlign: 'center',
-    fontSize: 21,
-    marginBottom: 20,
+    fontSize: fonts.heading3,
+    marginBottom: margins.md,
   },
 });
 

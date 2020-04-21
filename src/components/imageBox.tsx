@@ -3,16 +3,14 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
+import { dimensions } from '../assets/styles/variables';
 
 type ImageBoxProps = {
   type: 'animal' | 'person';
   source: any;
   navigation: any;
 }
-
-const { width } = Dimensions.get('window');
 
 const ImageBox: React.FC<ImageBoxProps> = ({ type, source, navigation }) => {
   const touchBoxCssStyle = type === 'person' ? styles.profileImageTouchBox : styles.dogImageTouchBox;
@@ -28,25 +26,28 @@ const ImageBox: React.FC<ImageBoxProps> = ({ type, source, navigation }) => {
   );
 };
 
+const profileImageToucbox = {
+  position: 'absolute',
+  bottom: 0,
+};
+
 const styles = StyleSheet.create({
   profileImageTouchBox: {
-    position: 'absolute',
-    bottom: 0,
+    ...profileImageToucbox as any,
   },
   dogImageTouchBox: {
-    position: 'absolute',
-    bottom: 0,
+    ...profileImageToucbox as any,
     right: 0,
   },
   profileImage: {
-    width: width * 0.8,
-    height: width * 0.8,
-    borderRadius: width * 0.4,
+    width: dimensions.fullWidth * 0.8,
+    height: dimensions.fullWidth * 0.8,
+    borderRadius: dimensions.fullWidth * 0.4,
   },
   dogImage: {
-    width: width * 0.4,
-    height: width * 0.4,
-    borderRadius: width * 0.2,
+    width: dimensions.fullWidth * 0.4,
+    height: dimensions.fullWidth * 0.4,
+    borderRadius: dimensions.fullWidth * 0.2,
   },
 });
 

@@ -4,7 +4,6 @@ import {
   View,
   ImageBackground,
   ScrollView,
-  Dimensions,
   TouchableOpacity,
   Button,
 } from 'react-native';
@@ -16,8 +15,8 @@ import Bio from '../components/bio';
 import Details from '../components/details';
 import ProfileTitle from '../components/profileTitle';
 import ImageBox from '../components/imageBox';
-
-const { width } = Dimensions.get('window');
+import { styleBackground, styleContainer } from '../assets/styles/base';
+import { fonts, dimensions, margins } from '../assets/styles/variables';
 
 type ResultScreenProps = {
   navigation: any;
@@ -48,7 +47,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
       <View style={styles.profileBox}>
         <ImageBackground
           source={image}
-          style={styles.background}
+          style={styleBackground}
           resizeMode="repeat"
           imageStyle={{ opacity: 0.04 }}
         >
@@ -99,31 +98,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexGrow: 1,
   },
-  background: {
-    width: '100%',
-    flex: 1,
-  },
   container: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#fff',
+    ...styleContainer as any,
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  header: {
-    backgroundColor: '#1a1a1a',
   },
   profileBox: {
-    paddingHorizontal: 10,
+    paddingHorizontal: margins.sm,
   },
   imageContainer: {
     position: 'relative',
     width: '100%',
-    marginTop: 20,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    height: width * 0.8,
+    marginTop: margins.md,
+    marginBottom: margins.md,
+    paddingHorizontal: margins.sm,
+    height: dimensions.fullWidth * 0.8,
   },
   moreImageIcon: {
     position: 'absolute',
@@ -133,7 +121,7 @@ const styles = StyleSheet.create({
     width: 30,
   },
   dogName: {
-    fontSize: 19,
+    fontSize: fonts.heading2,
   },
   detailsBox: {
     display: 'flex',

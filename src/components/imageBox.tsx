@@ -45,9 +45,9 @@ const styles = StyleSheet.create({
     borderRadius: dimensions.fullWidth * 0.4,
   },
   dogImage: {
-    width: dimensions.fullWidth * 0.4,
-    height: dimensions.fullWidth * 0.4,
-    borderRadius: dimensions.fullWidth * 0.2,
+    width: dimensions.fullWidth * 0.36,
+    height: dimensions.fullWidth * 0.36,
+    borderRadius: dimensions.fullWidth * 0.18,
   },
 });
 

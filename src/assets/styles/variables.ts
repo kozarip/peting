@@ -8,7 +8,9 @@ export const dimensions = {
 };
 
 export const colors = {
-  primary: '#0F52BA',
+  primary: '#5AC1D0',
+  secondary: '#7FDCA5',
+  // secondary: '#0F52BA',
   separator: '#BBBBBB',
   facebook: '#4267B2',
   google: '#DB4437',

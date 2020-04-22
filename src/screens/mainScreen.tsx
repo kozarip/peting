@@ -18,16 +18,6 @@ const AuthScreen: React.FC = () => {
 
   const user = useSelector((state: any) => state.firebase);
 
-  /* Firebase.auth().onAuthStateChanged(
-    (user) => {
-      if (u) {
-        console.log('Bejelentkezve');
-      } else {
-        console.log('Nincs user');
-      }
-    },
-  ); */
-
   if (!user.auth.isEmpty) {
     // eslint-disable-next-line prefer-destructuring
     const uid = user.auth.providerData[0].uid;

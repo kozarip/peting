@@ -18,12 +18,6 @@ const Login: React.FC = () => {
             type="font-awesome"
           />
         }
-        pressRetentionOffset={{
-          top: 10,
-          left: 10,
-          bottom: 10,
-          right: 10,
-        }}
         buttonStyle={styles.button}
         onPress={AuthService.loginWithFacebook}
         title="Facebook bejelentkezés"
@@ -38,12 +32,6 @@ const Login: React.FC = () => {
             type="font-awesome"
           />
         }
-        pressRetentionOffset={{
-          top: 10,
-          left: 10,
-          bottom: 10,
-          right: 10,
-        }}
         buttonStyle={{ ...styles.button, ...styles.googleButton }}
         onPress={AuthService.loginWithGoogle}
         title="Google bejelentkezés"

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { margins, colors, fonts } from '../assets/styles/variables';
+import { margins, fonts } from '../assets/styles/variables';
 import { styleContainer } from '../assets/styles/base';
 
 type DetailProps = {
@@ -36,8 +36,6 @@ const styles = StyleSheet.create({
     ...styleContainer as any,
     justifyContent: 'space-between',
     paddingBottom: margins.xsm,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.separator,
   },
   detailKey: {
     fontSize: fonts.default,

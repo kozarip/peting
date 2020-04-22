@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { fonts } from '../assets/styles/variables';
+import { fonts, colors, margins } from '../assets/styles/variables';
 import { styleBox } from '../assets/styles/base';
 
 type BioProps = {
@@ -19,6 +19,9 @@ const Bio: React.FC<BioProps> = ({ bio }) => {
 const styles = StyleSheet.create({
   bio: {
     fontSize: fonts.default,
+    borderTopColor: colors.separator,
+    borderTopWidth: 1,
+    paddingVertical: margins.sm,
   },
 });
 

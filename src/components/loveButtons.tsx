@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { styleContainer } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import { colors } from '../assets/styles/variables';
 
 const LoveButtons: React.FC = () => {
+  const iconSize = 27;
   return (
     <View style={styles.reviewBox}>
       <TouchableOpacity>
         <Icon
           name="times-circle"
-          size={35}
-          color="#000000"
+          size={iconSize}
+          color="#40D18A"
           type="font-awesome"
           raised
         />
@@ -19,8 +19,8 @@ const LoveButtons: React.FC = () => {
       <TouchableOpacity>
         <Icon
           name="heart"
-          size={35}
-          color="#FF0000"
+          size={iconSize}
+          color="#ED2654"
           type="font-awesome"
           raised
         />
@@ -28,8 +28,8 @@ const LoveButtons: React.FC = () => {
       <TouchableOpacity>
         <Icon
           name="chevron-circle-right"
-          size={35}
-          color="#008080"
+          size={iconSize}
+          color="#3692DD"
           type="font-awesome"
           raised
         />
@@ -40,9 +40,13 @@ const LoveButtons: React.FC = () => {
 
 const styles = StyleSheet.create({
   reviewBox: {
-    ...styleContainer as any,
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: margins.sm,
+    borderTopWidth: 1,
+    borderTopColor: colors.separator,
   },
 });
 

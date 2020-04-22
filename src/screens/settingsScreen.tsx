@@ -6,22 +6,22 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import PetingHeader from '../components/petingHeader';
-import UserData from '../components/userData';
+import UserData from '../components/_userData';
 import AppSettings from '../components/appSettings';
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import { margins, colors } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
   // @ts-ignore
-  <UserData isWithRange isFullForm={false} />
+  <UserData/>
 );
 
 const profileRoute = () => (
   // @ts-ignore
-  <UserData isWithRange={false} isFullForm />
+  <UserData />
 );
 
 const appSettingsRoute = () => (
@@ -65,6 +65,12 @@ const SettingsScreen = ({ navigation }) => {
           onIndexChange={setIndex}
           initialLayout={initialLayout}
           swipeEnabled={false}
+          renderTabBar={(props) => (
+            <TabBar
+              {...props}
+              style={{ backgroundColor: colors.secondary }}
+            />
+          )}
         />
       </ImageBackground>
     </View>

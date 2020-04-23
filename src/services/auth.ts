@@ -34,6 +34,7 @@ export default class AuthService {
   static async loginWithGoogle() {
     try {
       const result = await Google.logInAsync({
+        behavior: 'web',
         androidClientId: '987658316582-rvkudgpoho1oeochlv7sti2136sccaqh.apps.googleusercontent.com',
         iosClientId: '987658316582-alluojp12vglaf7n3m6c3r4gunhphbka.apps.googleusercontent.com',
       });

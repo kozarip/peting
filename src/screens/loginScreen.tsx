@@ -18,7 +18,7 @@ const LoginScreen = () => {
       >
         <Overlay
           isVisible={isOverlayVisible}
-          windowBackgroundColor="rgba(255, 255, 255, 0)"
+          windowBackgroundColor="rgba(255, 255, 255, 0.3)"
           overlayBackgroundColor="#fff"
           width="80%"
           height="auto"

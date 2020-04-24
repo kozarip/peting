@@ -1,103 +1,128 @@
 import React from 'react';
 import {
+  Text,
   StyleSheet,
+  ScrollView,
   View,
 } from 'react-native';
-import DynamicForm from 'react-native-dynamic-form';
+import RadioForm from 'react-native-simple-radio-button';
+import { Card } from 'react-native-elements';
+import TextBox from '../components/form/textBox';
+import Selector from '../components/form/selector';
+import { fonts, colors } from '../assets/styles/variables';
+import { styleForm } from '../assets/styles/form';
 
-const form = [
-  {
-    key: 'manshgdsuudfg',
-    type: 'text',
-    required: true, // optional
-    label: 'What is your last name?',
-    placeholder: 'Last Name', // optional
-    subtype: 'text', // one of text, tel, email and password
-    maxlength: 30, // optional
-    value: 'Salako', // optional
-    disabled: false, // optional,
-    icon: 'lock', // optional
-  },
-  {
-    key: 'manshgdsuudfg',
-    type: 'text',
-    required: true, // optional
-    label: 'What is your last name?',
-    placeholder: 'Last Name', // optional
-    subtype: 'text', // one of text, tel, email and password
-    maxlength: 30, // optional
-    value: 'Salako', // optional
-    disabled: false, // optional,
-    icon: 'lock', // optional
-    validationFunc: (value) => {
-      // do validation here and return bool status
-    }, // optional
-  },
-  {
-    key: 'jahaughabdvad',
-    type: 'textarea',
-    label: 'Please describe yourself in not more than 400 characters',
-    placeholder: 'My name is John Doe and I am...', // optional
-    maxlength: 400, // optional
-    required: true, // optional
-    value: '', // optional
-    validationFunc: (value) => {
-      // do validation here and return bool status
-    }, // optional
-  },
-  {
-    key: 'nabsgsgdhyshdhf',
-    type: 'select',
-    label: 'Languages Spoken',
-    multiple: false, // enable multiple selection and displays selected items as tags, optional
-    searchInputPlaceholder: 'Search Languages...',
-    values: [
-      {
-        label: 'Yoruba',
-        value: 'yoruba',
-        selected: true, // selected value (can be used to preselect values too) optional
-      },
-      {
-        label: 'Igbo',
-        value: 'igbo',
-      },
-      {
-        label: 'Hausa',
-        value: 'hausa',
-      },
-      {
-        label: 'English',
-        value: 'english',
-      },
-      {
-        label: 'Spanish',
-        value: 'spanish',
-      },
-      {
-        label: 'French',
-        value: 'french',
-      },
+const UserData = ({ isFullForm, isWithRange }) => {
+/*   const [heightRange, setHeightRange] = useState(['140', '210']);
+  const [ageRange, setAgeRange] = useState(['20', '80']); */
+
+  const gender = [
+    { label: 'Nő', value: 0 },
+    { label: 'Férfi', value: 1 },
+  ];
+
+  const hairColor = {
+    label: 'Hajszín',
+    options: [
+      { label: 'Szöke', value: 'blonde' },
+      { label: 'Barna', value: 'brown' },
+      { label: 'Vörös', value: 'red' },
     ],
-  },
-];
+  };
 
-const UserData = () => {
+  const animalType = {
+    label: 'Faja',
+    options: [
+      { label: 'Kutya', value: 'dog' },
+      { label: 'Macska', value: 'cat' },
+      { label: 'Hörcsög', value: 'hamster' },
+      { label: 'Nyúl', value: 'rabbit' },
+    ],
+  };
+
+  const animalSize = {
+    label: 'Mérete',
+    options: [
+      { label: 'Kicsi', value: 'small' },
+      { label: 'Közepes', value: 'medium' },
+      { label: 'Nagy', value: 'big' },
+    ],
+  };
+  const smokeFrequency = {
+    label: 'Dohányzás',
+    options: [
+      { label: 'Soha', value: 'never' },
+      { label: 'Alkalmanként', value: 'rarely' },
+      { label: 'Rendszeresen', value: 'often' },
+    ],
+  };
+
   return (
-    <View style={styles.container}>
-      <DynamicForm
-        form={form}
-        style={styles.formContainer}
-      />
-    </View>
+    <ScrollView style={styles.container}>
+      <Card
+        containerStyle={styleForm.cardBlock}
+        title="Alapadatok"
+        titleStyle={styleForm.cardTitle as any}
+      >
+        {isFullForm && <TextBox label="Név" value="Kozári Péter" />}
+        {isFullForm && <TextBox label="E-mail" value="kozaripeti@gmail.com" /> }
+        <Text style={styleForm.label as any}>
+          Nem
+        </Text>
+        <RadioForm
+          style={{ marginTop: 5, fontSize: fonts.heading3 }}
+          buttonColor={colors.secondary}
+          labelStyle={{ fontSize: fonts.heading3 }}
+          selectedButtonColor={colors.secondary}
+          buttonSize={15}
+          radio_props={gender}
+          initial={0}
+        />
+      </Card>
+
+      <Card
+        containerStyle={styleForm.cardBlock}
+        title="Kinézet"
+        titleStyle={styleForm.cardTitle as any}
+      >
+        {
+          isWithRange
+            ? (
+              <View>
+                <TextBox label="Minimum magasság" value="160 cm" />
+                <TextBox label="Maximum magasság" value="178 cm" />
+              </View>
+            )
+            : (
+              <TextBox label="Magasság" placeholder="? cm" />
+            )
+        }
+        <Selector label={hairColor.label} options={hairColor.options} />
+      </Card>
+
+      <Card
+        containerStyle={styleForm.cardBlock}
+        title="Állatod"
+        titleStyle={styleForm.cardTitle as any}
+      >
+        <Selector label={animalType.label} options={animalType.options} />
+        <Selector label={animalSize.label} options={animalSize.options} />
+      </Card>
+
+      <Card
+        containerStyle={styleForm.cardBlock}
+        title="Egyéb"
+        titleStyle={styleForm.cardTitle as any}
+      >
+        <Selector label={smokeFrequency.label} options={smokeFrequency.options} />
+      </Card>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-  },
-  formContainer: {
-    marginTop: 10,
+    paddingBottom: 20,
   },
 });
 

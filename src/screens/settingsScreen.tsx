@@ -8,20 +8,20 @@ import {
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import PetingHeader from '../components/petingHeader';
-import UserData from '../components/_userData';
+import UserData from '../components/userData';
 import AppSettings from '../components/appSettings';
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins, colors } from '../assets/styles/variables';
+import { margins } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
   // @ts-ignore
-  <UserData/>
+  <UserData isFullForm={false} isWithRange />
 );
 
 const profileRoute = () => (
   // @ts-ignore
-  <UserData />
+  <UserData isFullForm isWithRange={false} />
 );
 
 const appSettingsRoute = () => (
@@ -67,8 +67,11 @@ const SettingsScreen = ({ navigation }) => {
           swipeEnabled={false}
           renderTabBar={(props) => (
             <TabBar
+              inactiveColor="#000"
+              pressColor="#000"
+              activeColor="#000"
               {...props}
-              style={{ backgroundColor: colors.secondary }}
+              style={{ backgroundColor: '#fff' }}
             />
           )}
         />

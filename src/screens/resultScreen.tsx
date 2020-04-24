@@ -5,6 +5,7 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
+import { Card } from 'react-native-elements';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import Bio from '../components/bio';
@@ -13,7 +14,6 @@ import ProfileTitle from '../components/profileTitle';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 import ImagesBox from '../components/ImagesBox';
-import { Card } from 'react-native-elements';
 
 type ResultScreenProps = {
   navigation: any;
@@ -37,7 +37,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <ScrollView style={styles.userContainer}>
         <PetingHeader
           navigation={navigation}
@@ -50,8 +50,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
             imageStyle={{ opacity: 0.04 }}
           >
             <Card
-              containerStyle={{marginHorizontal: 0}}
-              containerStyle={{marginHorizontal: 0}}
+              containerStyle={styles.profileCard}
             >
               <ImagesBox
                 navigation={navigation}
@@ -85,6 +84,12 @@ const styles = StyleSheet.create({
   container: {
     ...styleContainer as any,
     alignItems: 'center',
+  },
+  profileCard: {
+    marginHorizontal: 0,
+    borderRadius: 10,
+    marginBottom: margins.sm,
+    paddingBottom: 25,
   },
   profileBox: {
     paddingHorizontal: margins.sm,

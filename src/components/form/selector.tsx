@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Platform } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { styleForm } from '../../assets/styles/form';
 import { fonts } from '../../assets/styles/variables';

@@ -11,7 +11,7 @@ import PetingHeader from '../components/petingHeader';
 import UserData from '../components/userData';
 import AppSettings from '../components/appSettings';
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins, fonts } from '../assets/styles/variables';
+import { margins } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
@@ -69,7 +69,7 @@ const SettingsScreen = ({ navigation }) => {
             <TabBar
               inactiveColor="#000"
               pressColor="#000"
-              labelStyle={{fontSize: 15}}
+              labelStyle={{ fontSize: 15 }}
               activeColor="#000"
               {...props}
               style={{ backgroundColor: '#fff' }}

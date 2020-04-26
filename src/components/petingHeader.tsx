@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header } from 'react-native-elements';
+import { Header, Icon } from 'react-native-elements';
 import { colors } from '../assets/styles/variables';
 
 
@@ -18,15 +18,33 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
         borderBottomWidth: 1,
       }}
       backgroundColor={colors.primary}
-      leftComponent={{
-        icon: 'search', color: '#fff', size: 32, onPress: () => navigation.navigate('Result'),
-      }}
-      centerComponent={{
-        icon: 'favorite', color: '#fff', size: 32, onPress: () => navigation.navigate('Match'),
-      }}
-      rightComponent={{
-        icon: 'settings', color: '#fff', size: 32, onPress: () => navigation.navigate('Settings'),
-      }}
+      leftComponent={
+        <Icon
+          name="search"
+          color="#ffffff"
+          size={32}
+          onPress={() => navigation.navigate('Result')}
+          underlayColor={colors.primary}
+        />
+      }
+      centerComponent={
+        <Icon
+          name="favorite"
+          color="#ffffff"
+          size={32}
+          onPress={() => navigation.navigate('Match')}
+          underlayColor={colors.primary}
+        />
+      }
+      rightComponent={
+        <Icon
+          name="settings"
+          color="#ffffff"
+          size={32}
+          onPress={() => navigation.navigate('Settings')}
+          underlayColor={colors.primary}
+        />
+      }
     />
   );
 };

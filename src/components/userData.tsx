@@ -64,20 +64,32 @@ const UserData = ({ isFullForm, isWithRange }) => {
         title="Alapadatok"
         titleStyle={styleForm.cardTitle as any}
       >
-        {isFullForm && <TextBox label="Név" value="Kozári Péter" />}
-        {isFullForm && <TextBox label="E-mail" value="kozaripeti@gmail.com" /> }
-        <Text style={styleForm.label as any}>
-          Nem
-        </Text>
-        <RadioForm
-          style={{ marginTop: 5, fontSize: fonts.heading3 }}
-          buttonColor={colors.secondary}
-          labelStyle={{ fontSize: fonts.heading3 }}
-          selectedButtonColor={colors.secondary}
-          buttonSize={15}
-          radio_props={gender}
-          initial={0}
-        />
+        <View>
+          {
+            isFullForm
+              ? (
+                <View>
+                  <TextBox label="Név" value="Kozári Péter" />
+                  <TextBox label="E-mail" value="kozaripeti@gmail.com" />
+                </View>
+              )
+              : (
+                <Text> </Text>
+              )
+          }
+          <Text style={styleForm.label as any}>
+            Nem
+          </Text>
+          <RadioForm
+            style={{ marginTop: 5, fontSize: fonts.heading3 }}
+            buttonColor={colors.secondary}
+            labelStyle={{ fontSize: fonts.heading3 }}
+            selectedButtonColor={colors.secondary}
+            buttonSize={15}
+            radio_props={gender}
+            initial={0}
+          />
+        </View>
       </Card>
 
       <Card

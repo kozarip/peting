@@ -4,9 +4,9 @@ import {
   StyleSheet,
   View,
   Text,
+  ActivityIndicator,
 } from 'react-native';
-import { Bubbles } from 'react-native-loader';
-import { fonts, dimensions } from '../assets/styles/variables';
+import { fonts, dimensions, colors } from '../assets/styles/variables';
 
 type SuccessLoginOverlayProps= {
   isLoggedIn: boolean;
@@ -22,8 +22,8 @@ const SuccessLoginOverlay: React.FC<SuccessLoginOverlayProps> = ({ isLoggedIn })
       height={dimensions.fullHeight * 0.4}
     >
       <View style={styles.successLoginModal}>
+        <ActivityIndicator size="large" color={colors.separator} />
         <Text style={styles.successLoginText}>Adatok betöltése...</Text>
-        <Bubbles size={10} color="#666" />
       </View>
     </Overlay>
 

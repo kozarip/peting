@@ -11,6 +11,7 @@ import TextBox from '../components/form/textBox';
 import Selector from '../components/form/selector';
 import { fonts, colors } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
+import MultiSelector from './form/multiSelector';
 
 const UserData = ({ isFullForm, isWithRange }) => {
 /*   const [heightRange, setHeightRange] = useState(['140', '210']);
@@ -56,6 +57,33 @@ const UserData = ({ isFullForm, isWithRange }) => {
       { label: 'Rendszeresen', value: 'often' },
     ],
   };
+
+  const fruits = [
+    {
+      name: 'Kosárlabda',
+      id: 1,
+    },
+    {
+      name: 'Asztalitenisz',
+      id: 2,
+    },
+    {
+      name: 'Tenisz',
+      id: 3,
+    },
+    {
+      name: 'Foci',
+      id: 4,
+    },
+    {
+      name: 'Túrázás',
+      id: 5,
+    },
+    {
+      name: 'Festés',
+      id: 6,
+    },
+  ];
 
   return (
     <ScrollView style={styles.container}>
@@ -127,6 +155,7 @@ const UserData = ({ isFullForm, isWithRange }) => {
         titleStyle={styleForm.cardTitle as any}
       >
         <Selector label={smokeFrequency.label} options={smokeFrequency.options} />
+        <MultiSelector label="Hobbijaid" options={fruits} />
       </Card>
     </ScrollView>
   );

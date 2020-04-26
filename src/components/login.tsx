@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
-import { StyleSheet, GestureResponderEvent, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import AuthService from '../services/auth';
-import { margins, colors } from '../assets/styles/variables';
+import {
+  margins,
+  colors,
+} from '../assets/styles/variables';
+import LoaderOverlay from './loaderOverlay';
 
 const Login: React.FC = () => {
+  const [isLogedIn, setLogedIn] = useState(false);
+
   return (
     <View>
       <Button
@@ -19,7 +25,7 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={styles.button}
-        onPress={AuthService.loginWithFacebook}
+        onPress={() => AuthService.loginWithFacebook(setLogedIn)}
         title="Facebook bejelentkezés"
       />
       <Button
@@ -33,9 +39,12 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={{ ...styles.button, ...styles.googleButton }}
-        onPress={AuthService.loginWithGoogle}
+        onPress={() => {
+          AuthService.loginWithGoogle(setLogedIn);
+        }}
         title="Google bejelentkezés"
       />
+      <LoaderOverlay isLoggedIn={isLogedIn} />
     </View>
 
   );

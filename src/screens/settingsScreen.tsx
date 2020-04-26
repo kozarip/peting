@@ -11,7 +11,7 @@ import PetingHeader from '../components/petingHeader';
 import UserData from '../components/userData';
 import AppSettings from '../components/appSettings';
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import { margins, fonts } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
@@ -36,7 +36,7 @@ const SettingsScreen = ({ navigation }) => {
   const [routes] = React.useState([
     { key: 'search', title: 'Keresés' },
     { key: 'profile', title: 'Profilom' },
-    { key: 'appSettings', title: 'Beállítások' },
+    { key: 'appSettings', title: 'Beállítás' },
   ]);
 
   const renderScene = SceneMap({
@@ -69,6 +69,7 @@ const SettingsScreen = ({ navigation }) => {
             <TabBar
               inactiveColor="#000"
               pressColor="#000"
+              labelStyle={{fontSize: 15}}
               activeColor="#000"
               {...props}
               style={{ backgroundColor: '#fff' }}

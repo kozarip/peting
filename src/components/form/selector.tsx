@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Picker, Text } from 'react-native';
+import { View, StyleSheet, Text, Platform } from 'react-native';
+import RNPickerSelect from 'react-native-picker-select';
 import { styleForm } from '../../assets/styles/form';
+import { fonts } from '../../assets/styles/variables';
 
 type SelectorProps = {
   label: string;
@@ -16,17 +18,29 @@ const Selector: React.FC<SelectorProps> = ({ label, options }) => {
   return (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
-      <Picker style={styleForm.cardInput}>
-        {options.map((option) => (
-          <Picker.Item
-            key={option.value}
-            label={option.label}
-            value={option.value}
-          />
-        ))}
-      </Picker>
+      <RNPickerSelect
+        placeholder={{
+          label: 'Válassz egy elemet',
+          color: '#000',
+        }}
+        style={pickerSelectStyles}
+        onValueChange={(value) => console.log(value)}
+        items={options}
+      />
     </View>
   );
 };
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    marginVertical: 5,
+    fontSize: fonts.heading3,
+    color: '#000',
+  },
+  inputAndroid: {
+    fontSize: fonts.heading3,
+    color: '#000',
+  },
+});
 
 export default Selector;

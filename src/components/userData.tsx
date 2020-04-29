@@ -12,6 +12,7 @@ import Selector from '../components/form/selector';
 import { fonts, colors } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
 import MultiSelector from './form/multiSelector';
+import SaveButton from './saveButton';
 
 const UserData = ({ isFullForm, isWithRange }) => {
 /*   const [heightRange, setHeightRange] = useState(['140', '210']);
@@ -157,6 +158,7 @@ const UserData = ({ isFullForm, isWithRange }) => {
         <Selector label={smokeFrequency.label} options={smokeFrequency.options} />
         <MultiSelector label="Hobbijaid" options={fruits} />
       </Card>
+      <SaveButton />
     </ScrollView>
   );
 };

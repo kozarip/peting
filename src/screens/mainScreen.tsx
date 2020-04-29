@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useFirebase, isLoaded } from 'react-redux-firebase'
 import { useSelector } from 'react-redux';
-import Firebase from '../integrations/firebase';
 
 import MatchScreen from './matchScreen';
 import ResultScreen from './resultScreen';
@@ -11,19 +11,17 @@ import ChatScreen from './chatScreen';
 import SettingsScreen from './settingsScreen';
 import LoginScreen from './loginScreen';
 
+
 require('../services/clearGlobalSetTimeout');
 
-const AuthScreen: React.FC = () => {
+const MainScreen: React.FC = () => {
   const Stack = createStackNavigator();
 
   const user = useSelector((state: any) => state.firebase);
+  const firebase = useFirebase();
 
   if (!user.auth.isEmpty) {
-    // eslint-disable-next-line prefer-destructuring
-    const uid = user.auth.providerData[0].uid;
-    Firebase.database().ref(`/users/${uid}`).set({
-      name: user.auth.displayName,
-    });
+    // firebase.updateProfile({ name: 'alma' });
     return (
       <NavigationContainer>
         <Stack.Navigator
@@ -46,4 +44,4 @@ const AuthScreen: React.FC = () => {
   );
 };
 
-export default AuthScreen;
+export default MainScreen;

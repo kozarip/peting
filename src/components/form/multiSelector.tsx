@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { styleForm } from '../../assets/styles/form';
+import { colors } from '../../assets/styles/variables';
 
 const MultiSelector = ({ options, label }) => {
   const [selectedItems, setSelectedItems] = useState([]);
@@ -19,12 +20,11 @@ const MultiSelector = ({ options, label }) => {
         selectedText="kiválasztva"
         selectText="Válassz elemeket"
         showDropDowns
+        confirmText="Kiválasztom"
         onSelectedItemsChange={onSelectedItemsChange}
         selectedItems={selectedItems}
-        styles={{
-          container: {
-
-          },
+        colors={{
+          primary: colors.primary,
         }}
       />
     </View>

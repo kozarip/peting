@@ -158,7 +158,6 @@ const UserData = ({ isFullForm, isWithRange }) => {
         <Selector label={smokeFrequency.label} options={smokeFrequency.options} />
         <MultiSelector label="Hobbijaid" options={fruits} />
       </Card>
-      <SaveButton />
     </ScrollView>
   );
 };

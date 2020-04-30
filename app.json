@@ -2,6 +2,7 @@
   "expo": {
     "name": "Peting - az állatbarátok társkeresője",
     "slug": "peting",
+    "scheme": "peting",
     "platforms": [
       "ios", "android", "web"
     ],

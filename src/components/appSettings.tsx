@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import AuthService from '../services/auth';
+import { withOAuth } from 'aws-amplify-react-native';
 
-const AppSettings: React.FC = () => {
+const AppSettings: React.FC = (props) => {
+  const { signOut } = props;
+
   const [hasNotification, setHasNotification] = useState(true);
   return (
     <View>
@@ -12,9 +14,9 @@ const AppSettings: React.FC = () => {
         checked={hasNotification}
         onPress={() => setHasNotification(!hasNotification)}
       />
-      <Button title="Logout" onPress={AuthService.logout} />
+      <Button title="Logout" onPress={signOut} />
     </View>
   );
 };
 
-export default AppSettings;
+export default withOAuth(AppSettings);

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // eslint-disable-next-line no-unused-vars
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
-import AuthService from '../services/auth';
+import { Auth } from 'aws-amplify';
 import {
   margins,
   colors,
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={styles.button}
-        onPress={() => AuthService.loginWithFacebook(setLogedIn)}
+        onPress={() => Auth.federatedSignIn({ provider: "Facebook" })}
         title="Facebook bejelentkezés"
       />
       <Button
@@ -39,9 +39,7 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={{ ...styles.button, ...styles.googleButton }}
-        onPress={() => {
-          AuthService.loginWithGoogle(setLogedIn);
-        }}
+        onPress={() => Auth.federatedSignIn({ provider: "Google" })}
         title="Google bejelentkezés"
       />
       <LoaderOverlay isLoggedIn={isLogedIn} />

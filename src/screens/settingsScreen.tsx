@@ -8,26 +8,26 @@ import {
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import PetingHeader from '../components/petingHeader';
-import UserData from '../components/userData';
+
+import Profile from '../components/profile';
 import AppSettings from '../components/appSettings';
+import SearchComponent from '../components/search';
+
 import { styleTitle, styleBackground } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 
 
 const searchRoute = () => (
-  // @ts-ignore
-  <UserData isFullForm={false} isWithRange />
+  <SearchComponent />
 );
 
 const profileRoute = () => (
-  // @ts-ignore
-  <UserData isFullForm isWithRange={false} />
+  <Profile />
 );
 
 const appSettingsRoute = () => (
   <AppSettings />
 );
-
 
 const initialLayout = { width: Dimensions.get('window').width };
 

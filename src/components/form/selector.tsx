@@ -7,6 +7,9 @@ import { fonts } from '../../assets/styles/variables';
 type SelectorProps = {
   label: string;
   options: SelectorOptions[];
+  type: string;
+  setValue: any;
+  value: any;
 }
 
 type SelectorOptions = {
@@ -14,7 +17,15 @@ type SelectorOptions = {
   value: string;
 }
 
-const Selector: React.FC<SelectorProps> = ({ label, options }) => {
+const Selector: React.FC<SelectorProps> = (
+  {
+    label,
+    options,
+    type,
+    value,
+    setValue,
+  },
+) => {
   return (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
@@ -23,8 +34,13 @@ const Selector: React.FC<SelectorProps> = ({ label, options }) => {
           label: 'Válassz egy elemet',
           color: '#000',
         }}
+        value={value}
         style={pickerSelectStyles}
-        onValueChange={(value) => console.log(value)}
+        onValueChange={(selectedValue) => {
+          const obj = {};
+          obj[type] = selectedValue;
+          setValue(obj);
+        }}
         items={options}
       />
     </View>

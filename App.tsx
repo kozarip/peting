@@ -1,11 +1,13 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import Amplify from 'aws-amplify';
-import { withOAuth } from "aws-amplify-react-native";
+import { withOAuth } from 'aws-amplify-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import config from './aws-exports';
+import store from './src/store/store';
+
 import MatchScreen from './src/screens/matchScreen';
 import ResultScreen from './src/screens/resultScreen';
 import PicturesScreen from './src/screens/picturesScreen';
@@ -13,10 +15,7 @@ import ChatScreen from './src/screens/chatScreen';
 import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
 
-
 require('./src/services/clearGlobalSetTimeout');
-
-import store from './src/store/store';
 
 Amplify.configure(config);
 

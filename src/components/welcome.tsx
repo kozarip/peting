@@ -12,7 +12,7 @@ const Welcome = () => {
   return (
     <View>
       <Image resizeMode="center" style={styles.logo} source={logo} />
-      <Text style={styles.title}>PETing aws</Text>
+      <Text style={styles.title}>PETing</Text>
       <Text style={styles.motto}>Az állatbarátok társkeresője</Text>
     </View>
   );

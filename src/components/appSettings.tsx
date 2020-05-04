@@ -3,7 +3,11 @@ import { View, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { withOAuth } from 'aws-amplify-react-native';
 
-const AppSettings: React.FC = (props) => {
+type AppSettingsProps = {
+  signOut: any;
+}
+
+const AppSettings: React.FC<AppSettingsProps> = (props) => {
   const { signOut } = props;
 
   const [hasNotification, setHasNotification] = useState(true);

@@ -1,0 +1,13 @@
+type User @model @searchable
+  @key(name: "byCognitoUserName", fields: ["cognitoUserName"], queryField: "userByCognitoUserName") {
+  id: ID!
+  cognitoUserName: String
+  userName: String!
+  email: String!
+  firstName: String
+  surName: String
+  age: Int
+  animal: String
+  gender: Int,
+  height: String,
+}

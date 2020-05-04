@@ -10,7 +10,7 @@ import {
 import LoaderOverlay from './loaderOverlay';
 
 const Login: React.FC = () => {
-  const [isLogedIn, setLogedIn] = useState(false);
+  const [isLoggedIn] = useState(false);
 
   return (
     <View>
@@ -25,7 +25,8 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={styles.button}
-        onPress={() => Auth.federatedSignIn({ provider: "Facebook" })}
+        // @ts-ignore
+        onPress={() => Auth.federatedSignIn({ provider: 'Facebook' })}
         title="Facebook bejelentkezés"
       />
       <Button
@@ -39,10 +40,11 @@ const Login: React.FC = () => {
           />
         }
         buttonStyle={{ ...styles.button, ...styles.googleButton }}
-        onPress={() => Auth.federatedSignIn({ provider: "Google" })}
+        // @ts-ignore
+        onPress={() => Auth.federatedSignIn({ provider: 'Google' })}
         title="Google bejelentkezés"
       />
-      <LoaderOverlay isLoggedIn={isLogedIn} />
+      <LoaderOverlay isLoggedIn={isLoggedIn} />
     </View>
 
   );

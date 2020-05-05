@@ -4,6 +4,7 @@
 import { graphqlOperation, API, Auth } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
+import { UserType } from '../types/user';
 
 
 class User {
@@ -39,7 +40,7 @@ class User {
     API.graphql(graphqlOperation(mutations.createUser, { input: newUser }));
   }
 
-  updateUser(user) {
+  updateUser(user: UserType) {
     console.log(user);
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }

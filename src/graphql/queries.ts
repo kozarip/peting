@@ -12,9 +12,13 @@ export const getUser = /* GraphQL */ `
       firstName
       surName
       age
-      animal
+      animalType
+      animalSize
       gender
       height
+      smokeFrequency
+      hairColor
+      hobbies
     }
   }
 `;
@@ -33,9 +37,13 @@ export const listUsers = /* GraphQL */ `
         firstName
         surName
         age
-        animal
+        animalType
+        animalSize
         gender
         height
+        smokeFrequency
+        hairColor
+        hobbies
       }
       nextToken
     }
@@ -64,9 +72,13 @@ export const userByCognitoUserName = /* GraphQL */ `
         firstName
         surName
         age
-        animal
+        animalType
+        animalSize
         gender
         height
+        smokeFrequency
+        hairColor
+        hobbies
       }
       nextToken
     }
@@ -93,9 +105,13 @@ export const searchUsers = /* GraphQL */ `
         firstName
         surName
         age
-        animal
+        animalType
+        animalSize
         gender
         height
+        smokeFrequency
+        hairColor
+        hobbies
       }
       nextToken
       total

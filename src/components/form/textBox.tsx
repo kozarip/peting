@@ -6,9 +6,10 @@ import { colors } from '../../assets/styles/variables';
 type TextBoxProps = {
   label: string,
   type: string,
-  value?: string,
+  value?: string | number,
   placeholder?: string
   setValue: any
+  keyboardType?: 'default' | 'number-pad' | 'numeric' | 'email-address' | 'phone-pad'
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
@@ -17,6 +18,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   value,
   placeholder,
   setValue,
+  keyboardType,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
 
@@ -26,13 +28,15 @@ const TextBox: React.FC<TextBoxProps> = ({
         {label}
       </Text>
       <TextInput
+        placeholder={placeholder}
+        keyboardType={keyboardType || 'default'}
         style={{ ...styleForm.cardInput, ...placeHolderStyle }}
         onChangeText={(changedText) => {
           const obj = {};
           obj[type] = changedText;
           return setValue(obj);
         }}
-        value={value}
+        value={value?.toString()}
       />
     </View>
   );

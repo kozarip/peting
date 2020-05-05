@@ -15,6 +15,8 @@ import MultiSelector from './form/multiSelector';
 import FillAlert from './fillAlert';
 
 import { styleForm } from '../assets/styles/form';
+// eslint-disable-next-line no-unused-vars
+import { UserType } from '../types/user';
 
 import {
   gender,
@@ -26,15 +28,20 @@ import {
 } from '../constants/userFields';
 
 const Profile: React.FC = () => {
-
-  const initialProfileUser = {
+  const initialProfileUser: UserType = {
     userName: '',
+    firstName: '',
+    surName: '',
     email: '',
     gender: -1,
-    height: '',
-    animal: '',
-    //hobbies: [],
+    height: 0,
+    animalSize: '',
+    animalType: '',
+    smokeFrequency: '',
+    hobbies: [],
     cognitoUserName: '',
+    hairColor: '',
+    age: 0,
   };
 
   const [isNewUser, setIsNewUser] = useState(false);
@@ -81,6 +88,7 @@ const Profile: React.FC = () => {
         <TextBox
           label="Név"
           type="userName"
+          placeholder="Ird ide a neved"
           value={profileUser.userName}
           setValue={setProfileUserValue}
         />
@@ -92,10 +100,18 @@ const Profile: React.FC = () => {
           placeholder="E-mail címed"
         />
         <RadioButton
-          values={gender}
+          options={gender}
           value={profileUser.gender}
           type="gender"
           label="Nemed"
+          setValue={setProfileUserValue}
+        />
+        <TextBox
+          label="Korod"
+          type="age"
+          placeholder="év"
+          keyboardType="number-pad"
+          value={profileUser.age}
           setValue={setProfileUserValue}
         />
       </Card>
@@ -106,9 +122,10 @@ const Profile: React.FC = () => {
         titleStyle={styleForm.cardTitle as any}
       >
         <TextBox
-          label="Magasság"
+          label="Magasság (cm)"
           placeholder="? cm"
           type="height"
+          keyboardType="number-pad"
           value={profileUser.height}
           setValue={setProfileUserValue}
         />
@@ -129,9 +146,9 @@ const Profile: React.FC = () => {
         <Selector
           label={animalType.label}
           options={animalType.options}
-          type="animal"
+          type="animalType"
           setValue={setProfileUserValue}
-          value={profileUser.animal}
+          value={profileUser.animalType}
         />
         <Selector
           label={animalSize.label}
@@ -154,7 +171,13 @@ const Profile: React.FC = () => {
           setValue={setProfileUserValue}
           value={profileUser.smokeFrequency}
         />
-        <MultiSelector label="Hobbijaid" options={hobbies} />
+        <MultiSelector
+          label="Hobbijaid"
+          options={hobbies}
+          type="hobbies"
+          setValue={setProfileUserValue}
+          value={profileUser.hobbies}
+        />
       </Card>
       <Button
         title="Mentés"

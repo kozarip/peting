@@ -9,7 +9,7 @@ import { styleForm } from '../../assets/styles/form';
 import { colors, dimensions } from '../../assets/styles/variables';
 
 type RadioButtonProps = {
-  values: any;
+  options: any;
   value: any;
   type: string;
   setValue: any;
@@ -17,7 +17,7 @@ type RadioButtonProps = {
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
-  values,
+  options,
   value,
   type,
   setValue,
@@ -28,10 +28,10 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       <Text style={styleForm.label as any}>
         {label}
       </Text>
-      {Array.isArray(values) && values.map((res: any) => {
+      {Array.isArray(options) && options.map((res: any) => {
         return (
           <View key={res.key} style={styles.container}>
-            <Text style={{...styleForm.cardInput, ...styles.radioInput}}>{res.text}</Text>
+            <Text style={{ ...styleForm.cardInput, ...styles.radioInput }}>{res.text}</Text>
             <TouchableOpacity
               style={styles.radioCircle}
               onPress={() => {

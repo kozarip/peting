@@ -12,9 +12,13 @@ export const onCreateUser = /* GraphQL */ `
       firstName
       surName
       age
-      animal
+      animalType
+      animalSize
       gender
       height
+      smokeFrequency
+      hairColor
+      hobbies
     }
   }
 `;
@@ -28,9 +32,13 @@ export const onUpdateUser = /* GraphQL */ `
       firstName
       surName
       age
-      animal
+      animalType
+      animalSize
       gender
       height
+      smokeFrequency
+      hairColor
+      hobbies
     }
   }
 `;
@@ -44,9 +52,13 @@ export const onDeleteUser = /* GraphQL */ `
       firstName
       surName
       age
-      animal
+      animalType
+      animalSize
       gender
       height
+      smokeFrequency
+      hairColor
+      hobbies
     }
   }
 `;

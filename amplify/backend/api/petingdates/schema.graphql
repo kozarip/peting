@@ -7,7 +7,11 @@ type User @model @searchable
   firstName: String
   surName: String
   age: Int
-  animal: String
-  gender: Int,
-  height: String,
+  animalType: String
+  animalSize: String
+  gender: Int
+  height: Int
+  smokeFrequency: String
+  hairColor: String
+  hobbies: [Int]
 }

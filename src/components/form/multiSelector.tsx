@@ -4,13 +4,24 @@ import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
 
-const MultiSelector = ({ options, label }) => {
-  const [selectedItems, setSelectedItems] = useState([]);
+type MultiSelectorProps = {
+  options: any,
+  label: string,
+  setValue: any,
+  value: any,
+  type: string,
+}
 
-  const onSelectedItemsChange = (items) => {
-    setSelectedItems(items);
-  };
-
+const MultiSelector: React.FC<MultiSelectorProps> = (
+  {
+    options,
+    label,
+    setValue,
+    value,
+    type,
+  },
+) => {
+  console.log(value);
   return (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
@@ -21,8 +32,12 @@ const MultiSelector = ({ options, label }) => {
         selectText="Válassz elemeket"
         showDropDowns
         confirmText="Kiválasztom"
-        onSelectedItemsChange={onSelectedItemsChange}
-        selectedItems={selectedItems}
+        onSelectedItemsChange={(selectedValue) => {
+          const obj = {};
+          obj[type] = selectedValue;
+          setValue(obj);
+        }}
+        selectedItems={value || []}
         colors={{
           primary: colors.primary,
         }}

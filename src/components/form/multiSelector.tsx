@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
+import { createNewTypeObject } from './formHelpers';
 
 type MultiSelectorProps = {
   options: any,
@@ -21,7 +22,6 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
     type,
   },
 ) => {
-  console.log(value);
   return (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
@@ -33,9 +33,7 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
         showDropDowns
         confirmText="Kiválasztom"
         onSelectedItemsChange={(selectedValue) => {
-          const obj = {};
-          obj[type] = selectedValue;
-          setValue(obj);
+          setValue(createNewTypeObject(type, selectedValue));
         }}
         selectedItems={value || []}
         colors={{

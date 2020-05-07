@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { styleForm } from '../../assets/styles/form';
 import { fonts } from '../../assets/styles/variables';
+import { createNewTypeObject } from './formHelpers';
 
 type SelectorProps = {
   label: string;
@@ -37,9 +38,7 @@ const Selector: React.FC<SelectorProps> = (
         value={value}
         style={pickerSelectStyles}
         onValueChange={(selectedValue) => {
-          const obj = {};
-          obj[type] = selectedValue;
-          setValue(obj);
+          setValue(createNewTypeObject(type, selectedValue));
         }}
         items={options}
       />

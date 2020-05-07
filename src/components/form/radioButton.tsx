@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { styleForm } from '../../assets/styles/form';
 import { colors, dimensions } from '../../assets/styles/variables';
+import { createNewTypeObject } from './formHelpers';
 
 type RadioButtonProps = {
   options: any;
@@ -35,9 +36,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
             <TouchableOpacity
               style={styles.radioCircle}
               onPress={() => {
-                const obj = {};
-                obj[type] = res.key;
-                return setValue(obj);
+                setValue(createNewTypeObject(type, res.key));
               }}
             >
               {value === res.key && <View style={styles.selectedRb} />}

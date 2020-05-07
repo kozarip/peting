@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
+import { createNewTypeObject } from './formHelpers';
 
 type TextBoxProps = {
   label: string,
@@ -32,9 +33,7 @@ const TextBox: React.FC<TextBoxProps> = ({
         keyboardType={keyboardType || 'default'}
         style={{ ...styleForm.cardInput, ...placeHolderStyle }}
         onChangeText={(changedText) => {
-          const obj = {};
-          obj[type] = changedText;
-          return setValue(obj);
+          setValue(createNewTypeObject(type, changedText));
         }}
         value={value?.toString()}
       />

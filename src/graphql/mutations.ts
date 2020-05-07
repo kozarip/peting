@@ -22,6 +22,8 @@ export const createUser = /* GraphQL */ `
       smokeFrequency
       hairColor
       hobbies
+      images
+      primaryImageIndex
     }
   }
 `;
@@ -45,6 +47,8 @@ export const updateUser = /* GraphQL */ `
       smokeFrequency
       hairColor
       hobbies
+      images
+      primaryImageIndex
     }
   }
 `;
@@ -68,6 +72,8 @@ export const deleteUser = /* GraphQL */ `
       smokeFrequency
       hairColor
       hobbies
+      images
+      primaryImageIndex
     }
   }
 `;

@@ -12,6 +12,7 @@ import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
+import ImageSelector from './form/ImageSelector';
 import FillAlert from './fillAlert';
 
 import { styleForm } from '../assets/styles/form';
@@ -42,6 +43,8 @@ const Profile: React.FC = () => {
     cognitoUserName: '',
     hairColor: '',
     age: 0,
+    images: [],
+    primaryImageIndex: 0,
   };
 
   const [isNewUser, setIsNewUser] = useState(false);
@@ -80,6 +83,14 @@ const Profile: React.FC = () => {
         isNewUser={isNewUser}
         setIsNewUser={setIsNewUser}
       />
+      <Card>
+        <ImageSelector
+          type="images"
+          primaryImageIndex={profileUser.primaryImageIndex || 0}
+          setValue={setProfileUserValue}
+          images={profileUser.images || []}
+        />
+      </Card>
       <Card
         containerStyle={styleForm.cardBlock}
         title="Alapadatok"

@@ -12,4 +12,6 @@ export type UserType = {
   hobbies: number[];
   smokeFrequency: string;
   hairColor: string;
+  images: string[];
+  primaryImageIndex: number,
 }

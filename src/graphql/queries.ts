@@ -19,6 +19,8 @@ export const getUser = /* GraphQL */ `
       smokeFrequency
       hairColor
       hobbies
+      images
+      primaryImageIndex
     }
   }
 `;
@@ -44,6 +46,8 @@ export const listUsers = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        images
+        primaryImageIndex
       }
       nextToken
     }
@@ -79,6 +83,8 @@ export const userByCognitoUserName = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        images
+        primaryImageIndex
       }
       nextToken
     }
@@ -112,6 +118,8 @@ export const searchUsers = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        images
+        primaryImageIndex
       }
       nextToken
       total

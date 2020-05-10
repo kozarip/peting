@@ -5,7 +5,7 @@ import { StyleSheet, Button, Image, View, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { styleContainer, styleTitle } from '../../assets/styles/base';
+import { styleTitle } from '../../assets/styles/base';
 import { dimensions, margins, colors } from '../../assets/styles/variables';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Overlay } from 'react-native-elements';
@@ -16,11 +16,13 @@ type ImageSelectorProps = {
   primaryImageIndex: number,
   setValue: any,
   type: string,
+  removeImage: any
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({images, primaryImageIndex, setValue, type}) => {
+const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex, setValue, type, removeImage }) => {
+  const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);
-  const [maxImageNumber, setMaxImageNumber] = useState(Math.max(images.length, 5));
+  const [maxImageNumber, setMaxImageNumber] = useState(initialMaxImagesNumber - images.length);
 
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({images, primaryImageIndex,
         quality: 1,
       });
       if (!result.cancelled && result.uri) {
-        setValue(createNewTypeObject(type, images.concat('https://lumiere-a.akamaihd.net/v1/images/ct_frozen_elsa_18466_22a50822.jpeg?region=0,0,600,600')));
+        setValue(createNewTypeObject(type, images.concat(result.uri)));
         setMaxImageNumber(maxImageNumber -1)
       }
     } catch (error) {
@@ -72,12 +74,10 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({images, primaryImageIndex,
   }
 
   const deleteImage = () => {
-    setValue(createNewTypeObject(type, images.splice(selectedImageIndex, 1)));
-
+    removeImage(selectedImageIndex);
     if (selectedImageIndex === primaryImageIndex) {
       setValue(createNewTypeObject('primaryImageIndex', 0));
     }
-    setMaxImageNumber(maxImageNumber + 1);
     closeSelectedImageOverlay();
   }
 
@@ -148,7 +148,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({images, primaryImageIndex,
       </View>
       <Text>Még {maxImageNumber} képet tölthetsz fel</Text>
       {
-        images.length <= maxImageNumber &&
+        maxImageNumber > 0 &&
         <Button
           title="Tölts fel egy képet"
           onPress={pickImage}

@@ -1,6 +1,6 @@
 type User @model @searchable
   @key(name: "byCognitoUserName", fields: ["cognitoUserName"], queryField: "userByCognitoUserName") {
-  id: ID!
+  id: ID
   cognitoUserName: String
   userName: String!
   email: String!

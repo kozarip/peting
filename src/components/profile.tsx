@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
@@ -7,6 +8,7 @@ import {
 import { Card } from 'react-native-elements';
 
 import User from '../services/user';
+import ImageStore from '../services/imageStore';
 
 import TextBox from './form/textBox';
 import Selector from './form/selector';
@@ -18,6 +20,7 @@ import FillAlert from './fillAlert';
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
 import { UserType } from '../types/user';
+import { createNewTypeObject } from './form/formHelpers';
 
 import {
   gender,
@@ -49,8 +52,11 @@ const Profile: React.FC = () => {
 
   const [isNewUser, setIsNewUser] = useState(false);
   const [profileUser, setProfileUser] = useState(initialProfileUser);
+  const [oldImageKeys, setOldImageKeys] = useState([]);
+  const [removedImageKeys, setRemovedImageKeys] = useState([]);
 
   const user = new User();
+  const imageStore = new ImageStore('Unknown');
 
   useEffect(() => {
     user.isCurrentUserExist().then((exist) => {
@@ -59,15 +65,23 @@ const Profile: React.FC = () => {
         user.saveNewUser();
         setIsNewUser(true);
       } else {
-        user.getUserData().then((u) => {
+        user.getUserData().then(async (u) => {
           console.log(u);
-          setProfileUser(
-            {
-              ...profileUser,
-              // @ts-ignore
-              ...u.data.userByCognitoUserName.items[0],
-            },
-          );
+          const fetchedUser = u.data.userByCognitoUserName.items[0];
+          if (fetchedUser.images) {
+            setOldImageKeys(fetchedUser.images);
+          }
+          const imageURLs = await imageStore.fetchImages(fetchedUser.images);
+          Promise.all(imageURLs).then((compiledImages) => {
+            fetchedUser.images = compiledImages;
+            setProfileUser(
+              {
+                ...profileUser,
+                // @ts-ignore
+                ...fetchedUser,
+              },
+            );
+          });
         });
       }
     });
@@ -75,6 +89,42 @@ const Profile: React.FC = () => {
 
   const setProfileUserValue = (value) => {
     setProfileUser({ ...profileUser, ...value });
+  };
+
+  const handleRemoveImage = (index) => {
+    if (index < oldImageKeys.length) {
+      const removedImageKey = oldImageKeys.splice(index, 1);
+      console.log(removedImageKeys);
+      setOldImageKeys(oldImageKeys);
+      setRemovedImageKeys(removedImageKeys.concat(removedImageKey));
+      console.log(removedImageKeys);
+    }
+
+    profileUser.images.splice(index, 1);
+    setProfileUserValue(createNewTypeObject('images', profileUser.images));
+  };
+
+  const handleSaveProfile = async () => {
+    const images = profileUser.images || [];
+    console.log(images);
+    const newImages = images.filter((image) => image.startsWith('file://'));
+    const newKeysPromise = await imageStore.uploadImagesToStore(
+      newImages,
+      profileUser.cognitoUserName,
+    );
+    Promise.all(newKeysPromise).then((newKeys) => {
+      console.log(oldImageKeys);
+      console.log({ 'New Keys': newKeys });
+      const wholeKeys = oldImageKeys.concat(newKeys);
+      console.log({ 'Whole Keys': wholeKeys });
+      profileUser.images = wholeKeys;
+      user.updateUser(profileUser);
+    });
+
+    const removeImages = await imageStore.removeImages(removedImageKeys);
+    Promise.all(removeImages).then((log) => {
+      console.log(log);
+    });
   };
 
   return (
@@ -89,6 +139,7 @@ const Profile: React.FC = () => {
           primaryImageIndex={profileUser.primaryImageIndex || 0}
           setValue={setProfileUserValue}
           images={profileUser.images || []}
+          removeImage={handleRemoveImage}
         />
       </Card>
       <Card
@@ -192,7 +243,7 @@ const Profile: React.FC = () => {
       </Card>
       <Button
         title="Mentés"
-        onPress={() => user.updateUser(profileUser)}
+        onPress={handleSaveProfile}
       />
     </ScrollView>
   );

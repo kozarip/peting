@@ -36,12 +36,12 @@ class User {
       email: this.currentCognitoUserAttributes.attributes.email,
       firstName: this.currentCognitoUserAttributes.attributes.given_name,
       surName: this.currentCognitoUserAttributes.attributes.family_name,
+      id: 0,
     }
     API.graphql(graphqlOperation(mutations.createUser, { input: newUser }));
   }
 
   updateUser(user: UserType) {
-    console.log(user);
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }
 

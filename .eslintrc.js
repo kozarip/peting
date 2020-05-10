@@ -25,7 +25,7 @@ module.exports = {
     indent: [2, 2],
     'import/no-unresolved': 0,
     '@typescript-eslint/no-use-before-define': 0,
-    'no-use-before-define': [2, { variables: false }],
+    'no-use-before-define': [2, { variables: false, functions: false }],
     'arrow-body-style': 0,
     'react/jsx-wrap-multilines': 0,
     'import/extensions': 0,
@@ -35,5 +35,6 @@ module.exports = {
     'react/prop-types': 0,
     'no-else-return': 0,
     'no-console': 0,
+    'no-plusplus': 0,
   },
 };

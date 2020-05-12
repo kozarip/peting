@@ -22,6 +22,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
   const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);;
   const maxImageNumber = initialMaxImagesNumber - images.length;
+  const imageQuality = 0.2;
 
   useEffect(() => {
     getPermissionAsync()
@@ -42,7 +43,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
         aspect: [1, 1],
-        quality: 1,
+        quality: imageQuality,
       });
       if (!result.cancelled && result.uri) {
         setValue(createNewTypeObject(type, images.concat(result.uri)));

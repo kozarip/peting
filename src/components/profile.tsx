@@ -14,13 +14,14 @@ import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
-import ImageSelector from './form/ImageSelector';
+import ImageSelector from './form/imageSelector';
 import FillAlert from './fillAlert';
 
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
 import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
+import Loader from './loader';
 
 import {
   gender,
@@ -54,38 +55,40 @@ const Profile: React.FC = () => {
   const [profileUser, setProfileUser] = useState(initialProfileUser);
   const [oldImageKeys, setOldImageKeys] = useState([]);
   const [removedImageKeys, setRemovedImageKeys] = useState([]);
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
 
   const user = new User();
   const imageStore = new ImageStore('Unknown');
 
   useEffect(() => {
     user.isCurrentUserExist().then((exist) => {
+      setIsLoaderActive(true);
       const userExis = !!exist;
       if (!userExis) {
         user.saveNewUser();
         setIsNewUser(true);
       } else {
-        user.getUserData().then(async (u) => {
-          console.log(u);
-          const fetchedUser = u.data.userByCognitoUserName.items[0];
-          if (fetchedUser.images) {
-            setOldImageKeys(fetchedUser.images);
-          }
-          const imageURLs = await imageStore.fetchImages(fetchedUser.images);
-          Promise.all(imageURLs).then((compiledImages) => {
-            fetchedUser.images = compiledImages;
-            setProfileUser(
-              {
-                ...profileUser,
-                // @ts-ignore
-                ...fetchedUser,
-              },
-            );
-          });
-        });
+        loadExistingUser();
       }
     });
-  }, []);
+  }, [isNewUser]);
+
+  const loadExistingUser = () => {
+    user.getUserData().then(async (u: any) => {
+      console.log(u);
+      const fetchedUser = u.data.userByCognitoUserName.items[0];
+      if (fetchedUser.images) {
+        setOldImageKeys(fetchedUser.images);
+      }
+      const imageKeys = fetchedUser.images || [];
+      const imageURLs = await imageStore.fetchImages(imageKeys);
+      Promise.all(imageURLs).then((compiledImages) => {
+        fetchedUser.images = compiledImages;
+        setProfileUser({ ...profileUser, ...fetchedUser });
+        setIsLoaderActive(false);
+      });
+    });
+  };
 
   const setProfileUserValue = (value) => {
     setProfileUser({ ...profileUser, ...value });
@@ -105,30 +108,31 @@ const Profile: React.FC = () => {
   };
 
   const handleSaveProfile = async () => {
+    setIsLoaderActive(true);
     const images = profileUser.images || [];
-    console.log(images);
     const newImages = images.filter((image) => image.startsWith('file://'));
-    const newKeysPromise = await imageStore.uploadImagesToStore(
+    const newKeysPromise = await imageStore.uploadImages(
       newImages,
       profileUser.cognitoUserName,
     );
-    Promise.all(newKeysPromise).then((newKeys) => {
-      console.log(oldImageKeys);
-      console.log({ 'New Keys': newKeys });
-      const wholeKeys = oldImageKeys.concat(newKeys);
-      console.log({ 'Whole Keys': wholeKeys });
-      profileUser.images = wholeKeys;
-      user.updateUser(profileUser);
-    });
 
     const removeImages = await imageStore.removeImages(removedImageKeys);
     Promise.all(removeImages).then((log) => {
       console.log(log);
     });
+
+    Promise.all(newKeysPromise).then((newKeys: any) => {
+      const wholeImageKeys = oldImageKeys.concat(newKeys);
+      const modifiedProfileUser = { ...{}, ...profileUser };
+      modifiedProfileUser.images = wholeImageKeys;
+      user.updateUser(modifiedProfileUser);
+      setIsLoaderActive(false);
+    });
   };
 
   return (
     <ScrollView style={styles.container}>
+      <Loader isActive={isLoaderActive} />
       <FillAlert
         isNewUser={isNewUser}
         setIsNewUser={setIsNewUser}

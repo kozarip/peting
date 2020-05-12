@@ -1,6 +1,6 @@
-export function setLogedInUser(logedInUser) {
+export function setIsLoadingActive(isLoadingActive) {
   return {
-    type: 'Set_LogedIn_User',
-    logedInUser,
+    type: 'Set_Is_Loading_Active',
+    isLoadingActive,
   };
 }

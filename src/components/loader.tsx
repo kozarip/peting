@@ -8,22 +8,22 @@ import {
 } from 'react-native';
 import { fonts, dimensions, colors } from '../assets/styles/variables';
 
-type SuccessLoginOverlayProps= {
-  isLoggedIn: boolean;
+type LoaderProps= {
+  isActive: boolean;
 }
 
-const SuccessLoginOverlay: React.FC<SuccessLoginOverlayProps> = ({ isLoggedIn }) => {
+const Loader: React.FC<LoaderProps> = ({ isActive }) => {
   return (
     <Overlay
-      isVisible={isLoggedIn}
+      isVisible={isActive}
       windowBackgroundColor="rgba(255, 255, 255, 0.8)"
       overlayBackgroundColor="#fff"
       width="80%"
       height={dimensions.fullHeight * 0.4}
     >
-      <View style={styles.successLoginModal}>
+      <View style={styles.loaderModal}>
         <ActivityIndicator size="large" color={colors.separator} />
-        <Text style={styles.successLoginText}>Adatok betöltése...</Text>
+        <Text style={styles.loaderText}>Adatok betöltése...</Text>
       </View>
     </Overlay>
 
@@ -31,17 +31,17 @@ const SuccessLoginOverlay: React.FC<SuccessLoginOverlayProps> = ({ isLoggedIn })
 };
 
 const styles = StyleSheet.create({
-  successLoginModal: {
+  loaderModal: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  successLoginText: {
+  loaderText: {
     fontSize: fonts.heading2,
     textAlign: 'center',
     marginBottom: 20,
   },
 });
 
-export default SuccessLoginOverlay;
+export default Loader;

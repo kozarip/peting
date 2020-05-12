@@ -6,18 +6,33 @@ import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 import { UserType } from '../types/user';
 
-
 class User {
-  currentCognitoUserAttributes: any;
-  currentUser: any;
+  private currentCognitoUserAttributes: any;
+  private currentUser: any;
 
   async isCurrentUserExist() {
+    await this.getCurrentCognitoUserAttributes();
+    await this.getCurrentUSer();
+
+    return this.currentUser.data.userByCognitoUserName.items.length;
+  }
+
+  async getCurrentCognitoUserAttributes() {
+    if (this.currentCognitoUserAttributes) {
+      return this.currentCognitoUserAttributes
+    }
     const currentCognitoUserAttributes = await Auth.currentUserInfo();
     this.currentCognitoUserAttributes = currentCognitoUserAttributes;
+    return this.currentCognitoUserAttributes;
+  }
 
-    const currentUser = await this.getUserByCognitoUserName(currentCognitoUserAttributes.username);
+  async getCurrentUSer() {
+    if (this.currentUser) {
+      return this.currentUser
+    }
+    const currentUser = await this.getUserByCognitoUserName(this.currentCognitoUserAttributes.username);
     this.currentUser = currentUser;
-    return currentUser.data.userByCognitoUserName.items.length;
+    return this.currentUser;
   }
 
   async getUserByCognitoUserName(cognitoUserName: string) {
@@ -32,11 +47,10 @@ class User {
   saveNewUser() {
     const newUser = {
       cognitoUserName: this.currentCognitoUserAttributes.username,
-      userName: this.currentCognitoUserAttributes.username,
+      userName: 'Username',
       email: this.currentCognitoUserAttributes.attributes.email,
       firstName: this.currentCognitoUserAttributes.attributes.given_name,
       surName: this.currentCognitoUserAttributes.attributes.family_name,
-      id: 0,
     }
     API.graphql(graphqlOperation(mutations.createUser, { input: newUser }));
   }

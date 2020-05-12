@@ -34,36 +34,17 @@ class ImageStore {
     }
   }
 
-  public async uploadImagesToStore(images, folder) {
+  public async uploadImages(images, folder) {
     this.folder = folder;
     const keys = await images.map((image) => {
-      return this.uploadFile(image);
+      return this.uploadFileToStore(image);
     });
     return keys;
   }
 
-  /*
-  private async uploadFileINCONSTRUCT(file) {
+  async uploadFileToStore(file) {
     try {
-      const rawFile = await this.getFileBlob(file);
-      const blob = await rawFile.blob();
-      const uploadedFile = await Storage.put(
-        this.generateKey(),
-        blob,
-        this.getFileMeta(file),
-      );
-      console.log({ uploadFile: uploadedFile.key });
-      return uploadedFile.key;
-    } catch (error) {
-      console.log(`Upload images error ${error}`);
-      return [];
-    }
-  }
- */
-
-  async uploadFile(file) {
-    try {
-      const uploadedFile = await fetch(file).then((rawFile) => {
+      const uploadedFile: any = await fetch(file).then((rawFile) => {
         return rawFile.blob().then((blob) => {
           return Storage.put(
             this.generateKey(),
@@ -84,15 +65,6 @@ class ImageStore {
     return this.folder + '/' + uuid();
   }
 
-  /*
-  private async getFileBlob(file) {
-    const blob = await fetch(file).then((rawFile) => {
-      return rawFile.blob;
-    });
-    return blob;
-  }
-  */
-
   private getFileMeta(file) {
     const fileType = mime.lookup(file);
     return {
@@ -104,7 +76,7 @@ class ImageStore {
   async removeImages(keys) {
     try {
       const response = await keys.map((key) => {
-        return this.removeFile(key);
+        return this.removeFileFromStore(key);
       });
       return response;
     } catch (error) {
@@ -113,7 +85,7 @@ class ImageStore {
     }
   }
 
-  async removeFile(key) {
+  async removeFileFromStore(key) {
     try {
       const response = await Storage.remove(key);
       console.log(`Success delete ${response}`);
@@ -123,9 +95,6 @@ class ImageStore {
       return [];
     }
   }
-
-
 }
-
 
 export default ImageStore;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // eslint-disable-next-line no-unused-vars
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
@@ -7,11 +7,8 @@ import {
   margins,
   colors,
 } from '../assets/styles/variables';
-import LoaderOverlay from './loaderOverlay';
 
 const Login: React.FC = () => {
-  const [isLoggedIn] = useState(false);
-
   return (
     <View>
       <Button
@@ -44,7 +41,6 @@ const Login: React.FC = () => {
         onPress={() => Auth.federatedSignIn({ provider: 'Google' })}
         title="Google bejelentkezés"
       />
-      <LoaderOverlay isLoggedIn={isLoggedIn} />
     </View>
 
   );

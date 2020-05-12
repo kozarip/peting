@@ -1,13 +1,13 @@
 export const initialState = {
-  logedInUser: {},
+  isLoadingActive: false,
 };
 
 export function reducer(state = initialState, action) {
   switch (action.type) {
-  case 'Set_LogedIn_User':
+  case 'Set_Is_Loading_Active':
     return {
       ...state,
-      ...action.logedInUser,
+      ...action.isLoadingActive,
     };
   default:
     return state;

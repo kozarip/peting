@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   Button,
+  View,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 
@@ -22,6 +23,7 @@ import { styleForm } from '../assets/styles/form';
 import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
+import { Alert } from 'react-native';
 
 import {
   gender,
@@ -127,129 +129,132 @@ const Profile: React.FC = () => {
       modifiedProfileUser.images = wholeImageKeys;
       user.updateUser(modifiedProfileUser);
       setIsLoaderActive(false);
+      Alert.alert('Sikeres mentés');
     });
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Loader isActive={isLoaderActive} />
-      <FillAlert
-        isNewUser={isNewUser}
-        setIsNewUser={setIsNewUser}
-      />
-      <Card>
-        <ImageSelector
-          type="images"
-          primaryImageIndex={profileUser.primaryImageIndex || 0}
-          setValue={setProfileUserValue}
-          images={profileUser.images || []}
-          removeImage={handleRemoveImage}
+    <View style={{ flex: 1 }}>
+      <ScrollView style={styles.container}>
+        <Loader isActive={isLoaderActive} />
+        <FillAlert
+          isNewUser={isNewUser}
+          setIsNewUser={setIsNewUser}
         />
-      </Card>
-      <Card
-        containerStyle={styleForm.cardBlock}
-        title="Alapadatok"
-        titleStyle={styleForm.cardTitle as any}
-      >
-        <TextBox
-          label="Név"
-          type="userName"
-          placeholder="Ird ide a neved"
-          value={profileUser.userName}
-          setValue={setProfileUserValue}
-        />
-        <TextBox
-          label="E-mail"
-          value={profileUser.email}
-          type="email"
-          setValue={setProfileUserValue}
-          placeholder="E-mail címed"
-        />
-        <RadioButton
-          options={gender}
-          value={profileUser.gender}
-          type="gender"
-          label="Nemed"
-          setValue={setProfileUserValue}
-        />
-        <TextBox
-          label="Korod"
-          type="age"
-          placeholder="év"
-          keyboardType="number-pad"
-          value={profileUser.age}
-          setValue={setProfileUserValue}
-        />
-      </Card>
+        <Card>
+          <ImageSelector
+            type="images"
+            primaryImageIndex={profileUser.primaryImageIndex || 0}
+            setValue={setProfileUserValue}
+            images={profileUser.images || []}
+            removeImage={handleRemoveImage}
+          />
+        </Card>
+        <Card
+          containerStyle={styleForm.cardBlock}
+          title="Alapadatok"
+          titleStyle={styleForm.cardTitle as any}
+        >
+          <TextBox
+            label="Név"
+            type="userName"
+            placeholder="Ird ide a neved"
+            value={profileUser.userName}
+            setValue={setProfileUserValue}
+          />
+          <TextBox
+            label="E-mail"
+            value={profileUser.email}
+            type="email"
+            setValue={setProfileUserValue}
+            placeholder="E-mail címed"
+          />
+          <RadioButton
+            options={gender}
+            value={profileUser.gender}
+            type="gender"
+            label="Nemed"
+            setValue={setProfileUserValue}
+          />
+          <TextBox
+            label="Korod"
+            type="age"
+            placeholder="év"
+            keyboardType="number-pad"
+            value={profileUser.age}
+            setValue={setProfileUserValue}
+          />
+        </Card>
 
-      <Card
-        containerStyle={styleForm.cardBlock}
-        title="Kinézet"
-        titleStyle={styleForm.cardTitle as any}
-      >
-        <TextBox
-          label="Magasság (cm)"
-          placeholder="? cm"
-          type="height"
-          keyboardType="number-pad"
-          value={profileUser.height}
-          setValue={setProfileUserValue}
-        />
-        <Selector
-          label={hairColor.label}
-          options={hairColor.options}
-          type="hairColor"
-          setValue={setProfileUserValue}
-          value={profileUser.hairColor}
-        />
-      </Card>
+        <Card
+          containerStyle={styleForm.cardBlock}
+          title="Kinézet"
+          titleStyle={styleForm.cardTitle as any}
+        >
+          <TextBox
+            label="Magasság (cm)"
+            placeholder="? cm"
+            type="height"
+            keyboardType="number-pad"
+            value={profileUser.height}
+            setValue={setProfileUserValue}
+          />
+          <Selector
+            label={hairColor.label}
+            options={hairColor.options}
+            type="hairColor"
+            setValue={setProfileUserValue}
+            value={profileUser.hairColor}
+          />
+        </Card>
 
-      <Card
-        containerStyle={styleForm.cardBlock}
-        title="Állatod"
-        titleStyle={styleForm.cardTitle as any}
-      >
-        <Selector
-          label={animalType.label}
-          options={animalType.options}
-          type="animalType"
-          setValue={setProfileUserValue}
-          value={profileUser.animalType}
-        />
-        <Selector
-          label={animalSize.label}
-          options={animalSize.options}
-          type="animalSize"
-          setValue={setProfileUserValue}
-          value={profileUser.animalSize}
-        />
-      </Card>
+        <Card
+          containerStyle={styleForm.cardBlock}
+          title="Állatod"
+          titleStyle={styleForm.cardTitle as any}
+        >
+          <Selector
+            label={animalType.label}
+            options={animalType.options}
+            type="animalType"
+            setValue={setProfileUserValue}
+            value={profileUser.animalType}
+          />
+          <Selector
+            label={animalSize.label}
+            options={animalSize.options}
+            type="animalSize"
+            setValue={setProfileUserValue}
+            value={profileUser.animalSize}
+          />
+        </Card>
 
-      <Card
-        containerStyle={styleForm.cardBlock}
-        title="Egyéb"
-        titleStyle={styleForm.cardTitle as any}
-      >
-        <Selector
-          label={smokeFrequency.label}
-          options={smokeFrequency.options}
-          type="smokeFrequency"
-          setValue={setProfileUserValue}
-          value={profileUser.smokeFrequency}
-        />
-        <MultiSelector
-          label="Hobbijaid"
-          options={hobbies}
-          type="hobbies"
-          setValue={setProfileUserValue}
-          value={profileUser.hobbies}
-        />
-      </Card>
+        <Card
+          containerStyle={styleForm.cardBlock}
+          title="Egyéb"
+          titleStyle={styleForm.cardTitle as any}
+        >
+          <Selector
+            label={smokeFrequency.label}
+            options={smokeFrequency.options}
+            type="smokeFrequency"
+            setValue={setProfileUserValue}
+            value={profileUser.smokeFrequency}
+          />
+          <MultiSelector
+            label="Hobbijaid"
+            options={hobbies}
+            type="hobbies"
+            setValue={setProfileUserValue}
+            value={profileUser.hobbies}
+          />
+        </Card>
+      </ScrollView>
       <Button
         title="Mentés"
         onPress={handleSaveProfile}
       />
-    </ScrollView>
+    </View>
   );
 };
 

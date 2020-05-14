@@ -9,6 +9,7 @@ export const dimensions = {
 
 export const colors = {
   primary: '#5AC1D0',
+  darkPrimary: '#35a9ba',
   secondary: '#7FDCA5',
   // secondary: '#0F52BA',
   separator: '#BBBBBB',

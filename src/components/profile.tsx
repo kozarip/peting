@@ -24,6 +24,7 @@ import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
 import { Alert } from 'react-native';
+import { colors } from '../assets/styles/variables';
 
 import {
   gender,
@@ -251,6 +252,7 @@ const Profile: React.FC = () => {
         </Card>
       </ScrollView>
       <Button
+        color={colors.darkPrimary}
         title="Mentés"
         onPress={handleSaveProfile}
       />

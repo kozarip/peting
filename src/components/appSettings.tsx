@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { withOAuth } from 'aws-amplify-react-native';
+import { colors } from '../assets/styles/variables';
 
 type AppSettingsProps = {
   signOut: any;
@@ -18,7 +19,11 @@ const AppSettings: React.FC<AppSettingsProps> = (props) => {
         checked={hasNotification}
         onPress={() => setHasNotification(!hasNotification)}
       />
-      <Button title="Logout" onPress={signOut} />
+      <Button 
+        color={colors.darkPrimary}
+        title="Logout"
+        onPress={signOut}
+      />
     </View>
   );
 };

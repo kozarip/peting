@@ -13,15 +13,18 @@ const Details: React.FC<DetailProps> = ({ details }) => {
       {
         details.map((detail) => {
           const detailKey = Object.keys(detail)[0];
-          return (
-            <View
-              key={detailKey}
-              style={styles.detail}
-            >
-              <Text style={styles.detailKey}>{detailKey}</Text>
-              <Text style={styles.detailValue}>{detail[detailKey]}</Text>
-            </View>
-          );
+          if (detail[detailKey]) {
+            return (
+              <View
+                key={detailKey}
+                style={styles.detail}
+              >
+                <Text style={styles.detailKey}>{detailKey}</Text>
+                <Text style={styles.detailValue}>{detail[detailKey]}</Text>
+              </View>
+            );
+          }
+          return '';
         })
       }
     </View>

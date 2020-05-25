@@ -16,7 +16,6 @@ import ProfileTitle from '../components/profileTitle';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 import ImagesBox from '../components/ImagesBox';
-import { searchUsers } from '../graphql/queries';
 import { hairColor, smokeFrequency } from '../constants/userFields';
 
 type ResultScreenProps = {
@@ -39,24 +38,37 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const search = new Search();
 
   useEffect(() => {
-    search.search(searchParams).then((res) => {
-      console.log(res.data.searchUsers.items);
-      setResult(res.data.searchUsers.items[0]);
+    search.search(searchParams).then((res: any) => {
+      const resultFromAPI = res.data.searchUsers.items[0];
+      if (resultFromAPI.hobbies) {
+        resultFromAPI.hobbies = resultFromAPI.hobbies.join(', ');
+      }
+      resultFromAPI.smokeFrequency = getDetailText(resultFromAPI.smokeFrequency, 'smokeFrequency');
+      resultFromAPI.hairColor = getDetailText(resultFromAPI.hairColor, 'hairColor');
+      console.log(resultFromAPI);
+      setResult(resultFromAPI);
     });
   }, [navigation]);
 
   const user = {
-    userName: 'Peti',
-    animalName: 'Zsömi',
     userProfileImage: require('../assets/images/elsa.jpg'),
     animalProfileImage: require('../assets/images/dog_sample.jpg'),
-    age: 30,
-    bio: 'Lorem Ipsum is simply dummy usertext of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of',
-    details: [
-      { Magasság: '188 cm' },
-      { Dohányzás: 'Alkalmanként' },
-      { Hobbi: 'Utazás, tenisz' },
-    ],
+  };
+
+
+  const getDetailText = (value, type) => {
+    let itemObject;
+    switch (type) {
+      case 'hairColor':
+        itemObject = hairColor.options.find((element) => element.value === value);
+        break;
+      case 'smokeFrequency':
+        itemObject = smokeFrequency.options.find((element) => element.value === value);
+        break;
+      default:
+        break;
+    }
+    return itemObject.label;
   };
 
   return (
@@ -94,6 +106,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
                   { Magasság: result.height },
                   { Dohányzás: result.smokeFrequency },
                   { Hajszín: result.hairColor },
+                  { Hobbik: result.hobbies },
                 ]
               }
               />

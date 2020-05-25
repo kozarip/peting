@@ -21,6 +21,20 @@ export const getUser = /* GraphQL */ `
       hobbies
       images
       primaryImageIndex
+      animalName
+      bio
+      search {
+        minAge
+        maxAge
+        animalType
+        animalSize
+        gender
+        minHeight
+        maxHeight
+        smokeFrequency
+        hairColor
+        hobbies
+      }
     }
   }
 `;
@@ -48,6 +62,20 @@ export const listUsers = /* GraphQL */ `
         hobbies
         images
         primaryImageIndex
+        animalName
+        bio
+        search {
+          minAge
+          maxAge
+          animalType
+          animalSize
+          gender
+          minHeight
+          maxHeight
+          smokeFrequency
+          hairColor
+          hobbies
+        }
       }
       nextToken
     }
@@ -85,6 +113,20 @@ export const userByCognitoUserName = /* GraphQL */ `
         hobbies
         images
         primaryImageIndex
+        animalName
+        bio
+        search {
+          minAge
+          maxAge
+          animalType
+          animalSize
+          gender
+          minHeight
+          maxHeight
+          smokeFrequency
+          hairColor
+          hobbies
+        }
       }
       nextToken
     }
@@ -120,6 +162,20 @@ export const searchUsers = /* GraphQL */ `
         hobbies
         images
         primaryImageIndex
+        animalName
+        bio
+        search {
+          minAge
+          maxAge
+          animalType
+          animalSize
+          gender
+          minHeight
+          maxHeight
+          smokeFrequency
+          hairColor
+          hobbies
+        }
       }
       nextToken
       total

@@ -16,4 +16,20 @@ type User @model @searchable
   hobbies: [Int]
   images: [String]
   primaryImageIndex: Int
+  animalName: String
+  bio: String
+  search: Search
+}
+
+type Search {
+  minAge: Int
+  maxAge: Int
+  animalType: String
+  animalSize: String
+  gender: Int
+  minHeight: Int
+  maxHeight: Int
+  smokeFrequency: String
+  hairColor: String,
+  hobbies: [Int]
 }

@@ -21,6 +21,20 @@ export const onCreateUser = /* GraphQL */ `
       hobbies
       images
       primaryImageIndex
+      animalName
+      bio
+      search {
+        minAge
+        maxAge
+        animalType
+        animalSize
+        gender
+        minHeight
+        maxHeight
+        smokeFrequency
+        hairColor
+        hobbies
+      }
     }
   }
 `;
@@ -43,6 +57,20 @@ export const onUpdateUser = /* GraphQL */ `
       hobbies
       images
       primaryImageIndex
+      animalName
+      bio
+      search {
+        minAge
+        maxAge
+        animalType
+        animalSize
+        gender
+        minHeight
+        maxHeight
+        smokeFrequency
+        hairColor
+        hobbies
+      }
     }
   }
 `;
@@ -65,6 +93,20 @@ export const onDeleteUser = /* GraphQL */ `
       hobbies
       images
       primaryImageIndex
+      animalName
+      bio
+      search {
+        minAge
+        maxAge
+        animalType
+        animalSize
+        gender
+        minHeight
+        maxHeight
+        smokeFrequency
+        hairColor
+        hobbies
+      }
     }
   }
 `;

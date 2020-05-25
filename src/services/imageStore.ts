@@ -14,7 +14,7 @@ class ImageStore {
 
   public async fetchImages(keys) {
     try {
-      const compiledImages = await keys.map((key) => {
+      const compiledImages: string[] = await keys.map((key) => {
         return this.fetchImageFromStore(key);
       });
       return compiledImages;

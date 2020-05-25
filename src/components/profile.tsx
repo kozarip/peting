@@ -5,10 +5,10 @@ import {
   ScrollView,
   Button,
   View,
+  Alert,
 } from 'react-native';
 import { Card } from 'react-native-elements';
 
-import User from '../services/user';
 import ImageStore from '../services/imageStore';
 
 import TextBox from './form/textBox';
@@ -16,14 +16,12 @@ import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
 import ImageSelector from './form/imageSelector';
-import FillAlert from './fillAlert';
 
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
 import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
-import { Alert } from 'react-native';
 import { colors } from '../assets/styles/variables';
 
 import {
@@ -35,7 +33,13 @@ import {
   hobbies,
 } from '../constants/userFields';
 
-const Profile: React.FC = () => {
+type profileProps = {
+  userAttributes: any,
+  saveUser: any,
+  setUserAttributes: any,
+}
+
+const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttributes }) => {
   const initialProfileUser: UserType = {
     userName: '',
     firstName: '',
@@ -43,6 +47,8 @@ const Profile: React.FC = () => {
     email: '',
     gender: -1,
     height: 0,
+    bio: '',
+    animalName: '',
     animalSize: '',
     animalType: '',
     smokeFrequency: '',
@@ -54,60 +60,49 @@ const Profile: React.FC = () => {
     primaryImageIndex: 0,
   };
 
-  const [isNewUser, setIsNewUser] = useState(false);
   const [profileUser, setProfileUser] = useState(initialProfileUser);
   const [oldImageKeys, setOldImageKeys] = useState([]);
   const [removedImageKeys, setRemovedImageKeys] = useState([]);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
 
-  const user = new User();
   const imageStore = new ImageStore('Unknown');
 
   useEffect(() => {
-    user.isCurrentUserExist().then((exist) => {
-      setIsLoaderActive(true);
-      const userExis = !!exist;
-      if (!userExis) {
-        user.saveNewUser();
-        setIsNewUser(true);
-      } else {
-        loadExistingUser();
-      }
-    });
-  }, [isNewUser]);
+    initProfileUser();
+  }, []);
 
-  const loadExistingUser = () => {
-    user.getUserData().then(async (u: any) => {
-      console.log(u);
-      const fetchedUser = u.data.userByCognitoUserName.items[0];
-      if (fetchedUser.images) {
-        setOldImageKeys(fetchedUser.images);
-      }
-      const imageKeys = fetchedUser.images || [];
-      const imageURLs = await imageStore.fetchImages(imageKeys);
-      Promise.all(imageURLs).then((compiledImages) => {
-        fetchedUser.images = compiledImages;
-        setProfileUser({ ...profileUser, ...fetchedUser });
-        setIsLoaderActive(false);
-      });
+  const initProfileUser = async () => {
+    setProfileUser({ ...profileUser, ...userAttributes });
+    if (userAttributes.images && userAttributes.images.length > 0 && !userAttributes.images[0].startsWith('https://')) {
+      setCompiledImagesToUrl();
+    }
+  };
+
+  const setCompiledImagesToUrl = async () => {
+    setIsLoaderActive(true);
+    setOldImageKeys(userAttributes.images);
+    const imageURLs = await imageStore.fetchImages(userAttributes.images);
+    Promise.all(imageURLs).then((compiledImages: string[]) => {
+      const profileUserWithCompiledImage = { ...{}, ...userAttributes };
+      profileUserWithCompiledImage.images = compiledImages;
+      setProfileUser(profileUserWithCompiledImage);
+      setIsLoaderActive(false);
     });
   };
 
-  const setProfileUserValue = (value) => {
+  const setProfileUserAttribute = (value) => {
     setProfileUser({ ...profileUser, ...value });
   };
 
   const handleRemoveImage = (index) => {
     if (index < oldImageKeys.length) {
       const removedImageKey = oldImageKeys.splice(index, 1);
-      console.log(removedImageKeys);
       setOldImageKeys(oldImageKeys);
       setRemovedImageKeys(removedImageKeys.concat(removedImageKey));
-      console.log(removedImageKeys);
     }
 
     profileUser.images.splice(index, 1);
-    setProfileUserValue(createNewTypeObject('images', profileUser.images));
+    setProfileUserAttribute(createNewTypeObject('images', profileUser.images));
   };
 
   const handleSaveProfile = async () => {
@@ -128,8 +123,8 @@ const Profile: React.FC = () => {
       const wholeImageKeys = oldImageKeys.concat(newKeys);
       const modifiedProfileUser = { ...{}, ...profileUser };
       modifiedProfileUser.images = wholeImageKeys;
-      user.updateUser(modifiedProfileUser);
-      setIsLoaderActive(false);
+      setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
+      saveUser({ ...userAttributes, ...modifiedProfileUser });
       Alert.alert('Sikeres mentés');
     });
   };
@@ -138,15 +133,11 @@ const Profile: React.FC = () => {
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.container}>
         <Loader isActive={isLoaderActive} />
-        <FillAlert
-          isNewUser={isNewUser}
-          setIsNewUser={setIsNewUser}
-        />
         <Card>
           <ImageSelector
             type="images"
             primaryImageIndex={profileUser.primaryImageIndex || 0}
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             images={profileUser.images || []}
             removeImage={handleRemoveImage}
           />
@@ -161,13 +152,13 @@ const Profile: React.FC = () => {
             type="userName"
             placeholder="Ird ide a neved"
             value={profileUser.userName}
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
           />
           <TextBox
             label="E-mail"
             value={profileUser.email}
             type="email"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             placeholder="E-mail címed"
           />
           <RadioButton
@@ -175,7 +166,7 @@ const Profile: React.FC = () => {
             value={profileUser.gender}
             type="gender"
             label="Nemed"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
           />
           <TextBox
             label="Korod"
@@ -183,7 +174,14 @@ const Profile: React.FC = () => {
             placeholder="év"
             keyboardType="number-pad"
             value={profileUser.age}
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
+          />
+          <TextBox
+            label="Bio"
+            type="bio"
+            placeholder=""
+            value={profileUser.bio}
+            setValue={setProfileUserAttribute}
           />
         </Card>
 
@@ -198,13 +196,13 @@ const Profile: React.FC = () => {
             type="height"
             keyboardType="number-pad"
             value={profileUser.height}
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
           />
           <Selector
             label={hairColor.label}
             options={hairColor.options}
             type="hairColor"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             value={profileUser.hairColor}
           />
         </Card>
@@ -214,18 +212,24 @@ const Profile: React.FC = () => {
           title="Állatod"
           titleStyle={styleForm.cardTitle as any}
         >
+          <TextBox
+            label="Állatod neve"
+            type="animalName"
+            value={profileUser.animalName}
+            setValue={setProfileUserAttribute}
+          />
           <Selector
             label={animalType.label}
             options={animalType.options}
             type="animalType"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             value={profileUser.animalType}
           />
           <Selector
             label={animalSize.label}
             options={animalSize.options}
             type="animalSize"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             value={profileUser.animalSize}
           />
         </Card>
@@ -239,14 +243,14 @@ const Profile: React.FC = () => {
             label={smokeFrequency.label}
             options={smokeFrequency.options}
             type="smokeFrequency"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             value={profileUser.smokeFrequency}
           />
           <MultiSelector
             label="Hobbijaid"
             options={hobbies}
             type="hobbies"
-            setValue={setProfileUserValue}
+            setValue={setProfileUserAttribute}
             value={profileUser.hobbies}
           />
         </Card>

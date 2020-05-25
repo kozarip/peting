@@ -8,16 +8,14 @@ import { UserType } from '../types/user';
 
 class User {
   private currentCognitoUserAttributes: any;
-  private currentUser: any;
+  private currentUserAttributes: any;
 
-  async isCurrentUserExist() {
-    await this.getCurrentCognitoUserAttributes();
-    await this.getCurrentUSer();
-
-    return this.currentUser.data.userByCognitoUserName.items.length;
+  public async init() {
+    await this.setCurrentCognitoUserAttributes();
+    await this.setCurrentUserAttributes();
   }
 
-  async getCurrentCognitoUserAttributes() {
+  private async setCurrentCognitoUserAttributes() {
     if (this.currentCognitoUserAttributes) {
       return this.currentCognitoUserAttributes
     }
@@ -26,28 +24,48 @@ class User {
     return this.currentCognitoUserAttributes;
   }
 
-  async getCurrentUSer() {
-    if (this.currentUser) {
-      return this.currentUser
+  private async setCurrentUserAttributes() {
+    if (this.currentUserAttributes) {
+      return this.currentUserAttributes
     }
     const currentUser = await this.getUserByCognitoUserName(this.currentCognitoUserAttributes.username);
-    this.currentUser = currentUser;
-    return this.currentUser;
+    this.currentUserAttributes = currentUser;
+    return this.currentUserAttributes;
   }
 
-  async getUserByCognitoUserName(cognitoUserName: string) {
+  public getCurrentCognitoUserAttributes() {
+    return this.currentCognitoUserAttributes;
+  }
+
+  public getCurrentUserAttributes() {
+    return this.currentUserAttributes;
+  }
+
+  public async crateNewUserIfNotExist() {
+    return this.init().then(async () => {
+      return this.isCurrentUserExist().then((isUserExist) => {
+        if (!isUserExist) {
+          this.saveNewUser();
+          return false;
+        }
+        return true;
+      })
+    })
+  }
+
+  public async isCurrentUserExist() {
+    await this.init();
+    return this.currentUserAttributes.data.userByCognitoUserName.items.length !== 0;
+  }
+
+  public async getUserByCognitoUserName(cognitoUserName: string) {
     return await (API.graphql(graphqlOperation(queries.userByCognitoUserName, { cognitoUserName })));
   }
 
-  async getUserData(userName?: string) {
-    const currentUserName = userName || this.currentCognitoUserAttributes.username;
-    return await API.graphql(graphqlOperation(queries.userByCognitoUserName, { cognitoUserName: currentUserName }))
-  }
-
-  saveNewUser() {
+  public saveNewUser() {
     const newUser = {
       cognitoUserName: this.currentCognitoUserAttributes.username,
-      userName: 'Username',
+      userName: ' ',
       email: this.currentCognitoUserAttributes.attributes.email,
       firstName: this.currentCognitoUserAttributes.attributes.given_name,
       surName: this.currentCognitoUserAttributes.attributes.family_name,
@@ -55,7 +73,8 @@ class User {
     API.graphql(graphqlOperation(mutations.createUser, { input: newUser }));
   }
 
-  updateUser(user: UserType) {
+  public updateUser(user: UserType) {
+    console.log({savedUser: user});
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }
 

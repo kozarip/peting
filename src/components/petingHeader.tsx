@@ -41,7 +41,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
           name="settings"
           color="#ffffff"
           size={32}
-          onPress={() => navigation.navigate('Settings')}
+          onPress={() => navigation.navigate('Settings', { newUser: false })}
           underlayColor={colors.primary}
         />
       }

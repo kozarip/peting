@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { View, Button } from 'react-native';
+import { Auth } from 'aws-amplify';
 import { CheckBox } from 'react-native-elements';
-import { withOAuth } from 'aws-amplify-react-native';
 import { colors } from '../assets/styles/variables';
 
-type AppSettingsProps = {
-  signOut: any;
-}
-
-const AppSettings: React.FC<AppSettingsProps> = (props) => {
-  const { signOut } = props;
-
+const AppSettings: React.FC = () => {
   const [hasNotification, setHasNotification] = useState(true);
   return (
     <View>
@@ -19,13 +13,13 @@ const AppSettings: React.FC<AppSettingsProps> = (props) => {
         checked={hasNotification}
         onPress={() => setHasNotification(!hasNotification)}
       />
-      <Button 
+      <Button
         color={colors.darkPrimary}
         title="Logout"
-        onPress={signOut}
+        onPress={() => { Auth.signOut(); }}
       />
     </View>
   );
 };
 
-export default withOAuth(AppSettings);
+export default AppSettings;

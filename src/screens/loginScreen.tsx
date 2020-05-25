@@ -6,7 +6,7 @@ import Login from '../components/login';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 
 const LoginScreen = () => {
-  const image = require('../assets/images/pet_silhouettes3.jpg');
+  const image = require('../assets/images/home/6.jpg');
   const isOverlayVisible = true;
 
   return (

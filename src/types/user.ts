@@ -5,6 +5,8 @@ export type UserType = {
   firstName?: string;
   surName?: string;
   age: number;
+  bio: string,
+  animalName: string,
   animalType: string;
   animalSize: string;
   gender: number;

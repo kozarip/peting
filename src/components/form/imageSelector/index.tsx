@@ -5,11 +5,12 @@ import { StyleSheet, Button, View, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
+import { Tooltip, Icon } from 'react-native-elements';
 import { createNewTypeObject } from '../formHelpers';
 
 import ImageList from './imageList';
 import ImageSettings from './imageSettings';
-import { fonts, margins, colors } from '../../../assets/styles/variables';
+import { fonts, margins, colors, dimensions } from '../../../assets/styles/variables';
 
 type ImageSelectorProps = {
   images: string[],
@@ -97,21 +98,38 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
         deleteImageConfirm={deleteImageConfirm}
         setPrimary={setPrimary}
       />
-      {
-        maxImageNumber > 0  ?
-          <Text style={styles.imageText}>Még {maxImageNumber} képet tölthetsz fel!</Text>
-          :
-          <Text style={styles.imageText}>Több képet már nem tölthetsz fel</Text>
-      }
+      <View style={styles.imageCardHeader}>
+        {
+          maxImageNumber > 0  ?
+            <Text style={styles.imageText}>Még {maxImageNumber} képet tölthetsz fel!</Text>
+            :
+            <Text style={styles.imageText}>Több képet már nem tölthetsz fel</Text>
+        }
+        <Tooltip
+          backgroundColor={colors.primary}
+          height={80}
+          width={dimensions.fullWidth * 0.8}
+          popover={
+            <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
+              Egyszere csak egy képet tudsz feltölteni.
+              Nyomd hosszan a képet a beállításokhoz!
+            </Text>
+          }
+        >
+          <Icon
+            name="info"
+            size={15}
+            raised
+            color="#000"
+            type="font-awesome"
+          />
+        </Tooltip>
+      </View>
       <ImageList
         images={images}
         primaryImageIndex={primaryImageIndex}
         setSelectedImageIndex={setSelectedImageIndex}
       />
-      <Text style={styles.imageText}>
-        Egyszere csak egy képet tudsz feltölteni.
-        Nyomd hosszan a képet a beállításokhoz!
-      </Text>
       {
         maxImageNumber > 0 &&
         <Button
@@ -127,9 +145,19 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
 const styles = StyleSheet.create({
   imageText: {
     fontSize: fonts.default,
-    marginBottom: margins.sm
-
+    marginBottom: margins.sm,
   },
+  toolTipImageText: {
+    color: '#fff',
+    paddingTop: margins.xsm,
+  },
+  imageCardHeader: {
+    display: 'flex',
+    marginTop: -10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+  }
 })
 
 export default ImageSelector;

@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, Button, View } from 'react-native';
+import { StyleSheet, Text, Button, View } from 'react-native';
 import { Overlay } from 'react-native-elements';
+import { styleBox } from '../assets/styles/base';
 
 type FillAlertProps = {
   isNewUser: boolean;
   setIsNewUser: any;
 }
 
-const FillAlert: React.FC<FillAlertProps> = ({ isNewUser, setIsNewUser }) => {
+const NewUserAlert: React.FC<FillAlertProps> = ({ isNewUser, setIsNewUser }) => {
   return (
     <Overlay
       isVisible={isNewUser}
@@ -15,8 +16,11 @@ const FillAlert: React.FC<FillAlertProps> = ({ isNewUser, setIsNewUser }) => {
       overlayBackgroundColor="#fff"
       width="80%"
     >
-      <View>
-        <Text>
+      <View style={styleBox as any}>
+        <Text style={styles.title}>
+          Üdvözöllek az a petingben!
+        </Text>
+        <Text style={styles.title}>
           Kérlek töltsd ki az adataidat
         </Text>
         <Button
@@ -28,4 +32,10 @@ const FillAlert: React.FC<FillAlertProps> = ({ isNewUser, setIsNewUser }) => {
   );
 };
 
-export default FillAlert;
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 21,
+  },
+});
+
+export default NewUserAlert;

@@ -1,6 +1,6 @@
-export function setIsLoadingActive(isLoadingActive) {
+export function setSearchParams(searchParams) {
   return {
-    type: 'Set_Is_Loading_Active',
-    isLoadingActive,
+    type: 'Set_Search_Params',
+    searchParams,
   };
 }

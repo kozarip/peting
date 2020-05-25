@@ -8,7 +8,7 @@ import {
 import { fonts, margins } from '../assets/styles/variables';
 
 const Welcome = () => {
-  const logo = require('../assets/images/peting_logo.png');
+  const logo = require('../assets/images/logo.jpg');
   return (
     <View>
       <Image resizeMode="center" style={styles.logo} source={logo} />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -12,26 +12,54 @@ import PetingHeader from '../components/petingHeader';
 import Profile from '../components/profile';
 import AppSettings from '../components/appSettings';
 import SearchComponent from '../components/search';
+import NewUserAlert from '../components/newUserAlert';
+import Loader from '../components/loader';
 
 import { styleTitle, styleBackground } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
+import User from '../services/user';
 
+const SettingsScreen = ({ navigation, route }) => {
+  const [userAttributes, setUserAttributes] = useState({});
+  const [isNewUser, setIsNewUser] = useState(route.params.newUser || false);
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
+  const loggedInUser = new User();
 
-const searchRoute = () => (
-  <SearchComponent />
-);
+  useEffect(() => {
+    setIsLoaderActive(true);
+    loggedInUser.init().then(() => {
+      setIsLoaderActive(false);
+      setUserAttributes(
+        loggedInUser.getCurrentUserAttributes().data.userByCognitoUserName.items[0],
+      );
+    });
+  }, []);
 
-const profileRoute = () => (
-  <Profile />
-);
+  const saveUser = (modifiedUser) => {
+    loggedInUser.updateUser(modifiedUser);
+  };
 
-const appSettingsRoute = () => (
-  <AppSettings />
-);
+  const searchRoute = () => (
+    <SearchComponent
+      userAttributes={userAttributes}
+      saveUser={saveUser}
+      setUserAttributes={setUserAttributes}
+      navigation={navigation}
+    />
+  );
+  const profileRoute = () => (
+    <Profile
+      userAttributes={userAttributes}
+      saveUser={saveUser}
+      setUserAttributes={setUserAttributes}
+    />
+  );
+  const appSettingsRoute = () => (
+    <AppSettings />
+  );
 
-const initialLayout = { width: Dimensions.get('window').width };
+  const initialLayout = { width: Dimensions.get('window').width };
 
-const SettingsScreen = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'search', title: 'Keresés' },
@@ -49,6 +77,11 @@ const SettingsScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Loader isActive={isLoaderActive} />
+      <NewUserAlert
+        isNewUser={isNewUser}
+        setIsNewUser={setIsNewUser}
+      />
       <ImageBackground
         source={image}
         style={styleBackground}

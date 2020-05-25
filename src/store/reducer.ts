@@ -1,13 +1,14 @@
 export const initialState = {
-  isLoadingActive: false,
+  searchParams: {},
 };
 
 export function reducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
-  case 'Set_Is_Loading_Active':
+  case 'Set_Search_Params':
     return {
       ...state,
-      ...action.isLoadingActive,
+      ...action.searchParams,
     };
   default:
     return state;

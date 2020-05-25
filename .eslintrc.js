@@ -22,7 +22,7 @@ module.exports = {
       2,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
-    indent: [2, 2],
+    indent: [2, 2, { "SwitchCase": 1 }],
     'import/no-unresolved': 0,
     '@typescript-eslint/no-use-before-define': 0,
     'no-use-before-define': [2, { variables: false, functions: false }],

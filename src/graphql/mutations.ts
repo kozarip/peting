@@ -23,6 +23,7 @@ export const createUser = /* GraphQL */ `
       hairColor
       hobbies
       images
+      animalImages
       primaryImageIndex
       animalName
       bio
@@ -62,6 +63,7 @@ export const updateUser = /* GraphQL */ `
       hairColor
       hobbies
       images
+      animalImages
       primaryImageIndex
       animalName
       bio
@@ -101,6 +103,7 @@ export const deleteUser = /* GraphQL */ `
       hairColor
       hobbies
       images
+      animalImages
       primaryImageIndex
       animalName
       bio

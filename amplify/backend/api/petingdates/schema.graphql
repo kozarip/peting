@@ -15,6 +15,7 @@ type User @model @searchable
   hairColor: String
   hobbies: [Int]
   images: [String]
+  animalImages: [String]
   primaryImageIndex: Int
   animalName: String
   bio: String

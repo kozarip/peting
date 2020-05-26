@@ -20,6 +20,7 @@ export const getUser = /* GraphQL */ `
       hairColor
       hobbies
       images
+      animalImages
       primaryImageIndex
       animalName
       bio
@@ -61,6 +62,7 @@ export const listUsers = /* GraphQL */ `
         hairColor
         hobbies
         images
+        animalImages
         primaryImageIndex
         animalName
         bio
@@ -112,6 +114,7 @@ export const userByCognitoUserName = /* GraphQL */ `
         hairColor
         hobbies
         images
+        animalImages
         primaryImageIndex
         animalName
         bio
@@ -161,6 +164,7 @@ export const searchUsers = /* GraphQL */ `
         hairColor
         hobbies
         images
+        animalImages
         primaryImageIndex
         animalName
         bio

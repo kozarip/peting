@@ -4,7 +4,7 @@ import { margins, fonts } from '../assets/styles/variables';
 import { styleContainer } from '../assets/styles/base';
 
 type DetailProps = {
-  details
+  details: any,
 }
 
 const Details: React.FC<DetailProps> = ({ details }) => {
@@ -24,7 +24,7 @@ const Details: React.FC<DetailProps> = ({ details }) => {
               </View>
             );
           }
-          return '';
+          return <Text key={detailKey}> </Text>;
         })
       }
     </View>

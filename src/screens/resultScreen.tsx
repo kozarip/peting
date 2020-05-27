@@ -5,18 +5,14 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import { Card } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import Search from '../services/search';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
-import Bio from '../components/bio';
-import Details from '../components/details';
-import ProfileTitle from '../components/profileTitle';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
-import ImagesBox from '../components/ImagesBox';
 import { hairColor, smokeFrequency } from '../constants/userFields';
+import PersonCard from '../components/personCard';
 
 type ResultScreenProps = {
   navigation: any;
@@ -30,31 +26,32 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
     animalName: '',
     bio: '',
     hairColor: '',
-    hobbies: [],
+    hobbies: '',
     smokeFrequency: '',
     height: '',
+    primaryImageIndex: 0,
+    images: [require('../assets/images/elsa.jpg')],
+    animalImages: [require('../assets/images/dog_sample.jpg')],
   });
   const { searchParams } = useSelector((state: RootState) => state);
   const search = new Search();
 
   useEffect(() => {
+    console.log(searchParams);
     search.search(searchParams).then((res: any) => {
       const resultFromAPI = res.data.searchUsers.items[0];
-      if (resultFromAPI.hobbies) {
-        resultFromAPI.hobbies = resultFromAPI.hobbies.join(', ');
-      }
-      resultFromAPI.smokeFrequency = getDetailText(resultFromAPI.smokeFrequency, 'smokeFrequency');
-      resultFromAPI.hairColor = getDetailText(resultFromAPI.hairColor, 'hairColor');
-      console.log(resultFromAPI);
-      setResult(resultFromAPI);
+      const resultWithValidValues = {};
+      Object.keys(resultFromAPI).forEach((key) => {
+        if (resultFromAPI[key]) {
+          resultWithValidValues[key] = resultFromAPI[key];
+        }
+      });
+      if (resultWithValidValues.hobbies) resultWithValidValues.hobbies = resultWithValidValues.hobbies.join(', ');
+      if (resultWithValidValues.smokeFrequency) resultWithValidValues.smokeFrequency = getDetailText(resultWithValidValues.smokeFrequency, 'smokeFrequency');
+      if (resultWithValidValues.hairColor) resultWithValidValues.hairColor = getDetailText(resultWithValidValues.hairColor, 'hairColor');
+      setResult({ ...result, ...resultWithValidValues });
     });
   }, [navigation]);
-
-  const user = {
-    userProfileImage: require('../assets/images/elsa.jpg'),
-    animalProfileImage: require('../assets/images/dog_sample.jpg'),
-  };
-
 
   const getDetailText = (value, type) => {
     let itemObject;
@@ -84,33 +81,10 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
             resizeMode="repeat"
             imageStyle={{ opacity: 0.04 }}
           >
-            <Card
-              containerStyle={styles.profileCard}
-            >
-              <ImagesBox
-                navigation={navigation}
-                animalProfileImage={user.animalProfileImage}
-                userProfileImage={user.userProfileImage}
-              />
-              <ProfileTitle
-                name={result.userName}
-                age={result.age}
-              />
-              <ProfileTitle
-                name={result.animalName}
-                smallFont
-              />
-              <Bio bio={result.bio} />
-              <Details details={
-                [
-                  { Magasság: result.height },
-                  { Dohányzás: result.smokeFrequency },
-                  { Hajszín: result.hairColor },
-                  { Hobbik: result.hobbies },
-                ]
-              }
-              />
-            </Card>
+            <PersonCard
+              person={result}
+              navigation={navigation}
+            />
           </ImageBackground>
         </View>
       </ScrollView>

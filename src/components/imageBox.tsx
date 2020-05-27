@@ -15,12 +15,13 @@ type ImageBoxProps = {
 const ImageBox: React.FC<ImageBoxProps> = ({ type, source, navigation }) => {
   const touchBoxCssStyle = type === 'person' ? styles.profileImageTouchBox : styles.dogImageTouchBox;
   const imageCssStyle = type === 'person' ? styles.profileImage : styles.dogImage;
+
   return (
     <TouchableOpacity style={touchBoxCssStyle} onPress={() => navigation.navigate('Pictures')}>
       <Image
         resizeMode="contain"
         style={imageCssStyle}
-        source={source}
+        source={{ uri: source }}
       />
     </TouchableOpacity>
   );
@@ -42,12 +43,12 @@ const styles = StyleSheet.create({
   profileImage: {
     width: dimensions.fullWidth * 0.8,
     height: dimensions.fullWidth * 0.8,
-    borderRadius: dimensions.fullWidth * 0.4,
+    borderRadius: (dimensions.fullWidth * 0.8) / 2,
   },
   dogImage: {
     width: dimensions.fullWidth * 0.36,
     height: dimensions.fullWidth * 0.36,
-    borderRadius: dimensions.fullWidth * 0.18,
+    borderRadius: (dimensions.fullWidth * 0.36) / 2,
   },
 });
 

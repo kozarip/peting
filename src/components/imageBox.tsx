@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  TouchableOpacity,
+  View,
   Image,
   StyleSheet,
 } from 'react-native';
@@ -12,18 +12,18 @@ type ImageBoxProps = {
   navigation: any;
 }
 
-const ImageBox: React.FC<ImageBoxProps> = ({ type, source, navigation }) => {
+const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
   const touchBoxCssStyle = type === 'person' ? styles.profileImageTouchBox : styles.dogImageTouchBox;
   const imageCssStyle = type === 'person' ? styles.profileImage : styles.dogImage;
 
   return (
-    <TouchableOpacity style={touchBoxCssStyle} onPress={() => navigation.navigate('Pictures')}>
+    <View style={touchBoxCssStyle}>
       <Image
         resizeMode="contain"
         style={imageCssStyle}
         source={{ uri: source }}
       />
-    </TouchableOpacity>
+    </View>
   );
 };
 

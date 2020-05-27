@@ -23,8 +23,8 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
 ) => {
   const [profileImage, setProfileImage] = useState('https://www.jtsoftex.com/wp-content/uploads/2015/01/dummy-person.jpg');
   const [animalProfileImage, setAnimalProfileImage] = useState('https://www.jtsoftex.com/wp-content/uploads/2015/01/dummy-person.jpg');
-  const [allImages, setAllImages] = useState(['']);
-  const [allAnimalImages, setAllAnimalImages] = useState();
+  const [allImages, setAllImages] = useState('');
+  const [allAnimalImages, setAllAnimalImages] = useState(',');
 
   const imageStore = new ImageStore('');
 
@@ -35,13 +35,12 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   const initImage = async () => {
     const imageURLs = await imageStore.fetchImages(images);
     Promise.all(imageURLs).then((compiledImages: string[]) => {
-      console.log(compiledImages);
       setProfileImage(compiledImages[primaryImage]);
-      //setAllImages(allImages.concat(['alma']));
+      setAllImages(compiledImages.join(','));
     });
     const animalImageURLs = await imageStore.fetchImages(animalImages);
     Promise.all(animalImageURLs).then((compiledImages: string[]) => {
-      //setAllAnimalImages(compiledImages);
+      setAllAnimalImages(compiledImages.join(','));
       setAnimalProfileImage(compiledImages[0]);
     });
   };
@@ -61,7 +60,7 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
       />
       <View style={styles.moreImageIcon}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Pictures')}
+          onPress={() => { navigation.navigate('Pictures', { id: 1, allImages, allAnimalImages }); }}
         >
           <Icon
             raised

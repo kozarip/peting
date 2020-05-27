@@ -16,20 +16,10 @@ import { margins } from '../assets/styles/variables';
 const { width } = Dimensions.get('window');
 const image = require('../assets/images/pet_silhouettes2.jpg');
 
-const PicturesScreen = ({ navigation }) => {
-  const personImages = [
-    'https://source.unsplash.com/1024x768/?water',
-    'https://source.unsplash.com/1024x768/?girl',
-    'https://source.unsplash.com/1024x768/?tree',
-  ];
-
-  const animalImages = [
-    require('../assets/images/dog_sample.jpg'),
-    'https://source.unsplash.com/1024x768/?nature',
-    'https://source.unsplash.com/1024x768/?water',
-    'https://source.unsplash.com/1024x768/?girl',
-    'https://source.unsplash.com/1024x768/?tree',
-  ];
+const PicturesScreen = ({ navigation, route }) => {
+  console.log(route);
+  const personImages = route.params.allImages.split(',');
+  const animalImages = route.params.allAnimalImages.split(',');
 
   return (
     <View style={{ flex: 1 }}>

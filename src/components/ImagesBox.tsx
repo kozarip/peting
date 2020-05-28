@@ -47,7 +47,10 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
 
 
   return (
-    <View style={styles.imageContainer}>
+    <TouchableOpacity
+      style={styles.imageContainer}
+      onPress={() => { navigation.navigate('Pictures', { id: 1, allImages, allAnimalImages }); }}
+    >
       <ImageBox
         type="person"
         source={profileImage}
@@ -59,19 +62,15 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
         navigation={navigation}
       />
       <View style={styles.moreImageIcon}>
-        <TouchableOpacity
-          onPress={() => { navigation.navigate('Pictures', { id: 1, allImages, allAnimalImages }); }}
-        >
-          <Icon
-            raised
-            name="ios-images"
-            size={20}
-            color="#21618C"
-            type="ionicon"
-          />
-        </TouchableOpacity>
+        <Icon
+          raised
+          name="ios-images"
+          size={20}
+          color="#21618C"
+          type="ionicon"
+        />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

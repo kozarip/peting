@@ -3,11 +3,21 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { colors } from '../assets/styles/variables';
 
-const LoveButtons: React.FC = () => {
+type LoveButtonsProps = {
+  handlePressLike: any,
+  handlePressDislike: any,
+  handlePressNext: any
+}
+
+const LoveButtons: React.FC<LoveButtonsProps> = (
+  { handlePressLike, handlePressDislike, handlePressNext },
+) => {
   const iconSize = 27;
   return (
     <View style={styles.reviewBox}>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={handlePressDislike}
+      >
         <Icon
           name="times-circle"
           size={iconSize}
@@ -16,7 +26,9 @@ const LoveButtons: React.FC = () => {
           raised
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={handlePressLike}
+      >
         <Icon
           name="heart"
           size={iconSize}
@@ -25,7 +37,9 @@ const LoveButtons: React.FC = () => {
           raised
         />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={handlePressNext}
+      >
         <Icon
           name="chevron-circle-right"
           size={iconSize}

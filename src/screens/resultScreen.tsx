@@ -18,29 +18,42 @@ type ResultScreenProps = {
   navigation: any;
 }
 
+const initialResultPerson = {
+  userName: '',
+  age: 20,
+  animalName: '',
+  bio: '',
+  hairColor: '',
+  hobbies: '',
+  smokeFrequency: '',
+  height: '',
+  primaryImageIndex: 0,
+  images: [require('../assets/images/elsa.jpg')],
+  animalImages: [require('../assets/images/dog_sample.jpg')],
+};
+
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
-  const [result, setResult] = useState({
-    userName: '',
-    age: 20,
-    animalName: '',
-    bio: '',
-    hairColor: '',
-    hobbies: '',
-    smokeFrequency: '',
-    height: '',
-    primaryImageIndex: 0,
-    images: [require('../assets/images/elsa.jpg')],
-    animalImages: [require('../assets/images/dog_sample.jpg')],
-  });
+
+  const [resultPersons, setResultPersons] = useState([]);
+  const [resultPersonIndex, setResultPersonIndex] = useState(0);
+  const [resultPerson, setResultPerson] = useState(initialResultPerson);
   const { searchParams } = useSelector((state: RootState) => state);
+
   const search = new Search();
 
   useEffect(() => {
     console.log(searchParams);
     search.search(searchParams).then((res: any) => {
-      const resultFromAPI = res.data.searchUsers.items[0];
-      const resultWithValidValues = {};
+      setResultPersons(res.data.searchUsers.items);
+      setCurrentResultPerson(resultPersonIndex);
+    });
+  }, [navigation]);
+
+  const setCurrentResultPerson = (personIndex) => {
+    const resultFromAPI = resultPersons[personIndex];
+    const resultWithValidValues = {};
+    if (resultFromAPI) {
       Object.keys(resultFromAPI).forEach((key) => {
         if (resultFromAPI[key]) {
           resultWithValidValues[key] = resultFromAPI[key];
@@ -49,9 +62,26 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
       if (resultWithValidValues.hobbies) resultWithValidValues.hobbies = resultWithValidValues.hobbies.join(', ');
       if (resultWithValidValues.smokeFrequency) resultWithValidValues.smokeFrequency = getDetailText(resultWithValidValues.smokeFrequency, 'smokeFrequency');
       if (resultWithValidValues.hairColor) resultWithValidValues.hairColor = getDetailText(resultWithValidValues.hairColor, 'hairColor');
-      setResult({ ...result, ...resultWithValidValues });
-    });
-  }, [navigation]);
+      setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
+    }
+  };
+
+  const handlePressNext = () => {
+    if (resultPersonIndex < resultPersons.length - 1) {
+      setResultPersonIndex(resultPersonIndex + 1);
+    } else {
+      setResultPersonIndex(0);
+    }
+    setCurrentResultPerson(resultPersonIndex);
+  };
+
+  const handlePressLike = () => {
+    console.log('Like');
+  };
+
+  const handlePressDislike = () => {
+    console.log('Dislike');
+  };
 
   const getDetailText = (value, type) => {
     let itemObject;
@@ -82,13 +112,17 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
             imageStyle={{ opacity: 0.04 }}
           >
             <PersonCard
-              person={result}
+              person={resultPerson}
               navigation={navigation}
             />
           </ImageBackground>
         </View>
       </ScrollView>
-      <LoveButtons />
+      <LoveButtons
+        handlePressLike={handlePressLike}
+        handlePressNext={handlePressNext}
+        handlePressDislike={handlePressDislike}
+      />
     </View>
   );
 };

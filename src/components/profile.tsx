@@ -15,7 +15,7 @@ import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
-import ImageSelector from './form/imageSelector';
+import ImageSelector from './form/imageSelector/imageSelector';
 
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
@@ -135,9 +135,9 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 
       const wholeAnimalImageKeys = userAttributes.animalImages.concat(newKeys[1]);
       modifiedProfileUser.animalImages = wholeAnimalImageKeys;
-      saveUser({ ...userAttributes, ...modifiedProfileUser });
       setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
 
+      saveUser({ ...userAttributes, ...modifiedProfileUser });
       Alert.alert('Sikeres mentés');
       setIsLoaderActive(false);
     });
@@ -158,6 +158,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={profileUser.primaryImageIndex || 0}
             setValue={setProfileUserAttribute}
             images={profileUser.images || []}
+            title="Tölts fel képeket magadról"
             removeImage={handleRemoveImage}
           />
           <ImageSelector
@@ -165,6 +166,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={0}
             setValue={setProfileUserAttribute}
             images={profileUser.animalImages || []}
+            title="Tölts fel képeket a kedvencedről"
             removeImage={handleRemoveImage}
           />
         </Card>

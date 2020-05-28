@@ -15,6 +15,7 @@ import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 
 import { styleForm } from '../assets/styles/form';
+import { colors } from '../assets/styles/variables';
 import Loader from './loader';
 
 import {
@@ -183,6 +184,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
         </Card>
       </ScrollView>
       <Button
+        color={colors.darkPrimary}
         title="Mentés és Keresés"
         onPress={handleSaveSearch}
       />

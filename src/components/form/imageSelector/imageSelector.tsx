@@ -14,13 +14,16 @@ import { fonts, margins, colors, dimensions } from '../../../assets/styles/varia
 
 type ImageSelectorProps = {
   images: string[],
+  title: string
   primaryImageIndex: number,
   setValue: any,
   type: string,
   removeImage: any
 }
 
-const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex, setValue, type, removeImage }) => {
+const ImageSelector: React.FC<ImageSelectorProps> = (
+  { images, primaryImageIndex, setValue, type, removeImage, title }
+) => {
   const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);;
   const maxImageNumber = initialMaxImagesNumber - images.length;
@@ -91,13 +94,14 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
   }
 
   return (
-    <View>
+    <View style={styles.imageSelectorContainer}>
       <ImageSettings
         selectedImageIndex={selectedImageIndex}
         closeSelectedImageOverlay={closeSelectedImageOverlay}
         deleteImageConfirm={deleteImageConfirm}
         setPrimary={setPrimary}
       />
+      <Text style={styles.title}>{title}</Text>
       <View style={styles.imageCardHeader}>
         {
           maxImageNumber > 0  ?
@@ -143,9 +147,15 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
 }
 
 const styles = StyleSheet.create({
+  imageSelectorContainer: {
+    marginBottom: margins.lg,
+  },
   imageText: {
     fontSize: fonts.default,
     marginBottom: margins.sm,
+  },
+  title: {
+    fontSize: fonts.heading2,
   },
   toolTipImageText: {
     color: '#fff',
@@ -153,7 +163,7 @@ const styles = StyleSheet.create({
   },
   imageCardHeader: {
     display: 'flex',
-    marginTop: -10,
+    marginTop: -5,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',

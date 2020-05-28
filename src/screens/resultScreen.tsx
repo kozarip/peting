@@ -13,6 +13,7 @@ import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 import { hairColor, smokeFrequency } from '../constants/userFields';
 import PersonCard from '../components/personCard';
+import Loader from '../components/loader';
 
 type ResultScreenProps = {
   navigation: any;
@@ -39,15 +40,18 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const [resultPersonIndex, setResultPersonIndex] = useState(0);
   const [resultPerson, setResultPerson] = useState(initialResultPerson);
   const { searchParams } = useSelector((state: RootState) => state);
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
 
   const search = new Search();
 
   useEffect(() => {
     console.log(searchParams);
+    setIsLoaderActive(true);
     search.search(searchParams).then((res: any) => {
       setResultPersons(res.data.searchUsers.items);
       setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
       setResultPersonIndex(resultPersonIndex + 1);
+      setIsLoaderActive(false);
     });
   }, [searchParams]);
 
@@ -107,6 +111,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
           navigation={navigation}
         />
         <View style={styles.profileBox}>
+          <Loader isActive={isLoaderActive} />
           <ImageBackground
             source={image}
             style={styleBackground}

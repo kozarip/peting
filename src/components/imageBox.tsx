@@ -43,12 +43,12 @@ const styles = StyleSheet.create({
   profileImage: {
     width: dimensions.fullWidth * 0.8,
     height: dimensions.fullWidth * 0.8,
-    borderRadius: (dimensions.fullWidth * 0.8) / 2,
+    borderRadius: (dimensions.fullWidth) / 2,
   },
   dogImage: {
     width: dimensions.fullWidth * 0.36,
     height: dimensions.fullWidth * 0.36,
-    borderRadius: (dimensions.fullWidth * 0.36) / 2,
+    borderRadius: dimensions.fullWidth / 2,
   },
 });
 

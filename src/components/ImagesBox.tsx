@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   },
   moreImageIcon: {
     position: 'absolute',
-    bottom: -3,
-    right: -5,
+    bottom: 0,
+    right: -7,
     height: 52,
     width: 52,
   },

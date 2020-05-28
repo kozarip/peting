@@ -46,12 +46,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
     console.log(searchParams);
     search.search(searchParams).then((res: any) => {
       setResultPersons(res.data.searchUsers.items);
-      setCurrentResultPerson(resultPersonIndex);
+      setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
+      setResultPersonIndex(resultPersonIndex + 1);
     });
-  }, [navigation]);
+  }, [searchParams]);
 
-  const setCurrentResultPerson = (personIndex) => {
-    const resultFromAPI = resultPersons[personIndex];
+  const setCurrentResultPerson = (personIndex, persons?) => {
+    const resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
     const resultWithValidValues = {};
     if (resultFromAPI) {
       Object.keys(resultFromAPI).forEach((key) => {
@@ -67,6 +68,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   };
 
   const handlePressNext = () => {
+    console.log(resultPersonIndex, resultPersons.length);
     if (resultPersonIndex < resultPersons.length - 1) {
       setResultPersonIndex(resultPersonIndex + 1);
     } else {

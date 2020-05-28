@@ -39,7 +39,9 @@ class ImageStore {
     const keys = await images.map((image) => {
       return this.uploadFileToStore(image);
     });
-    return keys;
+    return Promise.all(keys).then((key) => {
+      return key;
+    });
   }
 
   async uploadFileToStore(file) {

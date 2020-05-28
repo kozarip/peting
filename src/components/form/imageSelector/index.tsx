@@ -74,7 +74,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({ images, primaryImageIndex
   }
 
   const deleteImage = () => {
-    removeImage(selectedImageIndex);
+    removeImage(selectedImageIndex, type);
     if (selectedImageIndex === primaryImageIndex) {
       setValue(createNewTypeObject('primaryImageIndex', 0));
     }

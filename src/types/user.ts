@@ -15,5 +15,6 @@ export type UserType = {
   smokeFrequency: string;
   hairColor: string;
   images: string[];
+  animalImages: string[];
   primaryImageIndex: number,
 }

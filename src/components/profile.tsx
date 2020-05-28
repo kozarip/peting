@@ -57,35 +57,45 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     hairColor: '',
     age: 0,
     images: [],
+    animalImages: [],
     primaryImageIndex: 0,
   };
+  const imageTypes = ['images', 'animalImages'];
 
   const [profileUser, setProfileUser] = useState(initialProfileUser);
-  const [oldImageKeys, setOldImageKeys] = useState([]);
   const [removedImageKeys, setRemovedImageKeys] = useState([]);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
 
   const imageStore = new ImageStore('Unknown');
+  const compiledImagesObj = {};
 
   useEffect(() => {
     initProfileUser();
   }, []);
 
   const initProfileUser = async () => {
+    console.log(userAttributes);
     setProfileUser({ ...profileUser, ...userAttributes });
-    if (userAttributes.images && userAttributes.images.length > 0 && !userAttributes.images[0].startsWith('https://')) {
-      setCompiledImagesToUrl();
-    }
+    imageTypes.forEach((type) => {
+      if (isImageCompileIsNecessary(type)) {
+        setCompiledImagesToUrl(type);
+      }
+    });
   };
 
-  const setCompiledImagesToUrl = async () => {
+  const isImageCompileIsNecessary = (imageType) => {
+    return userAttributes[imageType]
+      && userAttributes[imageType].length > 0
+      && !userAttributes[imageType][0].startsWith('https://');
+  };
+
+  const setCompiledImagesToUrl = async (type) => {
     setIsLoaderActive(true);
-    setOldImageKeys(userAttributes.images);
-    const imageURLs = await imageStore.fetchImages(userAttributes.images);
-    Promise.all(imageURLs).then((compiledImages: string[]) => {
-      const profileUserWithCompiledImage = { ...{}, ...userAttributes };
-      profileUserWithCompiledImage.images = compiledImages;
-      setProfileUser(profileUserWithCompiledImage);
+    const imageURLs = await imageStore.fetchImages(userAttributes[type]);
+    console.log(profileUser);
+    await Promise.all(imageURLs).then((compiledImages: string[]) => {
+      compiledImagesObj[type] = compiledImages;
+      setProfileUser({ ...userAttributes, ...compiledImagesObj });
       setIsLoaderActive(false);
     });
   };
@@ -94,39 +104,48 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     setProfileUser({ ...profileUser, ...value });
   };
 
-  const handleRemoveImage = (index) => {
-    if (index < oldImageKeys.length) {
-      const removedImageKey = oldImageKeys.splice(index, 1);
-      setOldImageKeys(oldImageKeys);
+  const handleRemoveImage = (index, imageType) => {
+    if (index < userAttributes[imageType].length) {
+      const removedImageKey = userAttributes[imageType].splice(index, 1);
       setRemovedImageKeys(removedImageKeys.concat(removedImageKey));
     }
 
-    profileUser.images.splice(index, 1);
-    setProfileUserAttribute(createNewTypeObject('images', profileUser.images));
+    profileUser[imageType].splice(index, 1);
+    setProfileUserAttribute(createNewTypeObject(imageType, profileUser[imageType]));
   };
 
   const handleSaveProfile = async () => {
     setIsLoaderActive(true);
-    const images = profileUser.images || [];
-    const newImages = images.filter((image) => image.startsWith('file://'));
-    const newKeysPromise = await imageStore.uploadImages(
-      newImages,
-      profileUser.cognitoUserName,
-    );
 
     const removeImages = await imageStore.removeImages(removedImageKeys);
     Promise.all(removeImages).then((log) => {
       console.log(log);
     });
 
-    Promise.all(newKeysPromise).then((newKeys: any) => {
-      const wholeImageKeys = oldImageKeys.concat(newKeys);
+    const newImages = selectNewImages('images');
+    const newAnimalImages = selectNewImages('animalImages');
+    const newKeysPromise = await imageStore.uploadImages(newImages, profileUser.cognitoUserName);
+    const newAnimalKeysPromise = await imageStore.uploadImages(newAnimalImages, profileUser.cognitoUserName);
+
+    Promise.all([newKeysPromise, newAnimalKeysPromise]).then((newKeys: any) => {
       const modifiedProfileUser = { ...{}, ...profileUser };
+
+      const wholeImageKeys = userAttributes.images.concat(newKeys[0]);
       modifiedProfileUser.images = wholeImageKeys;
-      setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
+
+      const wholeAnimalImageKeys = userAttributes.animalImages.concat(newKeys[1]);
+      modifiedProfileUser.animalImages = wholeAnimalImageKeys;
       saveUser({ ...userAttributes, ...modifiedProfileUser });
+      setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
+
       Alert.alert('Sikeres mentés');
+      setIsLoaderActive(false);
     });
+  };
+
+  const selectNewImages = (imageType: 'images' | 'animalImages') => {
+    const images = profileUser[imageType] || [];
+    return images.filter((image) => image.startsWith('file://'));
   };
 
   return (
@@ -139,6 +158,13 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={profileUser.primaryImageIndex || 0}
             setValue={setProfileUserAttribute}
             images={profileUser.images || []}
+            removeImage={handleRemoveImage}
+          />
+          <ImageSelector
+            type="animalImages"
+            primaryImageIndex={0}
+            setValue={setProfileUserAttribute}
+            images={profileUser.animalImages || []}
             removeImage={handleRemoveImage}
           />
         </Card>

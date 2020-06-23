@@ -74,7 +74,7 @@ class User {
   }
 
   public updateUser(user: UserType) {
-    console.log({savedUser: user});
+    //console.log({savedUser: user});
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }
 

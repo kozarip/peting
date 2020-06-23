@@ -19,7 +19,7 @@ class ImageStore {
       });
       return compiledImages;
     } catch (error) {
-      console.log(`Fetch Images error: ${error}`);
+      //console.log(`Fetch Images error: ${error}`);
       return [];
     }
   }
@@ -29,7 +29,7 @@ class ImageStore {
       const response = await Storage.get(key);
       return response;
     } catch (error) {
-      console.log(`Fetch Image error: ${error}`);
+      //console.log(`Fetch Image error: ${error}`);
       return [];
     }
   }
@@ -57,7 +57,7 @@ class ImageStore {
       });
       return uploadedFile.key;
     } catch (error) {
-      console.log(`Upload images error ${error}`);
+      //console.log(`Upload images error ${error}`);
       return [];
     }
   }
@@ -82,7 +82,7 @@ class ImageStore {
       });
       return response;
     } catch (error) {
-      console.log(`Delete images error: ${error}`);
+      //console.log(`Delete images error: ${error}`);
       return [];
     }
   }
@@ -90,10 +90,10 @@ class ImageStore {
   async removeFileFromStore(key) {
     try {
       const response = await Storage.remove(key);
-      console.log(`Success delete ${response}`);
+      //console.log(`Success delete ${response}`);
       return response;
     } catch (error) {
-      console.log(`Delete image error: ${error}`);
+      //console.log(`Delete image error: ${error}`);
       return [];
     }
   }

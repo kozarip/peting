@@ -24,7 +24,7 @@ class Search {
             const parameterLowerCase = parameter.toLocaleLowerCase();
             const elasticRange = intervalType === 'min' ? 'gte' : 'lte';
             if (filter.filter[parameterLowerCase]) {
-              filter.filter[parameterLowerCase][elasticRange] = value;
+              filter.filter[parameterLowerCase][elasticRange] = value ;
             } else {
               filterField[elasticRange] = value;
               filter.filter[parameterLowerCase] = filterField;
@@ -33,7 +33,7 @@ class Search {
         }
       }
     }
-    console.log({ 'searchFilter': filter });
+    ////console.log({ 'searchFilter': filter });
     return await API.graphql(graphqlOperation(queries.searchUsers, filter));
   };
 }

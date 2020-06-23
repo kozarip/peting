@@ -17,7 +17,7 @@ const { width } = Dimensions.get('window');
 const image = require('../assets/images/pet_silhouettes2.jpg');
 
 const PicturesScreen = ({ navigation, route }) => {
-  console.log(route);
+  //console.log(route);
   const personImages = route.params.allImages.split(',');
   const animalImages = route.params.allAnimalImages.split(',');
 

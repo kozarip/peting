@@ -54,7 +54,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         setValue(createNewTypeObject(type, images.concat(result.uri)));
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 

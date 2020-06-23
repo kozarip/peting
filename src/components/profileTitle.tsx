@@ -15,9 +15,9 @@ const ProfileTitle: React.FC<ProfileTitleProps> = ({ name, age, smallFont = fals
     <View style={styles.titleContainer}>
       <Text style={cssClassName}>
         {name}
-        {age && ', '}
+        {age && age > 0 && ', '}
       </Text>
-      {age && <Text style={cssClassName}>{age}</Text>}
+      {age && age > 0 && <Text style={cssClassName}>{age}</Text>}
     </View>
   );
 };

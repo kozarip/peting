@@ -39,6 +39,8 @@ export const createUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
     }
   }
 `;
@@ -79,6 +81,8 @@ export const updateUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
     }
   }
 `;
@@ -119,6 +123,44 @@ export const deleteUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
+    }
+  }
+`;
+export const createMatches = /* GraphQL */ `
+  mutation CreateMatches(
+    $input: CreateMatchesInput!
+    $condition: ModelMatchesConditionInput
+  ) {
+    createMatches(input: $input, condition: $condition) {
+      id
+      user1
+      user2
+    }
+  }
+`;
+export const updateMatches = /* GraphQL */ `
+  mutation UpdateMatches(
+    $input: UpdateMatchesInput!
+    $condition: ModelMatchesConditionInput
+  ) {
+    updateMatches(input: $input, condition: $condition) {
+      id
+      user1
+      user2
+    }
+  }
+`;
+export const deleteMatches = /* GraphQL */ `
+  mutation DeleteMatches(
+    $input: DeleteMatchesInput!
+    $condition: ModelMatchesConditionInput
+  ) {
+    deleteMatches(input: $input, condition: $condition) {
+      id
+      user1
+      user2
     }
   }
 `;

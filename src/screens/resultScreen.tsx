@@ -5,8 +5,9 @@ import {
   ImageBackground,
   ScrollView,
 } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Search from '../services/search';
+import { saveMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
@@ -14,6 +15,8 @@ import { margins } from '../assets/styles/variables';
 import { hairColor, smokeFrequency } from '../constants/userFields';
 import PersonCard from '../components/personCard';
 import Loader from '../components/loader';
+import EmptyResultModal from '../components/emptyResultModal';
+import { setUser } from '../store/action';
 
 type ResultScreenProps = {
   navigation: any;
@@ -21,36 +24,46 @@ type ResultScreenProps = {
 
 const initialResultPerson = {
   userName: '',
-  age: 20,
+  age: -1,
   animalName: '',
   bio: '',
   hairColor: '',
   hobbies: '',
+  cognitoUserName: '',
   smokeFrequency: '',
   height: '',
   primaryImageIndex: 0,
   images: [require('../assets/images/elsa.jpg')],
   animalImages: [require('../assets/images/dog_sample.jpg')],
+  likedUsers: null,
 };
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
 
+  const { searchParams, user } = useSelector((state: any) => state);
+
   const [resultPersons, setResultPersons] = useState([]);
   const [resultPersonIndex, setResultPersonIndex] = useState(0);
   const [resultPerson, setResultPerson] = useState(initialResultPerson);
-  const { searchParams } = useSelector((state: RootState) => state);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
+  const [isOverlayActive, setIsOverlayActive] = useState(false);
 
   const search = new Search();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(searchParams);
     setIsLoaderActive(true);
+    setResultPerson(initialResultPerson);
+    setResultPersonIndex(0);
     search.search(searchParams).then((res: any) => {
       setResultPersons(res.data.searchUsers.items);
-      setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
-      setResultPersonIndex(resultPersonIndex + 1);
+      if (res.data.searchUsers.items.length === 0) {
+        setIsOverlayActive(true);
+      } else {
+        setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
+        setResultPersonIndex(resultPersonIndex + 1);
+      }
       setIsLoaderActive(false);
     });
   }, [searchParams]);
@@ -72,7 +85,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   };
 
   const handlePressNext = () => {
-    console.log(resultPersonIndex, resultPersons.length);
+    //console.log(resultPersonIndex, resultPersons.length);
     if (resultPersonIndex < resultPersons.length - 1) {
       setResultPersonIndex(resultPersonIndex + 1);
     } else {
@@ -82,11 +95,43 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   };
 
   const handlePressLike = () => {
-    console.log('Like');
+    if (resultPerson.cognitoUserName) {
+      user.likedUsers = setUserIdToEmotionArray(user.likedUsers, resultPerson.cognitoUserName);
+      //user.likedUsers = null;
+      checkMatch();
+      dispatch(setUser(user));
+    }
+    handlePressNext();
   };
 
   const handlePressDislike = () => {
-    console.log('Dislike');
+    if (resultPerson.cognitoUserName) {
+      user.disLikedUsers = setUserIdToEmotionArray(
+        user.disLikedUsers,
+        resultPerson.cognitoUserName,
+      );
+      dispatch(setUser(user));
+    }
+    handlePressNext();
+  };
+
+  const setUserIdToEmotionArray = (array, userId) => {
+    const arrayWithNewUserId = [userId];
+    if (array && Array.isArray(array)) {
+      const result = [...array, ...arrayWithNewUserId];
+      return result.filter((item, pos) => result.indexOf(item) === pos);
+    }
+    return arrayWithNewUserId;
+  };
+
+  const checkMatch = () => {
+    if (resultPerson.likedUsers && resultPerson.likedUsers.includes(user.cognitoUserName)) {
+      console.log("it's a match");
+      saveMatch({
+        user1: user.cognitoUserName,
+        user2: resultPerson.cognitoUserName,
+      });
+    }
   };
 
   const getDetailText = (value, type) => {
@@ -118,6 +163,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
             resizeMode="repeat"
             imageStyle={{ opacity: 0.04 }}
           >
+            <EmptyResultModal
+              setIsOverlayActive={setIsOverlayActive}
+              isOverlayActive={isOverlayActive}
+              navigation={navigation}
+            />
             <PersonCard
               person={resultPerson}
               navigation={navigation}

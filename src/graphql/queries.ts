@@ -36,6 +36,8 @@ export const getUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
     }
   }
 `;
@@ -78,6 +80,33 @@ export const listUsers = /* GraphQL */ `
           hairColor
           hobbies
         }
+        likedUsers
+        disLikedUsers
+      }
+      nextToken
+    }
+  }
+`;
+export const getMatches = /* GraphQL */ `
+  query GetMatches($id: ID!) {
+    getMatches(id: $id) {
+      id
+      user1
+      user2
+    }
+  }
+`;
+export const listMatchess = /* GraphQL */ `
+  query ListMatchess(
+    $filter: ModelMatchesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMatchess(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        user1
+        user2
       }
       nextToken
     }
@@ -130,6 +159,8 @@ export const userByCognitoUserName = /* GraphQL */ `
           hairColor
           hobbies
         }
+        likedUsers
+        disLikedUsers
       }
       nextToken
     }
@@ -180,6 +211,31 @@ export const searchUsers = /* GraphQL */ `
           hairColor
           hobbies
         }
+        likedUsers
+        disLikedUsers
+      }
+      nextToken
+      total
+    }
+  }
+`;
+export const searchMatchess = /* GraphQL */ `
+  query SearchMatchess(
+    $filter: SearchableMatchesFilterInput
+    $sort: SearchableMatchesSortInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    searchMatchess(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        user1
+        user2
       }
       nextToken
       total

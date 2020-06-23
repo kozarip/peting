@@ -5,10 +5,10 @@ import {
   ScrollView,
   Button,
   View,
-  Alert,
 } from 'react-native';
 import { Card } from 'react-native-elements';
-import Search from '../services/search';
+import { useDispatch } from 'react-redux';
+import { setGlobalSearchParams } from '../store/action';
 
 import TextBox from './form/textBox';
 import Selector from './form/selector';
@@ -58,7 +58,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
 
   const [searchParams, setSearchParams] = useState(initialSearchParams);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
-  const search = new Search();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setSearchParams({ ...searchParams, ...userAttributes.search });
@@ -73,12 +73,12 @@ const SearchComponent: React.FC<searchComponentProps> = (
     const newUserObject = { ...userAttributes, ...{ search: searchParams } };
     setUserAttributes(newUserObject);
     saveUser(newUserObject);
-    Alert.alert('Sikeres mentés');
     setIsLoaderActive(false);
-    search.search(searchParams).then((response) => {
-      console.log(response);
-      navigation.navigate('Result');
-    });
+    //console.log(newUserObject.search);
+    dispatch(setGlobalSearchParams({
+      searchParams: newUserObject.search,
+    }));
+    navigation.navigate('Result');
   };
 
   return (

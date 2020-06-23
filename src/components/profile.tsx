@@ -16,6 +16,7 @@ import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
 import ImageSelector from './form/imageSelector/imageSelector';
+import CitySelector from './form/citySelector';
 
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
@@ -53,12 +54,14 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     animalType: '',
     smokeFrequency: '',
     hobbies: [],
-    cognitoUserName: '',
     hairColor: '',
     age: 0,
     images: [],
     animalImages: [],
     primaryImageIndex: 0,
+    likedUsers: [],
+    disLikedUsers: [],
+    cognitoUserName: '',
   };
   const imageTypes = ['images', 'animalImages'];
 
@@ -74,7 +77,6 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   }, []);
 
   const initProfileUser = async () => {
-    console.log(userAttributes);
     setProfileUser({ ...profileUser, ...userAttributes });
     imageTypes.forEach((type) => {
       if (isImageCompileIsNecessary(type)) {
@@ -92,7 +94,6 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   const setCompiledImagesToUrl = async (type) => {
     setIsLoaderActive(true);
     const imageURLs = await imageStore.fetchImages(userAttributes[type]);
-    console.log(profileUser);
     await Promise.all(imageURLs).then((compiledImages: string[]) => {
       compiledImagesObj[type] = compiledImages;
       setProfileUser({ ...userAttributes, ...compiledImagesObj });
@@ -119,24 +120,27 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 
     const removeImages = await imageStore.removeImages(removedImageKeys);
     Promise.all(removeImages).then((log) => {
-      console.log(log);
+      //console.log(log);
     });
 
     const newImages = selectNewImages('images');
     const newAnimalImages = selectNewImages('animalImages');
     const newKeysPromise = await imageStore.uploadImages(newImages, profileUser.cognitoUserName);
-    const newAnimalKeysPromise = await imageStore.uploadImages(newAnimalImages, profileUser.cognitoUserName);
+    const newAnimalKeysPromise = await imageStore.uploadImages(
+      newAnimalImages, profileUser.cognitoUserName,
+    );
 
     Promise.all([newKeysPromise, newAnimalKeysPromise]).then((newKeys: any) => {
       const modifiedProfileUser = { ...{}, ...profileUser };
-
-      const wholeImageKeys = userAttributes.images.concat(newKeys[0]);
+      const oldImages = userAttributes.images || [];
+      const wholeImageKeys = [...oldImages, ...newKeys[0]];
       modifiedProfileUser.images = wholeImageKeys;
 
-      const wholeAnimalImageKeys = userAttributes.animalImages.concat(newKeys[1]);
+      const oldAnimalImages = userAttributes.animalImages || [];
+      const wholeAnimalImageKeys = [...oldAnimalImages, ...newKeys[1]];
       modifiedProfileUser.animalImages = wholeAnimalImageKeys;
       setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
-
+      console.log(userAttributes.age, modifiedProfileUser.age);
       saveUser({ ...userAttributes, ...modifiedProfileUser });
       Alert.alert('Sikeres mentés');
       setIsLoaderActive(false);
@@ -150,7 +154,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
+      <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
         <Loader isActive={isLoaderActive} />
         <Card>
           <ImageSelector
@@ -211,6 +215,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             value={profileUser.bio}
             setValue={setProfileUserAttribute}
           />
+          <CitySelector />
         </Card>
 
         <Card

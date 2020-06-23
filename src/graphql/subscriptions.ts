@@ -36,6 +36,8 @@ export const onCreateUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
     }
   }
 `;
@@ -73,6 +75,8 @@ export const onUpdateUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
     }
   }
 `;
@@ -110,6 +114,35 @@ export const onDeleteUser = /* GraphQL */ `
         hairColor
         hobbies
       }
+      likedUsers
+      disLikedUsers
+    }
+  }
+`;
+export const onCreateMatches = /* GraphQL */ `
+  subscription OnCreateMatches {
+    onCreateMatches {
+      id
+      user1
+      user2
+    }
+  }
+`;
+export const onUpdateMatches = /* GraphQL */ `
+  subscription OnUpdateMatches {
+    onUpdateMatches {
+      id
+      user1
+      user2
+    }
+  }
+`;
+export const onDeleteMatches = /* GraphQL */ `
+  subscription OnDeleteMatches {
+    onDeleteMatches {
+      id
+      user1
+      user2
     }
   }
 `;

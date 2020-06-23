@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Text,
   View,
@@ -17,6 +18,7 @@ import Loader from '../components/loader';
 
 import { styleTitle, styleBackground } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
+import { setUser } from '../store/action';
 import User from '../services/user';
 
 const SettingsScreen = ({ navigation, route }) => {
@@ -24,6 +26,7 @@ const SettingsScreen = ({ navigation, route }) => {
   const [isNewUser, setIsNewUser] = useState(route.params.newUser || false);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
   const loggedInUser = new User();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsLoaderActive(true);
@@ -36,7 +39,7 @@ const SettingsScreen = ({ navigation, route }) => {
   }, []);
 
   const saveUser = (modifiedUser) => {
-    loggedInUser.updateUser(modifiedUser);
+    dispatch(setUser({user: modifiedUser}));
   };
 
   const searchRoute = () => (

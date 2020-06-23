@@ -20,6 +20,8 @@ type User @model @searchable
   animalName: String
   bio: String
   search: Search
+  likedUsers: [String]
+  disLikedUsers: [String]
 }
 
 type Search {
@@ -33,4 +35,10 @@ type Search {
   smokeFrequency: String
   hairColor: String,
   hobbies: [Int]
+}
+
+type Matches @model @searchable {
+  id: ID,
+  user1: String,
+  user2: String,
 }

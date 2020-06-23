@@ -16,8 +16,6 @@ import ChatScreen from './src/screens/chatScreen';
 import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
 
-//require('./src/services/clearGlobalSetTimeout');
-
 Amplify.configure(config);
 
 const App = (props) => {

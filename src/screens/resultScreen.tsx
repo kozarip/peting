@@ -4,10 +4,11 @@ import {
   View,
   ImageBackground,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Search from '../services/search';
-import { saveMatch } from '../services/match';
+import { saveNewMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
@@ -16,7 +17,7 @@ import { hairColor, smokeFrequency } from '../constants/userFields';
 import PersonCard from '../components/personCard';
 import Loader from '../components/loader';
 import EmptyResultModal from '../components/emptyResultModal';
-import { setUser } from '../store/action';
+import { setUser, setMatches } from '../store/action';
 
 type ResultScreenProps = {
   navigation: any;
@@ -35,7 +36,6 @@ const initialResultPerson = {
   primaryImageIndex: 0,
   images: [require('../assets/images/elsa.jpg')],
   animalImages: [require('../assets/images/dog_sample.jpg')],
-  likedUsers: null,
 };
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
@@ -51,22 +51,27 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
 
   const search = new Search();
   const dispatch = useDispatch();
+  const { matches } = useSelector((state) => state);
 
   useEffect(() => {
     setIsLoaderActive(true);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
-    search.search(searchParams).then((res: any) => {
+    const matchedUsers = matches.map((match) => match.cognitoUserName);
+    const exceptUsers = { exceptUsers: [...[user.cognitoUserName], ...matchedUsers] };
+    search.search({ ...searchParams, ...exceptUsers }).then((res: any) => {
       setResultPersons(res.data.searchUsers.items);
       if (res.data.searchUsers.items.length === 0) {
-        setIsOverlayActive(true);
+        // setIsOverlayActive(true);
       } else {
+        if (resultPersonIndex > resultPersons.length - 1) {
+          setResultPersonIndex(0);
+        }
         setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
-        setResultPersonIndex(resultPersonIndex + 1);
       }
       setIsLoaderActive(false);
     });
-  }, [searchParams]);
+  }, [searchParams, matches]);
 
   const setCurrentResultPerson = (personIndex, persons?) => {
     const resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
@@ -85,7 +90,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   };
 
   const handlePressNext = () => {
-    //console.log(resultPersonIndex, resultPersons.length);
+    // console.log(resultPersonIndex, resultPersons.length);
     if (resultPersonIndex < resultPersons.length - 1) {
       setResultPersonIndex(resultPersonIndex + 1);
     } else {
@@ -96,8 +101,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
 
   const handlePressLike = () => {
     if (resultPerson.cognitoUserName) {
-      user.likedUsers = setUserIdToEmotionArray(user.likedUsers, resultPerson.cognitoUserName);
-      //user.likedUsers = null;
+      user.likes = createEmotionObject(user.likes, resultPerson.cognitoUserName);
+      // user.likedUsers = null;
       checkMatch();
       dispatch(setUser(user));
     }
@@ -106,31 +111,41 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
 
   const handlePressDislike = () => {
     if (resultPerson.cognitoUserName) {
-      user.disLikedUsers = setUserIdToEmotionArray(
-        user.disLikedUsers,
-        resultPerson.cognitoUserName,
-      );
+      user.dislikes = createEmotionObject(user.dislikes, resultPerson.cognitoUserName);
+      // user.disLikedUsers = null;
       dispatch(setUser(user));
     }
     handlePressNext();
   };
 
-  const setUserIdToEmotionArray = (array, userId) => {
-    const arrayWithNewUserId = [userId];
-    if (array && Array.isArray(array)) {
-      const result = [...array, ...arrayWithNewUserId];
-      return result.filter((item, pos) => result.indexOf(item) === pos);
+  const createEmotionObject = (array, userId) => {
+    const resultArray = array || [];
+    if (!resultArray.find((obj) => obj.cognitoUserName === userId)) {
+      resultArray.push({ cognitoUserName: userId, timestamp: new Date() });
     }
-    return arrayWithNewUserId;
+    return resultArray;
   };
 
   const checkMatch = () => {
-    if (resultPerson.likedUsers && resultPerson.likedUsers.includes(user.cognitoUserName)) {
-      console.log("it's a match");
-      saveMatch({
+    if (resultPerson.likes
+      && Array.isArray(resultPerson.likes)
+      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
+      Alert.alert('Match! Gratulálok');
+
+      const matchData: matchType = {
+        id: Math.random(),
+        cognitoUserName: resultPerson.cognitoUserName,
+        name: resultPerson.userName,
+        avatar_url: resultPerson.images[resultPerson.primaryImageIndex],
+        subtitle: new Date().toISOString().split('T', 1).join(''),
+      };
+      dispatch(setMatches({ matches: [matchData] }));
+      saveNewMatch({
         user1: user.cognitoUserName,
         user2: resultPerson.cognitoUserName,
+        timestamp: new Date(),
       });
+
     }
   };
 

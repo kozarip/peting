@@ -19,9 +19,9 @@ type User @model @searchable
   primaryImageIndex: Int
   animalName: String
   bio: String
+  likes: [Emotions]
+  dislikes: [Emotions]
   search: Search
-  likedUsers: [String]
-  disLikedUsers: [String]
 }
 
 type Search {
@@ -33,12 +33,18 @@ type Search {
   minHeight: Int
   maxHeight: Int
   smokeFrequency: String
-  hairColor: String,
+  hairColor: String
   hobbies: [Int]
+}
+
+type Emotions {
+  cognitoUserName: String
+  timestamp: String
 }
 
 type Matches @model @searchable {
   id: ID,
   user1: String,
   user2: String,
+  timestamp: String,
 }

@@ -20,6 +20,9 @@ const PicturesScreen = ({ navigation, route }) => {
   //console.log(route);
   const personImages = route.params.allImages.split(',');
   const animalImages = route.params.allAnimalImages.split(',');
+  const name = route.params.name || '';
+  const age = route.params.age > 0 ? route.params.age : '';
+  const animalName = route.params.animalName || '';
 
   return (
     <View style={{ flex: 1 }}>
@@ -33,18 +36,22 @@ const PicturesScreen = ({ navigation, route }) => {
           <PetingHeader
             navigation={navigation}
           />
-          <Text style={styles.title}>Elza, 30</Text>
+          <Text style={styles.title}>
+            {name}
+            {age}
+          </Text>
           <SliderBox
             images={personImages}
             sliderBoxHeight={width}
           />
-          <Text style={styles.title}>Zsömi</Text>
+          <Text style={styles.title}>{animalName}</Text>
           <SliderBox
             images={animalImages}
             sliderBoxHeight={width}
           />
         </ImageBackground>
       </ScrollView>
+      {/* TODO: add button handlers */}
       <LoveButtons />
     </View>
   );

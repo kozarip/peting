@@ -23,6 +23,9 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
         animalImages={person.animalImages}
         images={person.images}
         primaryImage={person.primaryImageIndex}
+        name={person.userName}
+        age={person.age}
+        animalName={person.animalName}
       />
       <ProfileTitle
         name={person.userName}

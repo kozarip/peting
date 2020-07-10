@@ -1,6 +1,7 @@
 export const initialState = {
   searchParams: {},
   user: {},
+  matches: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -14,6 +15,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.user,
+      };
+    case 'Set_Matches':
+      return {
+        ...state,
+        ...{ matches: [...state.matches, ...action.matches] },
       };
     default:
       return state;

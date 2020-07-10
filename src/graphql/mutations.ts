@@ -27,6 +27,14 @@ export const createUser = /* GraphQL */ `
       primaryImageIndex
       animalName
       bio
+      likes {
+        cognitoUserName
+        timestamp
+      }
+      dislikes {
+        cognitoUserName
+        timestamp
+      }
       search {
         minAge
         maxAge
@@ -39,8 +47,6 @@ export const createUser = /* GraphQL */ `
         hairColor
         hobbies
       }
-      likedUsers
-      disLikedUsers
     }
   }
 `;
@@ -69,6 +75,14 @@ export const updateUser = /* GraphQL */ `
       primaryImageIndex
       animalName
       bio
+      likes {
+        cognitoUserName
+        timestamp
+      }
+      dislikes {
+        cognitoUserName
+        timestamp
+      }
       search {
         minAge
         maxAge
@@ -81,8 +95,6 @@ export const updateUser = /* GraphQL */ `
         hairColor
         hobbies
       }
-      likedUsers
-      disLikedUsers
     }
   }
 `;
@@ -111,6 +123,14 @@ export const deleteUser = /* GraphQL */ `
       primaryImageIndex
       animalName
       bio
+      likes {
+        cognitoUserName
+        timestamp
+      }
+      dislikes {
+        cognitoUserName
+        timestamp
+      }
       search {
         minAge
         maxAge
@@ -123,8 +143,6 @@ export const deleteUser = /* GraphQL */ `
         hairColor
         hobbies
       }
-      likedUsers
-      disLikedUsers
     }
   }
 `;
@@ -137,6 +155,7 @@ export const createMatches = /* GraphQL */ `
       id
       user1
       user2
+      timestamp
     }
   }
 `;
@@ -149,6 +168,7 @@ export const updateMatches = /* GraphQL */ `
       id
       user1
       user2
+      timestamp
     }
   }
 `;
@@ -161,6 +181,7 @@ export const deleteMatches = /* GraphQL */ `
       id
       user1
       user2
+      timestamp
     }
   }
 `;

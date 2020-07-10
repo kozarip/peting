@@ -11,3 +11,10 @@ export function setUser(user) {
     user,
   };
 }
+
+export function setMatches(matches) {
+  return {
+    type: 'Set_Matches',
+    matches: matches.matches,
+  };
+}

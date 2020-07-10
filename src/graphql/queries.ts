@@ -24,6 +24,14 @@ export const getUser = /* GraphQL */ `
       primaryImageIndex
       animalName
       bio
+      likes {
+        cognitoUserName
+        timestamp
+      }
+      dislikes {
+        cognitoUserName
+        timestamp
+      }
       search {
         minAge
         maxAge
@@ -36,8 +44,6 @@ export const getUser = /* GraphQL */ `
         hairColor
         hobbies
       }
-      likedUsers
-      disLikedUsers
     }
   }
 `;
@@ -68,6 +74,14 @@ export const listUsers = /* GraphQL */ `
         primaryImageIndex
         animalName
         bio
+        likes {
+          cognitoUserName
+          timestamp
+        }
+        dislikes {
+          cognitoUserName
+          timestamp
+        }
         search {
           minAge
           maxAge
@@ -80,8 +94,6 @@ export const listUsers = /* GraphQL */ `
           hairColor
           hobbies
         }
-        likedUsers
-        disLikedUsers
       }
       nextToken
     }
@@ -93,6 +105,7 @@ export const getMatches = /* GraphQL */ `
       id
       user1
       user2
+      timestamp
     }
   }
 `;
@@ -107,6 +120,7 @@ export const listMatchess = /* GraphQL */ `
         id
         user1
         user2
+        timestamp
       }
       nextToken
     }
@@ -147,6 +161,14 @@ export const userByCognitoUserName = /* GraphQL */ `
         primaryImageIndex
         animalName
         bio
+        likes {
+          cognitoUserName
+          timestamp
+        }
+        dislikes {
+          cognitoUserName
+          timestamp
+        }
         search {
           minAge
           maxAge
@@ -159,8 +181,6 @@ export const userByCognitoUserName = /* GraphQL */ `
           hairColor
           hobbies
         }
-        likedUsers
-        disLikedUsers
       }
       nextToken
     }
@@ -199,6 +219,14 @@ export const searchUsers = /* GraphQL */ `
         primaryImageIndex
         animalName
         bio
+        likes {
+          cognitoUserName
+          timestamp
+        }
+        dislikes {
+          cognitoUserName
+          timestamp
+        }
         search {
           minAge
           maxAge
@@ -211,8 +239,6 @@ export const searchUsers = /* GraphQL */ `
           hairColor
           hobbies
         }
-        likedUsers
-        disLikedUsers
       }
       nextToken
       total
@@ -236,6 +262,7 @@ export const searchMatchess = /* GraphQL */ `
         id
         user1
         user2
+        timestamp
       }
       nextToken
       total

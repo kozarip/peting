@@ -11,6 +11,9 @@ type ImagesBoxProps = {
   images: any,
   animalImages: any,
   primaryImage: number,
+  name: string,
+  age: number,
+  animalName: string,
 }
 
 const ImagesBox: React.FC<ImagesBoxProps> = (
@@ -19,6 +22,9 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
     images,
     animalImages,
     primaryImage,
+    name,
+    age,
+    animalName,
   },
 ) => {
   const [profileImage, setProfileImage] = useState('https://www.jtsoftex.com/wp-content/uploads/2015/01/dummy-person.jpg');
@@ -49,7 +55,16 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   return (
     <TouchableOpacity
       style={styles.imageContainer}
-      onPress={() => { navigation.navigate('Pictures', { id: 1, allImages, allAnimalImages }); }}
+      onPress={() => {
+        navigation.navigate('Pictures', {
+          id: 1,
+          allImages,
+          allAnimalImages,
+          name,
+          age,
+          animalName,
+        });
+      }}
     >
       <ImageBox
         type="person"

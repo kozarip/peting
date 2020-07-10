@@ -74,7 +74,6 @@ const SearchComponent: React.FC<searchComponentProps> = (
     setUserAttributes(newUserObject);
     saveUser(newUserObject);
     setIsLoaderActive(false);
-    //console.log(newUserObject.search);
     dispatch(setGlobalSearchParams({
       searchParams: newUserObject.search,
     }));

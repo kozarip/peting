@@ -59,8 +59,8 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     images: [],
     animalImages: [],
     primaryImageIndex: 0,
-    likedUsers: [],
-    disLikedUsers: [],
+    likes: [],
+    dislikes: [],
     cognitoUserName: '',
   };
   const imageTypes = ['images', 'animalImages'];
@@ -119,9 +119,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     setIsLoaderActive(true);
 
     const removeImages = await imageStore.removeImages(removedImageKeys);
-    Promise.all(removeImages).then((log) => {
-      //console.log(log);
-    });
+    Promise.all(removeImages);
 
     const newImages = selectNewImages('images');
     const newAnimalImages = selectNewImages('animalImages');
@@ -139,8 +137,11 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
       const oldAnimalImages = userAttributes.animalImages || [];
       const wholeAnimalImageKeys = [...oldAnimalImages, ...newKeys[1]];
       modifiedProfileUser.animalImages = wholeAnimalImageKeys;
+      if (!modifiedProfileUser.primaryImageIndex) {
+        modifiedProfileUser.primaryImageIndex = 0;
+      }
       setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
-      console.log(userAttributes.age, modifiedProfileUser.age);
+      console.log(modifiedProfileUser.primaryImageIndex);
       saveUser({ ...userAttributes, ...modifiedProfileUser });
       Alert.alert('Sikeres mentés');
       setIsLoaderActive(false);

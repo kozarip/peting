@@ -1,5 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, Button, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  Button,
+  View,
+} from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { styleBox } from '../assets/styles/base';
 

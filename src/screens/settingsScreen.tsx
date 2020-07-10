@@ -39,7 +39,7 @@ const SettingsScreen = ({ navigation, route }) => {
   }, []);
 
   const saveUser = (modifiedUser) => {
-    dispatch(setUser({user: modifiedUser}));
+    dispatch(setUser({ user: modifiedUser }));
   };
 
   const searchRoute = () => (

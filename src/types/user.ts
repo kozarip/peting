@@ -17,6 +17,6 @@ export type UserType = {
   images: string[];
   animalImages: string[];
   primaryImageIndex: number,
-  likedUsers: string[],
-  disLikedUsers: string[],
+  likes: any,
+  dislikes: any,
 };

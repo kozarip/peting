@@ -43,6 +43,16 @@ export const onCreateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }
@@ -88,6 +98,16 @@ export const onUpdateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }
@@ -133,6 +153,16 @@ export const onDeleteUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }

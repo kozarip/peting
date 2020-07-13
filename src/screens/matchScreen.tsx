@@ -61,7 +61,6 @@ const MatchScreen = ({ navigation }) => {
         />
         <Text style={styles.title}>Matchek</Text>
         <ScrollView>
-          { console.log(matchImages) }
           {
             myMatches.map((item, i) => (
               <ListItem

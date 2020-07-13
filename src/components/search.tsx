@@ -27,6 +27,7 @@ import {
   hobbies,
 } from '../constants/userFields';
 import MultiSelector from './form/multiSelector';
+import CitySelector from './form/citySelectorModal';
 
 type searchComponentProps = {
   userAttributes: any,
@@ -54,6 +55,11 @@ const SearchComponent: React.FC<searchComponentProps> = (
     minAge: 0,
     maxAge: 0,
     hobbies: [],
+    city: {
+      name: '',
+      lat: 0,
+      lng: 0,
+    },
   };
 
   const [searchParams, setSearchParams] = useState(initialSearchParams);
@@ -82,7 +88,10 @@ const SearchComponent: React.FC<searchComponentProps> = (
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView style={styles.container}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        style={styles.container}
+      >
         <Loader isActive={isLoaderActive} />
         <Card
           containerStyle={styleForm.cardBlock}
@@ -110,10 +119,15 @@ const SearchComponent: React.FC<searchComponentProps> = (
             value={searchParams.maxAge}
             setValue={setSearchParamsValue}
           />
+          <CitySelector
+            label="Lakhelye"
+            setValue={setSearchParamsValue}
+            value={searchParams.city.name || ' '}
+          />
         </Card>
 
         <Card
-          containerStyle={styleForm.cardBlock}
+          containerStyle={styleForm.cardBlock}d
           title="Kinézet"
           titleStyle={styleForm.cardTitle as any}
         >

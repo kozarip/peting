@@ -22,6 +22,7 @@ type User @model @searchable
   likes: [Emotions]
   dislikes: [Emotions]
   search: Search
+  city: City
 }
 
 type Search {
@@ -35,11 +36,18 @@ type Search {
   smokeFrequency: String
   hairColor: String
   hobbies: [Int]
+  city: City
 }
 
 type Emotions {
   cognitoUserName: String
   timestamp: String
+}
+
+type City {
+  name: String
+  lat: Float
+  lng: Float
 }
 
 type Matches @model @searchable {

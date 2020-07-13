@@ -16,7 +16,12 @@ export type UserType = {
   hairColor: string;
   images: string[];
   animalImages: string[];
-  primaryImageIndex: number,
-  likes: any,
-  dislikes: any,
+  primaryImageIndex: number;
+  likes: any;
+  dislikes: any;
+  city: {
+    name: string;
+    lat: number;
+    lng: number;
+  }
 };

@@ -43,6 +43,16 @@ export const getUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }
@@ -93,6 +103,11 @@ export const listUsers = /* GraphQL */ `
           smokeFrequency
           hairColor
           hobbies
+        }
+        city {
+          name
+          lat
+          lng
         }
       }
       nextToken
@@ -181,6 +196,11 @@ export const userByCognitoUserName = /* GraphQL */ `
           hairColor
           hobbies
         }
+        city {
+          name
+          lat
+          lng
+        }
       }
       nextToken
     }
@@ -238,6 +258,11 @@ export const searchUsers = /* GraphQL */ `
           smokeFrequency
           hairColor
           hobbies
+        }
+        city {
+          name
+          lat
+          lng
         }
       }
       nextToken

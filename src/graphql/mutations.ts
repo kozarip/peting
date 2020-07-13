@@ -46,6 +46,16 @@ export const createUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }
@@ -94,6 +104,16 @@ export const updateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }
@@ -142,6 +162,16 @@ export const deleteUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
+        city {
+          name
+          lat
+          lng
+        }
+      }
+      city {
+        name
+        lat
+        lng
       }
     }
   }

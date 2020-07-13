@@ -16,7 +16,7 @@ import Selector from './form/selector';
 import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
 import ImageSelector from './form/imageSelector/imageSelector';
-import CitySelector from './form/citySelector';
+import CitySelector from './form/citySelectorModal';
 
 import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
@@ -62,6 +62,11 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     likes: [],
     dislikes: [],
     cognitoUserName: '',
+    city: {
+      name: '',
+      lat: 0,
+      lng: 0,
+    },
   };
   const imageTypes = ['images', 'animalImages'];
 
@@ -155,7 +160,10 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView keyboardShouldPersistTaps="always" style={styles.container}>
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        style={styles.container}
+      >
         <Loader isActive={isLoaderActive} />
         <Card>
           <ImageSelector
@@ -216,7 +224,11 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             value={profileUser.bio}
             setValue={setProfileUserAttribute}
           />
-          <CitySelector />
+          <CitySelector
+            label="Lakhelyed"
+            setValue={setProfileUserAttribute}
+            value={profileUser.city.name}
+          />
         </Card>
 
         <Card

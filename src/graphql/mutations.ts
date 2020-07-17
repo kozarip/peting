@@ -46,17 +46,11 @@ export const createUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -104,17 +98,11 @@ export const updateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -162,17 +150,11 @@ export const deleteUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -212,6 +194,60 @@ export const deleteMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+    }
+  }
+`;
+export const createChat = /* GraphQL */ `
+  mutation CreateChat(
+    $input: CreateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    createChat(input: $input, condition: $condition) {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
+export const updateChat = /* GraphQL */ `
+  mutation UpdateChat(
+    $input: UpdateChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    updateChat(input: $input, condition: $condition) {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
+export const deleteChat = /* GraphQL */ `
+  mutation DeleteChat(
+    $input: DeleteChatInput!
+    $condition: ModelChatConditionInput
+  ) {
+    deleteChat(input: $input, condition: $condition) {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
     }
   }
 `;

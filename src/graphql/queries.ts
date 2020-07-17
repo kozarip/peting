@@ -43,17 +43,11 @@ export const getUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -103,12 +97,11 @@ export const listUsers = /* GraphQL */ `
           smokeFrequency
           hairColor
           hobbies
+          distance
         }
-        city {
-          name
-          lat
-          lng
-        }
+        cityName
+        cityLat
+        cityLng
       }
       nextToken
     }
@@ -136,6 +129,43 @@ export const listMatchess = /* GraphQL */ `
         user1
         user2
         timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const getChat = /* GraphQL */ `
+  query GetChat($id: ID!) {
+    getChat(id: $id) {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
+export const listChats = /* GraphQL */ `
+  query ListChats(
+    $filter: ModelChatFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        user1
+        user2
+        messages {
+          _id
+          text
+          createdAt
+          messagesOwner
+        }
       }
       nextToken
     }
@@ -195,12 +225,11 @@ export const userByCognitoUserName = /* GraphQL */ `
           smokeFrequency
           hairColor
           hobbies
+          distance
         }
-        city {
-          name
-          lat
-          lng
-        }
+        cityName
+        cityLat
+        cityLng
       }
       nextToken
     }
@@ -258,12 +287,11 @@ export const searchUsers = /* GraphQL */ `
           smokeFrequency
           hairColor
           hobbies
+          distance
         }
-        city {
-          name
-          lat
-          lng
-        }
+        cityName
+        cityLat
+        cityLng
       }
       nextToken
       total
@@ -288,6 +316,35 @@ export const searchMatchess = /* GraphQL */ `
         user1
         user2
         timestamp
+      }
+      nextToken
+      total
+    }
+  }
+`;
+export const searchChats = /* GraphQL */ `
+  query SearchChats(
+    $filter: SearchableChatFilterInput
+    $sort: SearchableChatSortInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    searchChats(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        user1
+        user2
+        messages {
+          _id
+          text
+          createdAt
+          messagesOwner
+        }
       }
       nextToken
       total

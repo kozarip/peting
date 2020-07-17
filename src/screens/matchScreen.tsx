@@ -5,7 +5,7 @@ import {
   StyleSheet,
   ImageBackground,
 } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { ListItem, Card } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import ImageStore from '../services/imageStore';
@@ -17,7 +17,7 @@ const MatchScreen = ({ navigation }) => {
   const [myMatches, setMyMatches] = useState<matchType[]>([]);
   const [matchImages, setMatchImages] = useState({});
 
-  const { matches } = useSelector((state) => state);
+  const { matches, user } = useSelector((state) => state);
   const imageStore = new ImageStore('Unknown');
 
   useEffect(() => {
@@ -60,21 +60,34 @@ const MatchScreen = ({ navigation }) => {
           navigation={navigation}
         />
         <Text style={styles.title}>Matchek</Text>
-        <ScrollView>
-          {
-            myMatches.map((item, i) => (
-              <ListItem
-                key={i}
-                title={item.name.trim()}
-                subtitle={item.subtitle}
-                leftAvatar={{ source: { uri: matchImages[i] } }}
-                bottomDivider
-                chevron
-                onPress={() => { navigation.navigate('Chat', { id: i, name: item.name }); }}
-              />
-            ))
-          }
-        </ScrollView>
+        {
+          // eslint-disable-next-line operator-linebreak
+          myMatches.length > 0 ?
+            <ScrollView>
+              {
+                myMatches.map((item, i) => (
+                  <ListItem
+                    key={i}
+                    title={item.name.trim()}
+                    subtitle={item.subtitle}
+                    leftAvatar={{ source: { uri: matchImages[i] } }}
+                    bottomDivider
+                    chevron
+                    onPress={() => {
+                      navigation.navigate('Chat', {
+                        id: i,
+                        name: item.name,
+                        userId: user.cognitoUserName,
+                        friendId: item.cognitoUserName,
+                        avatar: matchImages[i],
+                      });
+                    }}
+                  />
+                ))
+              }
+            </ScrollView>
+            : <Card><Text>Sajnos még nincs egyezésed</Text></Card>
+        }
       </ImageBackground>
     </View>
   );

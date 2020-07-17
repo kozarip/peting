@@ -22,7 +22,9 @@ type User @model @searchable
   likes: [Emotions]
   dislikes: [Emotions]
   search: Search
-  city: City
+  cityName: String
+  cityLat: Float
+  cityLng: Float
 }
 
 type Search {
@@ -36,7 +38,7 @@ type Search {
   smokeFrequency: String
   hairColor: String
   hobbies: [Int]
-  city: City
+  distance: Int
 }
 
 type Emotions {
@@ -44,15 +46,23 @@ type Emotions {
   timestamp: String
 }
 
-type City {
-  name: String
-  lat: Float
-  lng: Float
-}
-
 type Matches @model @searchable {
   id: ID,
   user1: String,
   user2: String,
   timestamp: String,
+}
+
+type Chat @model @searchable {
+  id: ID
+  user1: String
+  user2: String
+  messages: [Message]
+}
+
+type Message {
+  _id: String
+  text: String
+  createdAt: String
+  messagesOwner: String
 }

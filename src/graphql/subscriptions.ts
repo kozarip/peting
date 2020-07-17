@@ -43,17 +43,11 @@ export const onCreateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -98,17 +92,11 @@ export const onUpdateUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -153,17 +141,11 @@ export const onDeleteUser = /* GraphQL */ `
         smokeFrequency
         hairColor
         hobbies
-        city {
-          name
-          lat
-          lng
-        }
+        distance
       }
-      city {
-        name
-        lat
-        lng
-      }
+      cityName
+      cityLat
+      cityLng
     }
   }
 `;
@@ -194,6 +176,51 @@ export const onDeleteMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+    }
+  }
+`;
+export const onCreateChat = /* GraphQL */ `
+  subscription OnCreateChat {
+    onCreateChat {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
+export const onUpdateChat = /* GraphQL */ `
+  subscription OnUpdateChat {
+    onUpdateChat {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
+export const onDeleteChat = /* GraphQL */ `
+  subscription OnDeleteChat {
+    onDeleteChat {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
     }
   }
 `;

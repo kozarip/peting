@@ -1,4 +1,4 @@
-import { fonts } from './variables';
+import { fonts, colors } from './variables';
 
 export const styleForm = {
   cardBlock: {
@@ -17,5 +17,8 @@ export const styleForm = {
     fontSize: fonts.heading3,
     marginBottom: 10,
     marginHorizontal: 0,
+  },
+  mandatory: {
+    color: colors.darkPrimary,
   },
 };

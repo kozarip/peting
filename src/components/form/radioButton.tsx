@@ -15,6 +15,7 @@ type RadioButtonProps = {
   type: string;
   setValue: any;
   label: string;
+  mandatory?: boolean
 }
 
 const RadioButton: React.FC<RadioButtonProps> = ({
@@ -23,11 +24,13 @@ const RadioButton: React.FC<RadioButtonProps> = ({
   type,
   setValue,
   label,
+  mandatory,
 }) => {
   return (
     <View>
       <Text style={styleForm.label as any}>
         {label}
+        {mandatory && <Text style={styleForm.mandatory}> *</Text>}
       </Text>
       {Array.isArray(options) && options.map((res: any) => {
         return (

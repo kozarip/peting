@@ -1,5 +1,14 @@
 export function createNewTypeObject(type, value) {
+  let newValue;
+  // eslint-disable-next-line no-restricted-globals
+  if (Array.isArray(value)) {
+    newValue = value;
+  } else if (!isNaN(parseInt(value, 10))) {
+    newValue = parseInt(value, 10);
+  } else {
+    newValue = value;
+  }
   const obj = {};
-  obj[type] = value;
+  obj[type] = newValue;
   return obj;
 }

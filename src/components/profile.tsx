@@ -62,12 +62,11 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     likes: [],
     dislikes: [],
     cognitoUserName: '',
-    city: {
-      name: '',
-      lat: 0,
-      lng: 0,
-    },
+    cityName: ' ',
+    cityLat: 0,
+    cityLng: 0,
   };
+  const mandatoryFields = ['userName', 'email', 'gender', 'height', 'animalName', 'animalType', 'age', 'cityName'];
   const imageTypes = ['images', 'animalImages'];
 
   const [profileUser, setProfileUser] = useState(initialProfileUser);
@@ -121,36 +120,61 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   };
 
   const handleSaveProfile = async () => {
-    setIsLoaderActive(true);
+    const errorFields = checkMandatoryFields();
+    if (errorFields.length > 0) {
+      Alert.alert(`Az alábbi mezők kitőltése kötelező: ${errorFields.join(', ')}`);
+    } else {
+      setIsLoaderActive(true);
 
-    const removeImages = await imageStore.removeImages(removedImageKeys);
-    Promise.all(removeImages);
+      const removeImages = await imageStore.removeImages(removedImageKeys);
+      Promise.all(removeImages);
 
-    const newImages = selectNewImages('images');
-    const newAnimalImages = selectNewImages('animalImages');
-    const newKeysPromise = await imageStore.uploadImages(newImages, profileUser.cognitoUserName);
-    const newAnimalKeysPromise = await imageStore.uploadImages(
-      newAnimalImages, profileUser.cognitoUserName,
-    );
+      const newImages = selectNewImages('images');
+      const newAnimalImages = selectNewImages('animalImages');
+      const newKeysPromise = await imageStore.uploadImages(newImages, profileUser.cognitoUserName);
+      const newAnimalKeysPromise = await imageStore.uploadImages(
+        newAnimalImages, profileUser.cognitoUserName,
+      );
 
-    Promise.all([newKeysPromise, newAnimalKeysPromise]).then((newKeys: any) => {
-      const modifiedProfileUser = { ...{}, ...profileUser };
-      const oldImages = userAttributes.images || [];
-      const wholeImageKeys = [...oldImages, ...newKeys[0]];
-      modifiedProfileUser.images = wholeImageKeys;
+      Promise.all([newKeysPromise, newAnimalKeysPromise]).then((newKeys: any) => {
+        const modifiedProfileUser = { ...{}, ...profileUser };
+        const oldImages = userAttributes.images || [];
+        const wholeImageKeys = [...oldImages, ...newKeys[0]];
+        modifiedProfileUser.images = wholeImageKeys;
 
-      const oldAnimalImages = userAttributes.animalImages || [];
-      const wholeAnimalImageKeys = [...oldAnimalImages, ...newKeys[1]];
-      modifiedProfileUser.animalImages = wholeAnimalImageKeys;
-      if (!modifiedProfileUser.primaryImageIndex) {
-        modifiedProfileUser.primaryImageIndex = 0;
-      }
-      setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
-      console.log(modifiedProfileUser.primaryImageIndex);
-      saveUser({ ...userAttributes, ...modifiedProfileUser });
-      Alert.alert('Sikeres mentés');
-      setIsLoaderActive(false);
-    });
+        const oldAnimalImages = userAttributes.animalImages || [];
+        const wholeAnimalImageKeys = [...oldAnimalImages, ...newKeys[1]];
+        modifiedProfileUser.animalImages = wholeAnimalImageKeys;
+        if (!modifiedProfileUser.primaryImageIndex) {
+          modifiedProfileUser.primaryImageIndex = 0;
+        }
+        setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
+        saveUser({ ...userAttributes, ...modifiedProfileUser });
+        Alert.alert('Sikeres mentés');
+        setIsLoaderActive(false);
+      });
+    }
+  };
+
+  const checkMandatoryFields = () => {
+    return mandatoryFields.filter((field) => isEmpty(profileUser[field]));
+  };
+
+  const isEmpty = (field) => {
+    if (!field) {
+      return true;
+    }
+    const fieldType = typeof field;
+    if (fieldType === 'undefined') {
+      return true;
+    }
+    if (fieldType === 'number') {
+      return field < 1;
+    }
+    if (fieldType === 'string') {
+      return field.trim() === '';
+    }
+    return false;
   };
 
   const selectNewImages = (imageType: 'images' | 'animalImages') => {
@@ -191,12 +215,14 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <TextBox
             label="Név"
             type="userName"
+            mandatory={mandatoryFields.includes('userName')}
             placeholder="Ird ide a neved"
             value={profileUser.userName}
             setValue={setProfileUserAttribute}
           />
           <TextBox
             label="E-mail"
+            mandatory={mandatoryFields.includes('email')}
             value={profileUser.email}
             type="email"
             setValue={setProfileUserAttribute}
@@ -205,6 +231,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <RadioButton
             options={gender}
             value={profileUser.gender}
+            mandatory={mandatoryFields.includes('gender')}
             type="gender"
             label="Nemed"
             setValue={setProfileUserAttribute}
@@ -212,6 +239,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <TextBox
             label="Korod"
             type="age"
+            mandatory={mandatoryFields.includes('age')}
             placeholder="év"
             keyboardType="number-pad"
             value={profileUser.age}
@@ -220,6 +248,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <TextBox
             label="Bio"
             type="bio"
+            mandatory={mandatoryFields.includes('bio')}
             placeholder=""
             value={profileUser.bio}
             setValue={setProfileUserAttribute}
@@ -227,7 +256,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <CitySelector
             label="Lakhelyed"
             setValue={setProfileUserAttribute}
-            value={profileUser.city.name}
+            value={profileUser.cityName}
           />
         </Card>
 
@@ -238,6 +267,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         >
           <TextBox
             label="Magasság (cm)"
+            mandatory={mandatoryFields.includes('height')}
             placeholder="? cm"
             type="height"
             keyboardType="number-pad"
@@ -246,6 +276,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <Selector
             label={hairColor.label}
+            mandatory={mandatoryFields.includes('hairColor')}
             options={hairColor.options}
             type="hairColor"
             setValue={setProfileUserAttribute}
@@ -261,6 +292,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <TextBox
             label="Állatod neve"
             type="animalName"
+            mandatory={mandatoryFields.includes('animalName')}
             value={profileUser.animalName}
             setValue={setProfileUserAttribute}
           />
@@ -268,12 +300,14 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             label={animalType.label}
             options={animalType.options}
             type="animalType"
+            mandatory={mandatoryFields.includes('animalType')}
             setValue={setProfileUserAttribute}
             value={profileUser.animalType}
           />
           <Selector
             label={animalSize.label}
             options={animalSize.options}
+            mandatory={mandatoryFields.includes('animalSize')}
             type="animalSize"
             setValue={setProfileUserAttribute}
             value={profileUser.animalSize}
@@ -288,6 +322,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           <Selector
             label={smokeFrequency.label}
             options={smokeFrequency.options}
+            mandatory={mandatoryFields.includes('smokeFrequency')}
             type="smokeFrequency"
             setValue={setProfileUserAttribute}
             value={profileUser.smokeFrequency}

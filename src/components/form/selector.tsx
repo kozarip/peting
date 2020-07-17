@@ -11,6 +11,7 @@ type SelectorProps = {
   type: string;
   setValue: any;
   value: any;
+  mandatory?: boolean;
 }
 
 type SelectorOptions = {
@@ -25,11 +26,15 @@ const Selector: React.FC<SelectorProps> = (
     type,
     value,
     setValue,
+    mandatory,
   },
 ) => {
   return (
     <View>
-      <Text style={styleForm.label as any}>{label}</Text>
+      <Text style={styleForm.label as any}>
+        {label}
+        {mandatory && <Text style={styleForm.mandatory}> *</Text>}
+      </Text>
       <RNPickerSelect
         placeholder={{
           label: 'Válassz egy elemet',

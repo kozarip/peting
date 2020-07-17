@@ -10,6 +10,7 @@ type TextBoxProps = {
   value?: string | number,
   placeholder?: string
   setValue: any
+  mandatory?: boolean
   keyboardType?: 'default' | 'number-pad' | 'numeric' | 'email-address' | 'phone-pad'
 }
 
@@ -20,6 +21,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   placeholder,
   setValue,
   keyboardType,
+  mandatory,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
 
@@ -27,11 +29,12 @@ const TextBox: React.FC<TextBoxProps> = ({
     <View>
       <Text style={styleForm.label as any}>
         {label}
+        {mandatory && <Text style={styleForm.mandatory}> *</Text>}
       </Text>
       <TextInput
         placeholder={placeholder}
         keyboardType={keyboardType || 'default'}
-        style={{ ...styleForm.cardInput, ...placeHolderStyle }}
+        style={{ ...styleForm.cardInput, ...placeHolderStyle}}
         onChangeText={(changedText) => {
           setValue(createNewTypeObject(type, changedText));
         }}

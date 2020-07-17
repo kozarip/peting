@@ -1,5 +1,12 @@
-import React, {useState} from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, {
+  useState,
+} from 'react';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+} from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { styleForm } from '../../assets/styles/form';
@@ -11,8 +18,8 @@ const CitySelector = ({
   setValue,
 }) => {
   const [isCityOverlayActive, setIsCityOverlayActive] = useState(false);
-  const defaultPlaceholder = value === ' ' ? 'Kezd el írni a település nevét' : value;
-  if (value) {
+  const defaultPlaceholder = !value || value === ' ' ? 'Kezd el írni a település nevét' : value;
+  if (typeof value !== 'undefined') {
     return (
       <View>
         <Text style={styleForm.label as any}>{label}</Text>
@@ -31,23 +38,21 @@ const CitySelector = ({
           width="80%"
           height="70%"
         >
-          <View>
+          <View style={styles.overlayContainer}>
             <GooglePlacesAutocomplete
               placeholder={defaultPlaceholder}
               minLength={2} // minimum length of text to search
               autoFocus={false}
               returnKeyType="search"
-              listViewDisplayed={true}
+              listViewDisplayed
               numberOfLines={3}
               fetchDetails
               renderDescription={(row) => row.description}
               onPress={(data, details = null) => {
                 setValue({
-                  city: {
-                    name: data.description,
-                    lat: details?.geometry.location.lat,
-                    lng: details?.geometry.location.lng,
-                  },
+                  cityName: data.description,
+                  cityLat: details?.geometry.location.lat,
+                  cityLng: details?.geometry.location.lng,
                 });
                 setIsCityOverlayActive(false);
               }}
@@ -96,15 +101,15 @@ const CitySelector = ({
               }}
               debounce={200}
             />
-          </View>
-          <View style={styles.closeButton}>
-            <Button
-              title="Bezárás"
-              color={colors.darkPrimary}
-              onPress={() => {
-                setIsCityOverlayActive(false);
-              }}
-            />
+            <View style={styles.closeButton}>
+              <Button
+                title="Bezárás"
+                color={colors.darkPrimary}
+                onPress={() => {
+                  setIsCityOverlayActive(false);
+                }}
+              />
+            </View>
           </View>
         </Overlay>
       </View>
@@ -114,6 +119,9 @@ const CitySelector = ({
 };
 
 const styles = StyleSheet.create({
+  overlayContainer: {
+    flex: 1,
+  },
   closeButton: {
     position: 'absolute',
     bottom: 0,

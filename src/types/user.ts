@@ -19,9 +19,7 @@ export type UserType = {
   primaryImageIndex: number;
   likes: any;
   dislikes: any;
-  city: {
-    name: string;
-    lat: number;
-    lng: number;
-  }
+  cityName: string;
+  cityLat: number;
+  cityLng: number;
 };

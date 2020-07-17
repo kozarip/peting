@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Search from '../services/search';
+import Chat from '../services/chat';
 import { saveNewMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
@@ -50,6 +51,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const [isOverlayActive, setIsOverlayActive] = useState(false);
 
   const search = new Search();
+  const chat = new Chat();
   const dispatch = useDispatch();
   const { matches } = useSelector((state) => state);
 
@@ -59,7 +61,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
     setResultPersonIndex(0);
     const matchedUsers = matches.map((match) => match.cognitoUserName);
     const exceptUsers = { exceptUsers: [...[user.cognitoUserName], ...matchedUsers] };
-    search.search({ ...searchParams, ...exceptUsers }).then((res: any) => {
+    const city = { lat: user.cityLat, lng: user.cityLng };
+    search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
       setResultPersons(res.data.searchUsers.items);
       if (res.data.searchUsers.items.length === 0) {
         // setIsOverlayActive(true);
@@ -140,6 +143,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
         subtitle: new Date().toISOString().split('T', 1).join(''),
       };
       dispatch(setMatches({ matches: [matchData] }));
+      chat.createNewChat({
+        user1: user.cognitoUserName,
+        user2: resultPerson.cognitoUserName,
+        messages: [],
+      });
       saveNewMatch({
         user1: user.cognitoUserName,
         user2: resultPerson.cognitoUserName,

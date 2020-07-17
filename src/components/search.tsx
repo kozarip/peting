@@ -27,7 +27,6 @@ import {
   hobbies,
 } from '../constants/userFields';
 import MultiSelector from './form/multiSelector';
-import CitySelector from './form/citySelectorModal';
 
 type searchComponentProps = {
   userAttributes: any,
@@ -47,19 +46,15 @@ const SearchComponent: React.FC<searchComponentProps> = (
   const initialSearchParams = {
     gender: -1,
     minHeight: 0,
-    maxHeight: 0,
+    maxHeight: 999,
     animalSize: '',
     animalType: '',
     smokeFrequency: '',
     hairColor: '',
     minAge: 0,
-    maxAge: 0,
+    maxAge: 99,
     hobbies: [],
-    city: {
-      name: '',
-      lat: 0,
-      lng: 0,
-    },
+    distance: 20,
   };
 
   const [searchParams, setSearchParams] = useState(initialSearchParams);
@@ -119,10 +114,12 @@ const SearchComponent: React.FC<searchComponentProps> = (
             value={searchParams.maxAge}
             setValue={setSearchParamsValue}
           />
-          <CitySelector
-            label="Lakhelye"
+          <TextBox
+            label="Távolság (km)"
+            type="distance"
+            keyboardType="number-pad"
+            value={searchParams.distance}
             setValue={setSearchParamsValue}
-            value={searchParams.city.name || ' '}
           />
         </Card>
 

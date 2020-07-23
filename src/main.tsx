@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { View, ImageBackground, StyleSheet, Text } from 'react-native';
+import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import { getUserMatches, selectTheOtherProfileId } from './services/match';
@@ -22,10 +22,14 @@ const Main = ({ navigation }) => {
         }));
         setGlobalMatches(userData.cognitoUserName);
         navigation.navigate('Result');
-        navigationReset('Result', {});
+        if (Platform.OS === 'android') {
+          navigationReset('Result', {});
+        }
       } else {
         navigation.navigate('Settings');
-        navigationReset('Settings', { newUser: true });
+        if (Platform.OS === 'android') {
+          navigationReset('Settings', { newUser: true });
+        }
       }
     });
   }, []);

@@ -34,12 +34,20 @@ class Chat {
     API.graphql(graphqlOperation(mutations.updateChat, { input: chat }));
   }
 
-  async subscriptionChat(chatId) {
-    /* const subscription = API.graphql(
-      graphqlOperation(subscriptions.onUpdateChat)
+  async subscriptionChat(chatId, setNewChat) {
+    const subscription = await API.graphql(
+      graphqlOperation(subscriptions.subscribeToGivenChat, { id: chatId }),
     ).subscribe({
-      next: (todoData) => console.log(todoData),
-    }); */
+      next: (messages) => {
+        if (typeof setNewChat === 'function') {
+          if (messages.value.data.subscribeToGivenChat.messages) {
+            return setNewChat(messages.value.data.subscribeToGivenChat.messages);
+          }
+        }
+        return false;
+      },
+    });
+    return subscription;
   }
 }
 

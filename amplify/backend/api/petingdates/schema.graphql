@@ -66,3 +66,8 @@ type Message {
   createdAt: String
   messagesOwner: String
 }
+
+type Subscription {
+    subscribeToGivenChat(id: ID!): Chat
+        @aws_subscribe(mutations: ["updateChat"])
+}

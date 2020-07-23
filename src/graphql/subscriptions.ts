@@ -2,6 +2,21 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const subscribeToGivenChat = /* GraphQL */ `
+  subscription SubscribeToGivenChat($id: ID!) {
+    subscribeToGivenChat(id: $id) {
+      id
+      user1
+      user2
+      messages {
+        _id
+        text
+        createdAt
+        messagesOwner
+      }
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {

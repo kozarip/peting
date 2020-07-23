@@ -4,7 +4,9 @@
     "slug": "peting",
     "scheme": "peting",
     "platforms": [
-      "ios", "android", "web"
+      "ios",
+      "android",
+      "web"
     ],
     "version": "1.0.0",
     "sdkVersion": "37.0.0",
@@ -18,11 +20,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true
-    },
-    "facebookAppId": "583951345538571",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "host.exp.exponent.ios",
@@ -33,9 +33,11 @@
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
+    "facebookAppId": "583951345538571",
     "android": {
-        "package": "host.exp.exponent.android",
-        "googleServicesFile": "google-services.json"
-    }
+      "package": "host.exp.exponent.android",
+      "googleServicesFile": "google-services.json"
+    },
+    "description": ""
   }
 }

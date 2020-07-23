@@ -31,17 +31,23 @@ const ChatScreen = ({ route, navigation }) => {
   useEffect(() => {
     // console.log({ name, userId, friendId, avatar, date: new Date() })
     chat.getGivenChat(userId, friendId).then((apiObject) => {
-      chat.subscriptionChat(apiObject.data.searchChats.items[0].id);
       baseMessageData = {
         id: apiObject.data.searchChats.items[0].id,
         user1: apiObject.data.searchChats.items[0].user1,
         user2: apiObject.data.searchChats.items[0].user2,
       };
-      const messagesFromAPi: [] = apiObject.data.searchChats.items[0].messages.map((message) => addUserObjToMessage(message));
-      messagesFromAPi.sort((a, b) => compareMessageDates(a,b));
-      setMessages(messagesFromAPi);
+      createGiftedMessageObject(apiObject.data.searchChats.items[0].messages);
+      chat.subscriptionChat(apiObject.data.searchChats.items[0].id, createGiftedMessageObject);
     });
   }, []);
+
+  const createGiftedMessageObject = (rawMessages: []) => {
+    if (rawMessages) {
+      const messagesFromAPi: [] = rawMessages.map((message) => addUserObjToMessage(message));
+      messagesFromAPi.sort((a, b) => compareMessageDates(a, b));
+      setMessages(messagesFromAPi);
+    }
+  };
 
   const compareMessageDates = (a, b) => {
     if (a.createdAt > b.createdAt) {
@@ -75,7 +81,6 @@ const ChatScreen = ({ route, navigation }) => {
       return keepAttrs;
     });
     const objToApi = { ...baseMessageData, ...{ messages: messagesToApi } };
-    console.log(objToApi);
     chat.updateChat(objToApi);
   };
 

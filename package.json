@@ -55,6 +55,7 @@
     "react-redux-firebase": "^3.3.0",
     "redux": "^4.0.5",
     "redux-firestore": "^0.13.0",
+    "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "test": "jest",
     "uuid": "^8.0.0"
   },

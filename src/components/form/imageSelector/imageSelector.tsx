@@ -5,7 +5,9 @@ import { StyleSheet, Button, View, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Tooltip, Icon } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
+import Tooltip from "rne-modal-tooltip";
+
 import { createNewTypeObject } from '../formHelpers';
 import { styleForm } from '../../../assets/styles/form';
 
@@ -118,7 +120,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
           backgroundColor={colors.primary}
           height={80}
           width={dimensions.fullWidth * 0.8}
-          containerStyle={{paddingBottom: 0}}
           popover={
             <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
               Egyszere csak egy képet tudsz feltölteni.

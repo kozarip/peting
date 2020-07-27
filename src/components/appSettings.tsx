@@ -10,7 +10,7 @@ const AppSettings: React.FC = () => {
   return (
     <View style={{ ...styleBox }} >
       <CheckBox
-        title="Kérek értesítést"
+        title="Kérek értesítést (Nem működik)"
         checked={hasNotification}
         onPress={() => setHasNotification(!hasNotification)}
       />

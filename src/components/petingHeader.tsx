@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header, Icon } from 'react-native-elements';
 import { colors } from '../assets/styles/variables';
+import { Platform } from 'react-native';
 
 
 type PetingHeaderProps = {
@@ -11,10 +12,9 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
   return (
     <Header
       containerStyle={{
-        paddingTop: 0,
+        paddingTop: Platform.OS === 'ios' ? 12 : 0,
         height: 60,
-        borderBottomColor:
-          colors.separator,
+        borderBottomColor: colors.separator,
         borderBottomWidth: 1,
       }}
       backgroundColor={colors.primary}

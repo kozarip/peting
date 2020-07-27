@@ -1,16 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { View, ImageBackground, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { updateMatch } from '../services/match';
 import Chat from '../services/chat';
 import PetingHeader from '../components/petingHeader';
+import { colors, fonts } from '../assets/styles/variables';
 
 const ChatScreen = ({ route, navigation }) => {
   const {
+    id,
     name,
     userId,
     friendId,
     avatar,
+    timestamp,
+    lastNewMessageSender,
   } = route.params;
   const [messages, setMessages] = useState([]);
   let baseMessageData = {};
@@ -39,6 +44,9 @@ const ChatScreen = ({ route, navigation }) => {
       createGiftedMessageObject(apiObject.data.searchChats.items[0].messages);
       chat.subscriptionChat(apiObject.data.searchChats.items[0].id, createGiftedMessageObject);
     });
+    if (lastNewMessageSender === friendId) {
+      updateMatch(createMatchObj(false));
+    }
   }, []);
 
   const createGiftedMessageObject = (rawMessages: []) => {
@@ -68,6 +76,7 @@ const ChatScreen = ({ route, navigation }) => {
   const onSend = useCallback((messagesFromGiftedChat = []) => {
     setMessages((previousMessages) => {
       saveToApi([...previousMessages, messagesFromGiftedChat[0]]);
+      updateMatch(createMatchObj(true));
       return GiftedChat.append(previousMessages, messagesFromGiftedChat);
     });
   }, []);
@@ -84,11 +93,22 @@ const ChatScreen = ({ route, navigation }) => {
     chat.updateChat(objToApi);
   };
 
+  const createMatchObj = (withNewMessage: boolean) => {
+    return {
+      id,
+      user1: userId,
+      user2: friendId,
+      timestamp,
+      lastNewMessageSender: withNewMessage ? userId : '',
+    };
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: '#ddd' }}>
       <PetingHeader
         navigation={navigation}
       />
+      <Text style={styles.chatHeader}>Chat vele: {name}</Text>
       <GiftedChat
         messages={messages}
         onSend={(messagesFromGiftedChat) => onSend(messagesFromGiftedChat)}
@@ -100,5 +120,15 @@ const ChatScreen = ({ route, navigation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  chatHeader: {
+    backgroundColor: colors.primary,
+    fontSize: fonts.heading3,
+    color: '#fff',
+    paddingVertical: 5,
+    textAlign: 'center',
+  },
+});
 
 export default ChatScreen;

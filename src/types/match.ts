@@ -5,4 +5,5 @@ type matchType = {
   name: string,
   avatar_url: string,
   subtitle: string,
+  lastNewMessageSender: string,
 };

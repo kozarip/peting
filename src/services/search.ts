@@ -7,7 +7,8 @@ class Search {
 
   async search(searchParams: {}, currentCityCoordinates) {
     const intervalValues = ['minHeight', 'maxHeight', 'minAge', 'maxAge'];
-    const equalValues = ['animalSize', 'animalType', 'gender', 'hairColor', 'smokeFrequency'];
+    const equalValues = ['animalType', 'animalSize', 'gender', 'hairColor', 'smokeFrequency'];
+    // const arrayValue = ['animalType']
     const filter = {
       filter: {}
     }
@@ -22,6 +23,12 @@ class Search {
             filter.filter['cityLat'] = { gte: distances.minLat, lte: distances.maxLat };
             filter.filter['cityLng'] = { gte: distances.minLng, lte: distances.maxLng };
           }
+          /* if (arrayValue.includes(key) && Array.isArray(value)) {
+            filter.filter['or'] = value.map((v) => {
+              const obj = {}
+              return obj[key] =  { eq: v }
+            })
+          } */
           if (equalValues.includes(key)) {
             filter.filter[key] = { eq: value }
           }
@@ -49,8 +56,8 @@ class Search {
   };
 
   calculateCoordinates(currentCity, distance) {
-    const distanceLat = 0.009000000 * distance;
-    const distanceLng = 0.013800000 * distance;
+    const distanceLat = 0.005360631 * distance;
+    const distanceLng = 0.010580781 * distance;
     const maxLat = currentCity.lat + distanceLat;
     const minLat = currentCity.lat - distanceLat;
     const maxLng = currentCity.lng + distanceLng;

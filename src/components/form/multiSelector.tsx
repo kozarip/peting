@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { styleForm } from '../../assets/styles/form';
@@ -38,6 +38,7 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
         selectedItems={value || []}
         colors={{
           primary: colors.primary,
+          selectToggleTextColor: colors.separator,
         }}
       />
     </View>

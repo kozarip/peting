@@ -62,8 +62,9 @@ const SettingsScreen = ({ navigation, route }) => {
   );
 
   const initialLayout = { width: Dimensions.get('window').width };
+  const defaultScreenNumber = isNewUser ? 1 : 0;
 
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(defaultScreenNumber);
   const [routes] = React.useState([
     { key: 'search', title: 'Keresés' },
     { key: 'profile', title: 'Profilom' },

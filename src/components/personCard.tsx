@@ -25,7 +25,6 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
         primaryImage={person.primaryImageIndex}
         name={person.userName}
         age={person.age}
-        animalName={person.animalName}
       />
       <ProfileTitle
         name={person.userName}
@@ -38,7 +37,7 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
       <Bio bio={person.bio} />
       <Details details={
         [
-          { Magasság: person.height },
+          { 'Magasság (cm)': person.height },
           { Dohányzás: person.smokeFrequency },
           { Hajszín: person.hairColor },
           { Hobbik: person.hobbies },

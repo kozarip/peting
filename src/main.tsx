@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
-import { getUserMatches, selectTheOtherProfileId } from './services/match';
+import { getUserMatches, selectTheOtherProfileId, subscriptionMatch } from './services/match';
 import { setGlobalSearchParams, setUser, setMatches } from './store/action';
 
 const Main = ({ navigation }) => {
@@ -21,12 +21,8 @@ const Main = ({ navigation }) => {
           user: userData,
         }));
         setGlobalMatches(userData.cognitoUserName);
-        navigation.navigate('Result');
-        if (Platform.OS === 'android') {
-          navigationReset('Result', {});
-        }
       } else {
-        navigation.navigate('Settings');
+        navigation.navigate('Settings', { newUser: true });
         if (Platform.OS === 'android') {
           navigationReset('Settings', { newUser: true });
         }
@@ -56,17 +52,26 @@ const Main = ({ navigation }) => {
             imageIds.push(fullUserData.images[fullUserData.primaryImageIndex]);
           }
           const matchData: matchType = {
-            id: i,
+            id: matches[i].id,
             cognitoUserName: fullUserData.cognitoUserName,
             name: fullUserData.userName,
             avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
             subtitle: matches[i].timestamp.split('T', 1).join(''),
+            lastNewMessageSender: matches[i].lastNewMessageSender,
           };
           globalMatches.push(matchData);
         });
-        dispatch(setMatches({ matches: globalMatches }));
+        setMatchToGlobalState(globalMatches);
+        navigation.navigate('Result');
+        if (Platform.OS === 'android') {
+          navigationReset('Result', {});
+        }
       });
     });
+  };
+
+  const setMatchToGlobalState = (match) => {
+    dispatch(setMatches({ matches: match }));
   };
 
   const image = require('./assets/images/pet_silhouettes2.jpg');

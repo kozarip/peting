@@ -17,7 +17,6 @@ const { width } = Dimensions.get('window');
 const image = require('../assets/images/pet_silhouettes2.jpg');
 
 const PicturesScreen = ({ navigation, route }) => {
-  //console.log(route);
   const personImages = route.params.allImages.split(',');
   const animalImages = route.params.allAnimalImages.split(',');
   const name = route.params.name || '';
@@ -38,6 +37,7 @@ const PicturesScreen = ({ navigation, route }) => {
           />
           <Text style={styles.title}>
             {name}
+            {' '}
             {age}
           </Text>
           <SliderBox
@@ -51,8 +51,11 @@ const PicturesScreen = ({ navigation, route }) => {
           />
         </ImageBackground>
       </ScrollView>
-      {/* TODO: add button handlers */}
-      <LoveButtons />
+      <LoveButtons
+        handlePressLike={() => { navigation.navigate('Result', { pressedButton: 'handlePressLike' }); }}
+        handlePressNext={() => { navigation.navigate('Result', { pressedButton: 'handlePressNext' }); }}
+        handlePressDislike={() => { navigation.navigate('Result', { pressedButton: 'handlePressDislike' }); }}
+      />
     </View>
   );
 };

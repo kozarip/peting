@@ -24,6 +24,7 @@ import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
 import { colors } from '../assets/styles/variables';
+import * as userField from '../constants/userFields';
 
 import {
   gender,
@@ -46,7 +47,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     firstName: '',
     surName: '',
     email: '',
-    gender: -1,
+    gender: 0,
     height: 0,
     bio: '',
     animalName: '',
@@ -66,7 +67,18 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     cityLat: 0,
     cityLng: 0,
   };
-  const mandatoryFields = ['userName', 'email', 'gender', 'height', 'animalName', 'animalType', 'age', 'cityName'];
+  const mandatoryFields = [
+    'images',
+    'animalImages',
+    'userName',
+    'email',
+    'gender',
+    'height',
+    'animalName',
+    'animalType',
+    'age',
+    'cityName',
+  ];
   const imageTypes = ['images', 'animalImages'];
 
   const [profileUser, setProfileUser] = useState(initialProfileUser);
@@ -122,7 +134,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   const handleSaveProfile = async () => {
     const errorFields = checkMandatoryFields();
     if (errorFields.length > 0) {
-      Alert.alert(`Az alábbi mezők kitőltése kötelező: ${errorFields.join(', ')}`);
+      Alert.alert(`Az alábbi mezők kitőltése kötelező: ${formatMandatoryErrorList(errorFields)}`);
     } else {
       setIsLoaderActive(true);
 
@@ -157,29 +169,48 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   };
 
   const checkMandatoryFields = () => {
-    return mandatoryFields.filter((field) => isEmpty(profileUser[field]));
+    return mandatoryFields.filter((field) => isEmpty(profileUser[field], field));
   };
 
-  const isEmpty = (field) => {
-    if (!field) {
+  const isEmpty = (value, field = '') => {
+    if (isNaN(value) && !value) {
       return true;
     }
-    const fieldType = typeof field;
-    if (fieldType === 'undefined') {
+    const valueType = typeof value;
+    if (valueType === 'undefined') {
       return true;
     }
-    if (fieldType === 'number') {
-      return field < 1;
+    if (Array.isArray(value)) {
+      return value.length === 0;
     }
-    if (fieldType === 'string') {
-      return field.trim() === '';
+    if (valueType === 'number') {
+      if (field === 'gender') {
+        return value < 0;
+      }
+      return value < 1;
+    }
+    if (valueType === 'string') {
+      return value.trim() === '';
     }
     return false;
+  };
+
+  const formatMandatoryErrorList = (list) => {
+    const translatedLabels = list.map((element) => {
+      return userField[element].label;
+    })
+    return translatedLabels.join(', ');
   };
 
   const selectNewImages = (imageType: 'images' | 'animalImages') => {
     const images = profileUser[imageType] || [];
     return images.filter((image) => image.startsWith('file://'));
+  };
+
+  const transformOptionsForMultiselect = (options) => {
+    return options.map((opt, i) => {
+      return { id: i, name: opt.label };
+    });
   };
 
   return (
@@ -192,6 +223,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         <Card>
           <ImageSelector
             type="images"
+            mandatory={mandatoryFields.includes('images')}
             primaryImageIndex={profileUser.primaryImageIndex || 0}
             setValue={setProfileUserAttribute}
             images={profileUser.images || []}
@@ -200,6 +232,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <ImageSelector
             type="animalImages"
+            mandatory={mandatoryFields.includes('animalImages')}
             primaryImageIndex={0}
             setValue={setProfileUserAttribute}
             images={profileUser.animalImages || []}
@@ -329,7 +362,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <MultiSelector
             label="Hobbijaid"
-            options={hobbies}
+            options={transformOptionsForMultiselect(hobbies)}
             type="hobbies"
             setValue={setProfileUserAttribute}
             value={profileUser.hobbies}

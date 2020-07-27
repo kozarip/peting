@@ -4,6 +4,26 @@ export const gender = [
   { text: 'Férfi', key: 1 },
 ];
 
+export const age = {
+  label: 'Korod',
+};
+
+export const height = {
+  label: 'Magasság',
+};
+
+export const email = {
+  label: 'E-mail',
+};
+
+export const userName = {
+  label: 'Név',
+};
+
+export const animalName = {
+  label: 'Állatod neve',
+};
+
 export const hairColor = {
   label: 'Hajszín',
   options: [

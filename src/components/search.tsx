@@ -13,6 +13,7 @@ import { setGlobalSearchParams } from '../store/action';
 import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
+import MultiSelector from './form/multiSelector';
 
 import { styleForm } from '../assets/styles/form';
 import { colors } from '../assets/styles/variables';
@@ -20,13 +21,9 @@ import Loader from './loader';
 
 import {
   gender,
-  hairColor,
   animalType,
-  animalSize,
   smokeFrequency,
-  hobbies,
 } from '../constants/userFields';
-import MultiSelector from './form/multiSelector';
 
 type searchComponentProps = {
   userAttributes: any,
@@ -142,33 +139,26 @@ const SearchComponent: React.FC<searchComponentProps> = (
             value={searchParams.maxHeight}
             setValue={setSearchParamsValue}
           />
-          <Selector
-            label={hairColor.label}
-            options={hairColor.options}
-            type="hairColor"
-            setValue={setSearchParamsValue}
-            value={searchParams.hairColor}
-          />
         </Card>
 
         <Card
           containerStyle={styleForm.cardBlock}
           title="Állat"
           titleStyle={styleForm.cardTitle as any}
-        >
+        >{/* 
+          <MultiSelector
+            label="Állat fajták"
+            options={animalType.options}
+            type="animalType"
+            setValue={setSearchParamsValue}
+            value={searchParams.animalType}
+          /> */}
           <Selector
             label={animalType.label}
             options={animalType.options}
             type="animalType"
             setValue={setSearchParamsValue}
             value={searchParams.animalType}
-          />
-          <Selector
-            label={animalSize.label}
-            options={animalSize.options}
-            type="animalSize"
-            setValue={setSearchParamsValue}
-            value={searchParams.animalSize}
           />
         </Card>
 
@@ -183,13 +173,6 @@ const SearchComponent: React.FC<searchComponentProps> = (
             type="smokeFrequency"
             setValue={setSearchParamsValue}
             value={searchParams.smokeFrequency}
-          />
-          <MultiSelector
-            label="Hobbijaid"
-            options={hobbies}
-            type="hobbies"
-            setValue={setSearchParamsValue}
-            value={searchParams.hobbies}
           />
         </Card>
       </ScrollView>

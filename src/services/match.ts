@@ -1,6 +1,7 @@
 import { graphqlOperation, API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
+import * as subscriptions from '../graphql/subscriptions';
 
 const saveNewMatch = (match) => {
   API.graphql(graphqlOperation(mutations.createMatches, { input: match }));
@@ -21,4 +22,30 @@ const selectTheOtherProfileId = (match, cognitoUserName) => {
   return match.user1 === cognitoUserName ? match.user2 : match.user1;
 };
 
-export { saveNewMatch, getUserMatches, selectTheOtherProfileId };
+const updateMatch = (match) => {
+  API.graphql(graphqlOperation(mutations.updateMatches, { input: match }));
+};
+
+const subscriptionMatch = async (match: matchType, setNewMatch) => {
+  const subscription = await API.graphql(
+    graphqlOperation(subscriptions.subscribeToUserMatches, { id: match.id }),
+  ).subscribe({
+    next: (messages) => {
+      if (typeof setNewMatch === 'function' && messages.value.data.subscribeToUserMatches) {
+        console.log(messages.value.data.subscribeToUserMatches);
+        match.lastNewMessageSender = messages.value.data.subscribeToUserMatches.lastNewMessageSender;
+        return setNewMatch([match]);
+      }
+      return false;
+    },
+  });
+  return subscription;
+};
+
+export {
+  saveNewMatch,
+  getUserMatches,
+  selectTheOtherProfileId,
+  updateMatch,
+  subscriptionMatch,
+};

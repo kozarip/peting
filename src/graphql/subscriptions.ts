@@ -17,6 +17,17 @@ export const subscribeToGivenChat = /* GraphQL */ `
     }
   }
 `;
+export const subscribeToUserMatches = /* GraphQL */ `
+  subscription SubscribeToUserMatches($id: ID!) {
+    subscribeToUserMatches(id: $id) {
+      id
+      user1
+      user2
+      timestamp
+      lastNewMessageSender
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -171,6 +182,7 @@ export const onCreateMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;
@@ -181,6 +193,7 @@ export const onUpdateMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;
@@ -191,6 +204,7 @@ export const onDeleteMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;

@@ -114,6 +114,7 @@ export const getMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;
@@ -129,6 +130,7 @@ export const listMatchess = /* GraphQL */ `
         user1
         user2
         timestamp
+        lastNewMessageSender
       }
       nextToken
     }
@@ -316,6 +318,7 @@ export const searchMatchess = /* GraphQL */ `
         user1
         user2
         timestamp
+        lastNewMessageSender
       }
       nextToken
       total

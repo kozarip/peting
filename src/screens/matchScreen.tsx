@@ -4,24 +4,34 @@ import {
   View,
   StyleSheet,
   ImageBackground,
+  Button,
 } from 'react-native';
-import { ListItem, Card } from 'react-native-elements';
+import { ListItem, Card, Overlay, Icon } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
+import User from '../services/user';
 import ImageStore from '../services/imageStore';
+import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
-import { margins } from '../assets/styles/variables';
+import { margins, colors } from '../assets/styles/variables';
 import { styleTitle, styleBackground } from '../assets/styles/base';
 
-const MatchScreen = ({ navigation }) => {
+type MatchScreenProps = {
+  navigation: any
+}
+
+const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
+  const { matches, user } = useSelector((state) => state);
   const [myMatches, setMyMatches] = useState<matchType[]>([]);
   const [matchImages, setMatchImages] = useState({});
+  const [friendObject, setFriendObject] = useState({});
+  const [isCardActive, setIsCardActive] = useState(false);
 
-  const { matches, user } = useSelector((state) => state);
   const imageStore = new ImageStore('Unknown');
+  const friendUser = new User();
 
   useEffect(() => {
-    setMyMatches(matches);
+    setMyMatches(orderMatches(matches));
     const images: string[] = [];
     myMatches.forEach((match: matchType) => {
       if (match.avatar_url && !match.avatar_url.startsWith('https://')) {
@@ -46,6 +56,38 @@ const MatchScreen = ({ navigation }) => {
     });
   };
 
+  const orderMatches = (unOrderedMatches: []) => {
+    return unOrderedMatches
+      .sort((a, b) => orderByDate(a, b))
+      .sort((a, b) => orderByNewMessages(a, b));
+  };
+
+  const orderByNewMessages = (a, b) => {
+    if (a.lastNewMessageSender !== '' && b.lastNewMessageSender === '') {
+      return 1;
+    } else if (b.lastNewMessageSender !== '' && a.lastNewMessageSender === '') {
+      return -1;
+    }
+    return 0;
+  };
+
+  const orderByDate = (a, b) => {
+    if (a.timestamp > b.timestamp) {
+      return -1;
+    } else if (a.timestamp < b.timestamp) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const handlePressAvatar = (cognitoUserName) => {
+    friendUser.getUserByCognitoUserName(cognitoUserName).then((dataFromApi) => {
+      setFriendObject(dataFromApi.data.userByCognitoUserName.items[0]);
+      console.log(friendObject);
+      setIsCardActive(true);
+    });
+  };
+
   const image = require('../assets/images/pet_silhouettes2.jpg');
 
   return (
@@ -60,6 +102,25 @@ const MatchScreen = ({ navigation }) => {
           navigation={navigation}
         />
         <Text style={styles.title}>Matchek</Text>
+        <Overlay
+          isVisible={isCardActive}
+          width="100%"
+          height="90%"
+        >
+          <View>
+            <ScrollView>
+              <PersonCard
+                navigation={navigation}
+                person={friendObject}
+              />
+            </ScrollView>
+            <Button
+              color={colors.darkPrimary}
+              title="Bezárás"
+              onPress={() => setIsCardActive(false)}
+            />
+          </View>
+        </Overlay>
         {
           // eslint-disable-next-line operator-linebreak
           myMatches.length > 0 ?
@@ -71,17 +132,31 @@ const MatchScreen = ({ navigation }) => {
                     title={item.name.trim()}
                     subtitle={item.subtitle}
                     leftAvatar={{ source: { uri: matchImages[i] } }}
+                    rightIcon={
+                      item.lastNewMessageSender === item.cognitoUserName ?
+                        <Icon
+                          name="envelope"
+                          size={15}
+                          raised
+                          color={colors.primary}
+                          type="font-awesome"
+                        />
+                        : <></>
+                    }
                     bottomDivider
                     chevron
                     onPress={() => {
                       navigation.navigate('Chat', {
-                        id: i,
+                        id: item.id,
                         name: item.name,
                         userId: user.cognitoUserName,
                         friendId: item.cognitoUserName,
                         avatar: matchImages[i],
+                        timestamp: item.subtitle,
+                        lastNewMessageSender: item.lastNewMessageSender,
                       });
                     }}
+                    onLongPress={() => handlePressAvatar(item.cognitoUserName)}
                   />
                 ))
               }

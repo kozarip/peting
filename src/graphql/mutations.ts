@@ -168,6 +168,7 @@ export const createMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;
@@ -181,6 +182,7 @@ export const updateMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;
@@ -194,6 +196,7 @@ export const deleteMatches = /* GraphQL */ `
       user1
       user2
       timestamp
+      lastNewMessageSender
     }
   }
 `;

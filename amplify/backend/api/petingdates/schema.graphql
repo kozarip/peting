@@ -51,6 +51,7 @@ type Matches @model @searchable {
   user1: String,
   user2: String,
   timestamp: String,
+  lastNewMessageSender: String,
 }
 
 type Chat @model @searchable {
@@ -70,4 +71,6 @@ type Message {
 type Subscription {
     subscribeToGivenChat(id: ID!): Chat
         @aws_subscribe(mutations: ["updateChat"])
+    subscribeToUserMatches(id: ID!): Matches
+        @aws_subscribe(mutations: ["updateMatches"])
 }

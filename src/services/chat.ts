@@ -39,10 +39,8 @@ class Chat {
       graphqlOperation(subscriptions.subscribeToGivenChat, { id: chatId }),
     ).subscribe({
       next: (messages) => {
-        if (typeof setNewChat === 'function') {
-          if (messages.value.data.subscribeToGivenChat.messages) {
-            return setNewChat(messages.value.data.subscribeToGivenChat.messages);
-          }
+        if (typeof setNewChat === 'function' && messages.value.data.subscribeToGivenChat.messages) {
+          return setNewChat(messages.value.data.subscribeToGivenChat.messages);
         }
         return false;
       },

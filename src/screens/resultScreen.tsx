@@ -9,12 +9,12 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import Search from '../services/search';
 import Chat from '../services/chat';
-import { saveNewMatch } from '../services/match';
+import { saveNewMatch, subscriptionMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
-import { hairColor, smokeFrequency } from '../constants/userFields';
+import { hairColor, smokeFrequency, hobbies } from '../constants/userFields';
 import PersonCard from '../components/personCard';
 import Loader from '../components/loader';
 import EmptyResultModal from '../components/emptyResultModal';
@@ -39,10 +39,11 @@ const initialResultPerson = {
   animalImages: [require('../assets/images/dog_sample.jpg')],
 };
 
-const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
+const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const image = require('../assets/images/pet_silhouettes2.jpg');
+  const pressedButton = route.params ? route.params.pressedButton : '';
 
-  const { searchParams, user } = useSelector((state: any) => state);
+  const { searchParams, user, matches } = useSelector((state: any) => state);
 
   const [resultPersons, setResultPersons] = useState([]);
   const [resultPersonIndex, setResultPersonIndex] = useState(0);
@@ -53,7 +54,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
   const search = new Search();
   const chat = new Chat();
   const dispatch = useDispatch();
-  const { matches } = useSelector((state) => state);
 
   useEffect(() => {
     setIsLoaderActive(true);
@@ -63,9 +63,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
     const exceptUsers = { exceptUsers: [...[user.cognitoUserName], ...matchedUsers] };
     const city = { lat: user.cityLat, lng: user.cityLng };
     search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
+      if (pressedButton) {
+        if (typeof ResultScreen.loveButtonHandlers[pressedButton] === 'function') {
+          ResultScreen.loveButtonHandlers[pressedButton]
+        }
+      }
       setResultPersons(res.data.searchUsers.items);
       if (res.data.searchUsers.items.length === 0) {
-        // setIsOverlayActive(true);
+        setIsOverlayActive(true);
       } else {
         if (resultPersonIndex > resultPersons.length - 1) {
           setResultPersonIndex(0);
@@ -74,7 +79,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
       }
       setIsLoaderActive(false);
     });
-  }, [searchParams, matches]);
+    matches.forEach((match) => {
+      subscriptionMatch(match, setMatchToGlobalState);
+    });
+  }, [searchParams, pressedButton]);
+
+  const setMatchToGlobalState = (match) => {
+    dispatch(setMatches({ matches: match }));
+  };
 
   const setCurrentResultPerson = (personIndex, persons?) => {
     const resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
@@ -85,7 +97,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
           resultWithValidValues[key] = resultFromAPI[key];
         }
       });
-      if (resultWithValidValues.hobbies) resultWithValidValues.hobbies = resultWithValidValues.hobbies.join(', ');
+      if (resultWithValidValues.hobbies) resultWithValidValues.hobbies = getDetailText(resultWithValidValues.hobbies, 'hobbies');
       if (resultWithValidValues.smokeFrequency) resultWithValidValues.smokeFrequency = getDetailText(resultWithValidValues.smokeFrequency, 'smokeFrequency');
       if (resultWithValidValues.hairColor) resultWithValidValues.hairColor = getDetailText(resultWithValidValues.hairColor, 'hairColor');
       setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
@@ -121,6 +133,12 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
     handlePressNext();
   };
 
+  ResultScreen.loveButtonHandlers = {
+    handlePressDislike,
+    handlePressLike,
+    handlePressNext,
+  };
+
   const createEmotionObject = (array, userId) => {
     const resultArray = array || [];
     if (!resultArray.find((obj) => obj.cognitoUserName === userId)) {
@@ -153,13 +171,17 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation }) => {
         user2: resultPerson.cognitoUserName,
         timestamp: new Date(),
       });
-
     }
   };
 
   const getDetailText = (value, type) => {
     let itemObject;
     switch (type) {
+      case 'hobbies':
+        itemObject = hobbies.filter((hobby) => value.includes(hobby.id));
+        // eslint-disable-next-line no-case-declarations
+        const onlyNames = itemObject.map((hobby) => hobby.name);
+        return onlyNames.join(', ');
       case 'hairColor':
         itemObject = hairColor.options.find((element) => element.value === value);
         break;

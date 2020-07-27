@@ -7,6 +7,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { Tooltip, Icon } from 'react-native-elements';
 import { createNewTypeObject } from '../formHelpers';
+import { styleForm } from '../../../assets/styles/form';
 
 import ImageList from './imageList';
 import ImageSettings from './imageSettings';
@@ -18,11 +19,12 @@ type ImageSelectorProps = {
   primaryImageIndex: number,
   setValue: any,
   type: string,
-  removeImage: any
+  removeImage: any,
+  mandatory: boolean,
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = (
-  { images, primaryImageIndex, setValue, type, removeImage, title }
+  { images, primaryImageIndex, setValue, type, removeImage, title, mandatory }
 ) => {
   const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);;
@@ -101,7 +103,10 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         deleteImageConfirm={deleteImageConfirm}
         setPrimary={setPrimary}
       />
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title}>
+        {title}
+        {mandatory && <Text style={styleForm.mandatory}> *</Text>}
+      </Text>
       <View style={styles.imageCardHeader}>
         {
           maxImageNumber > 0  ?
@@ -113,6 +118,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
           backgroundColor={colors.primary}
           height={80}
           width={dimensions.fullWidth * 0.8}
+          containerStyle={{paddingBottom: 0}}
           popover={
             <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
               Egyszere csak egy képet tudsz feltölteni.

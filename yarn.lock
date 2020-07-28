@@ -3684,7 +3684,7 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-aws-amplify-react-native@^4.2.3:
+aws-amplify-react-native@^4.1.0:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/aws-amplify-react-native/-/aws-amplify-react-native-4.2.3.tgz#e8df13a6fec62969de05730ac33f47ebc3a98e6f"
   integrity sha512-CKd5a3tLlNOWp96EioLa27BH5xPCnXNy2RUMFf92hj6yoTRE6X4vdLp9r4t9pTi1HMIg+bGy6zmXaHigycfkJw==
@@ -3694,7 +3694,7 @@ aws-amplify-react-native@^4.2.3:
     react-native-elements "^0.19.1"
     react-native-vector-icons "^6.6.0"
 
-aws-amplify@^3.0.22:
+aws-amplify@^3.0.9:
   version "3.0.22"
   resolved "https://registry.yarnpkg.com/aws-amplify/-/aws-amplify-3.0.22.tgz#4b51d899f6033bcbc63de9a36bdd3694164f464a"
   integrity sha512-nkw9OLDuMsNvgHmO1nUm9q9pkoLajKSmraJBxTGHZIF4ntC0vJceqcTVOOcmAU+OaZsh7tiniEzvBevd+7Q4uw==

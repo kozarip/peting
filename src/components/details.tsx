@@ -10,10 +10,8 @@ type DetailProps = {
 
 const Details: React.FC<DetailProps> = ({ details }) => {
   const getDetailText = (type, value) => {
-    console.log(value, type);
     let itemObject;
     let result = { label: userFields[type].label, value };
-    console.log(result);
     switch (type) {
       case 'hobbies':
         itemObject = userFields[type].filter((hobby) => value.includes(hobby.id));
@@ -33,7 +31,6 @@ const Details: React.FC<DetailProps> = ({ details }) => {
       default:
         break;
     }
-    console.log(itemObject);
     return result;
   };
 

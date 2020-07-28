@@ -51,7 +51,6 @@ const Main = ({ navigation }) => {
           if (fullUserData.images && fullUserData.images[fullUserData.primaryImageIndex]) {
             imageIds.push(fullUserData.images[fullUserData.primaryImageIndex]);
           }
-          console.log(imageIds[i], i);
           const matchData: matchType = {
             id: matches[i].id,
             cognitoUserName: fullUserData.cognitoUserName,

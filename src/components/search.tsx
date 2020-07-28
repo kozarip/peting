@@ -145,7 +145,8 @@ const SearchComponent: React.FC<searchComponentProps> = (
           containerStyle={styleForm.cardBlock}
           title="Állat"
           titleStyle={styleForm.cardTitle as any}
-        >{/* 
+        >
+          {/* 
           <MultiSelector
             label="Állat fajták"
             options={animalType.options}

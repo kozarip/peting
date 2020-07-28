@@ -32,7 +32,6 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   useEffect(() => {
     setMyMatches(orderMatches(matches));
-    console.log(matches);
     const images: string[] = [];
     myMatches.forEach((match: matchType) => {
       if (match.avatar_url && !match.avatar_url.startsWith('https://')) {
@@ -84,7 +83,6 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   const handlePressAvatar = (cognitoUserName) => {
     friendUser.getUserByCognitoUserName(cognitoUserName).then((dataFromApi) => {
       setFriendObject(dataFromApi.data.userByCognitoUserName.items[0]);
-      console.log(friendObject);
       setIsCardActive(true);
     });
   };

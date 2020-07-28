@@ -97,9 +97,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           resultWithValidValues[key] = resultFromAPI[key];
         }
       });
-      if (resultWithValidValues.hobbies) resultWithValidValues.hobbies = getDetailText(resultWithValidValues.hobbies, 'hobbies');
-      if (resultWithValidValues.smokeFrequency) resultWithValidValues.smokeFrequency = getDetailText(resultWithValidValues.smokeFrequency, 'smokeFrequency');
-      if (resultWithValidValues.hairColor) resultWithValidValues.hairColor = getDetailText(resultWithValidValues.hairColor, 'hairColor');
       setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
     }
   };
@@ -172,26 +169,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         timestamp: new Date(),
       });
     }
-  };
-
-  const getDetailText = (value, type) => {
-    let itemObject;
-    switch (type) {
-      case 'hobbies':
-        itemObject = hobbies.filter((hobby) => value.includes(hobby.id));
-        // eslint-disable-next-line no-case-declarations
-        const onlyNames = itemObject.map((hobby) => hobby.name);
-        return onlyNames.join(', ');
-      case 'hairColor':
-        itemObject = hairColor.options.find((element) => element.value === value);
-        break;
-      case 'smokeFrequency':
-        itemObject = smokeFrequency.options.find((element) => element.value === value);
-        break;
-      default:
-        break;
-    }
-    return itemObject.label;
   };
 
   return (

@@ -39,10 +39,10 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
       <Bio bio={person.bio} />
       <Details details={
         [
-          { 'Magasság (cm)': person.height },
-          { Dohányzás: person.smokeFrequency },
-          { Hajszín: person.hairColor },
-          { Hobbik: person.hobbies },
+          { height: person.height },
+          { smokeFrequency: person.smokeFrequency },
+          { hairColor: person.hairColor },
+          { hobbies: person.hobbies },
         ]
       }
       />

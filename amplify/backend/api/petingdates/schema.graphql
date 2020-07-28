@@ -30,7 +30,7 @@ type User @model @searchable
 type Search {
   minAge: Int
   maxAge: Int
-  animalType: [String]
+  animalType: String
   animalSize: String
   gender: Int
   minHeight: Int

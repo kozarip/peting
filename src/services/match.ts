@@ -32,7 +32,6 @@ const subscriptionMatch = async (match: matchType, setNewMatch) => {
   ).subscribe({
     next: (messages) => {
       if (typeof setNewMatch === 'function' && messages.value.data.subscribeToUserMatches) {
-        console.log(messages.value.data.subscribeToUserMatches);
         match.lastNewMessageSender = messages.value.data.subscribeToUserMatches.lastNewMessageSender;
         return setNewMatch([match]);
       }

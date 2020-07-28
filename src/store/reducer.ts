@@ -17,7 +17,7 @@ export function reducer(state = initialState, action) {
         ...action.user,
       };
     case 'Set_Matches':
-      if (action.matches.length === 1 && state.matches.length > 0) {
+      if (action.matches.length === 1) {
         return {
           ...state,
           ...mergeOnlyOneMatchObj(state.matches, action.matches[0]),
@@ -35,5 +35,6 @@ export function reducer(state = initialState, action) {
 const mergeOnlyOneMatchObj = (stateMatches, newMatch) => {
   const stateMatchesWithoutTheNewOne = stateMatches.filter((match) => (
     match.cognitoUserName !== newMatch.cognitoUserName));
+  //console.log(match.cognitoUserName, newMatch.cognitoUserName);
   return { matches: [...stateMatchesWithoutTheNewOne, ...[newMatch]] };
 };

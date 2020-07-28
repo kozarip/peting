@@ -44,18 +44,19 @@ const Main = ({ navigation }) => {
       const matchPromises = matches.map((match) => {
         return user.getUserByCognitoUserName(selectTheOtherProfileId(match, cognitoUserName));
       });
+      const imageIds = [];
       Promise.all(matchPromises).then((resolved) => {
-        const imageIds = [];
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
           if (fullUserData.images && fullUserData.images[fullUserData.primaryImageIndex]) {
             imageIds.push(fullUserData.images[fullUserData.primaryImageIndex]);
           }
+          console.log(imageIds[i], i);
           const matchData: matchType = {
             id: matches[i].id,
             cognitoUserName: fullUserData.cognitoUserName,
             name: fullUserData.userName,
-            avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
+            avatar_url: imageIds[i],
             subtitle: matches[i].timestamp.split('T', 1).join(''),
             lastNewMessageSender: matches[i].lastNewMessageSender,
           };

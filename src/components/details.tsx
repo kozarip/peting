@@ -24,7 +24,6 @@ const Details: React.FC<DetailProps> = ({ details }) => {
               </View>
             );
           }
-          return <Text key={detailKey}> </Text>;
         })
       }
     </View>
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
   detail: {
     ...styleContainer as any,
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingBottom: margins.xsm,
   },
   detailKey: {

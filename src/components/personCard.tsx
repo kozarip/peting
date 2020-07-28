@@ -25,13 +25,15 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
         primaryImage={person.primaryImageIndex}
         name={person.userName}
         age={person.age}
+        animalName={person.animalName}
       />
       <ProfileTitle
-        name={person.userName}
+        name={person.userName.trim()}
         age={person.age}
       />
       <ProfileTitle
         name={person.animalName}
+        city={person.cityName}
         smallFont
       />
       <Bio bio={person.bio} />

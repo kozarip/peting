@@ -14,7 +14,7 @@ class Search {
     }
     if (searchParams) {
       for (let [key, value] of Object.entries(searchParams)) {
-        if (value) {
+        if (value || (key === 'gender' && value !== null )) {
           if (key === 'exceptUsers' && Array.isArray(value)) {
             filter.filter['and'] = value.map((v) => { return {'cognitoUserName': {'ne' : v}}})
           }

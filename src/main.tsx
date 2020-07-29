@@ -48,14 +48,12 @@ const Main = ({ navigation }) => {
       Promise.all(matchPromises).then((resolved) => {
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
-          if (fullUserData.images && fullUserData.images[fullUserData.primaryImageIndex]) {
-            imageIds.push(fullUserData.images[fullUserData.primaryImageIndex]);
-          }
+          console.log(fullUserData.images[fullUserData.primaryImageIndex]);
           const matchData: matchType = {
             id: matches[i].id,
             cognitoUserName: fullUserData.cognitoUserName,
             name: fullUserData.userName,
-            avatar_url: imageIds[i],
+            avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
             subtitle: matches[i].timestamp.split('T', 1).join(''),
             lastNewMessageSender: matches[i].lastNewMessageSender,
           };

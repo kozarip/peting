@@ -7,13 +7,14 @@ import {
   Button,
 } from 'react-native';
 import { ListItem, Card, Overlay, Icon } from 'react-native-elements';
+import Tooltip from "rne-modal-tooltip";
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import User from '../services/user';
 import ImageStore from '../services/imageStore';
 import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
-import { margins, colors } from '../assets/styles/variables';
+import { margins, colors, dimensions } from '../assets/styles/variables';
 import { styleTitle, styleBackground } from '../assets/styles/base';
 
 type MatchScreenProps = {
@@ -23,7 +24,6 @@ type MatchScreenProps = {
 const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   const { matches, user } = useSelector((state) => state);
   const [myMatches, setMyMatches] = useState<matchType[]>([]);
-  const [matchImages, setMatchImages] = useState({});
   const [friendObject, setFriendObject] = useState({});
   const [isCardActive, setIsCardActive] = useState(false);
 
@@ -46,11 +46,8 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
     Promise.all(imageURLs).then((compiledImages: string[]) => {
       compiledImages.forEach((image, i) => {
         if (myMatches.length > 0) {
-          const temp = {};
-          temp[i] = image;
-          setMatchImages({ ...matchImages, ...temp });
           myMatches[i].avatar_url = image;
-          setMyMatches(myMatches);
+          setMyMatches((previsous) => [...previsous, ...myMatches]);
         }
       });
     });
@@ -100,7 +97,27 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
         <PetingHeader
           navigation={navigation}
         />
-        <Text style={styles.title}>Matchek</Text>
+        <View style={styles.screenHeader}>
+          <Text style={styles.title}>Matchek</Text>
+          <Tooltip
+            backgroundColor={colors.primary}
+            height={80}
+            width={dimensions.fullWidth * 0.8}
+            popover={
+              <Text style={styles.infoText}>
+                A név hosszan nyomásával, elő tudod hozni a személy profilját
+              </Text>
+            }
+          >
+            <Icon
+              name="info"
+              size={15}
+              raised
+              color="#000"
+              type="font-awesome"
+            />
+          </Tooltip>
+        </View>
         <Overlay
           isVisible={isCardActive}
           width="100%"
@@ -130,7 +147,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                     key={i}
                     title={item.name.trim()}
                     subtitle={item.subtitle}
-                    leftAvatar={{ source: { uri: matchImages[i] } }}
+                    leftAvatar={{ source: { uri: item.avatar_url } }}
                     rightIcon={
                       item.lastNewMessageSender === item.cognitoUserName ?
                         <Icon
@@ -150,7 +167,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                         name: item.name,
                         userId: user.cognitoUserName,
                         friendId: item.cognitoUserName,
-                        avatar: matchImages[i],
+                        avatar: item.avatar_url,
                         timestamp: item.subtitle,
                         lastNewMessageSender: item.lastNewMessageSender,
                       });
@@ -175,7 +192,16 @@ const styles = StyleSheet.create({
   title: {
     ...styleTitle as any,
     paddingHorizontal: margins.sm,
-    marginTop: margins.md,
+    marginTop: margins.sm,
+  },
+  screenHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  infoText: {
+    color: '#fff',
   },
 });
 

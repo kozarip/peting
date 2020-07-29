@@ -4,6 +4,7 @@ import { Auth } from 'aws-amplify';
 import { CheckBox } from 'react-native-elements';
 import { colors } from '../assets/styles/variables';
 import { styleBox } from '../assets/styles/base';
+import { clearStore } from '../store/action';
 
 const AppSettings: React.FC = () => {
   const [hasNotification, setHasNotification] = useState(true);
@@ -17,7 +18,10 @@ const AppSettings: React.FC = () => {
       <Button
         color={colors.darkPrimary}
         title="Logout"
-        onPress={() => { Auth.signOut(); }}
+        onPress={() => {
+          clearStore();
+          Auth.signOut();
+        }}
       />
     </View>
   );

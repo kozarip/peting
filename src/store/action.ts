@@ -18,3 +18,7 @@ export function setMatches(matches) {
     matches: matches.matches,
   };
 }
+
+export function clearStore() {
+  return {type: 'clear_store'}
+}

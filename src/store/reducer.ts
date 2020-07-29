@@ -27,6 +27,8 @@ export function reducer(state = initialState, action) {
         ...state,
         ...{ matches: [...state.matches, ...action.matches] },
       };
+    case 'clear_store':
+      return initialState;
     default:
       return state;
   }

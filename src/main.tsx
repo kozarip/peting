@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
-
 import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
-import { getUserMatches, selectTheOtherProfileId, subscriptionMatch } from './services/match';
+import { getUserMatches, selectTheOtherProfileId } from './services/match';
 import { setGlobalSearchParams, setUser, setMatches } from './store/action';
+
+//import aws_exports from '../aws-exports';
 
 const Main = ({ navigation }) => {
   const user = new User();
   const dispatch = useDispatch();
+
+  // PushNotification.configure(aws_exports);
 
   useEffect(() => {
     user.crateNewUserIfNotExist().then((exist) => {

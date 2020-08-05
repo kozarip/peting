@@ -30,6 +30,7 @@
     "expo-image-picker": "~8.1.0",
     "expo-notifications": "~0.1.1",
     "expo-permissions": "~8.1.0",
+    "expo-web-browser": "^8.3.1",
     "firebase": "7.9.0",
     "nanoid": "^3.1.6",
     "prop-types": "^15.7.2",
@@ -57,7 +58,6 @@
     "react-redux-firebase": "^3.3.0",
     "redux": "^4.0.5",
     "redux-firestore": "^0.13.0",
-    "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
     "test": "jest"
   },
   "devDependencies": {

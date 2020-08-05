@@ -10,6 +10,7 @@
     "lint": "./node_modules/.bin/eslint App.tsx"
   },
   "dependencies": {
+    "@aws-amplify/pushnotification": "^3.1.8",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-community/masked-view": "0.1.6",
     "@react-native-community/netinfo": "^5.5.1",
@@ -27,6 +28,7 @@
     "expo-google-app-auth": "^8.1.0",
     "expo-google-sign-in": "~8.1.0",
     "expo-image-picker": "~8.1.0",
+    "expo-notifications": "~0.1.1",
     "expo-permissions": "~8.1.0",
     "firebase": "7.9.0",
     "nanoid": "^3.1.6",
@@ -56,6 +58,7 @@
     "redux": "^4.0.5",
     "redux-firestore": "^0.13.0",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

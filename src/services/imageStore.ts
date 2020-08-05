@@ -2,8 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import { Storage } from 'aws-amplify';
 import * as mime from 'react-native-mime-types';
-
-const uuid = require('react-native-uuid');
+import uuid from 'react-native-uuid';
 
 class ImageStore {
   folder: string;

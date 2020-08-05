@@ -2,7 +2,6 @@
 /* eslint-disable class-methods-use-this */
 import { Storage } from 'aws-amplify';
 import * as mime from 'react-native-mime-types';
-import uuid from 'react-native-uuid';
 
 class ImageStore {
   folder: string;
@@ -63,7 +62,15 @@ class ImageStore {
 
   private generateKey() {
     // eslint-disable-next-line prefer-template
-    return this.folder + '/' + uuid();
+    return this.folder + '/' + this.uuidv4();
+  }
+
+  private uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      // eslint-disable-next-line one-var
+      const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 
   private getFileMeta(file) {

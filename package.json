@@ -6,6 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
+    "publish": "expo start",
     "lint": "./node_modules/.bin/eslint App.tsx"
   },
   "dependencies": {

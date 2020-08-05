@@ -5,8 +5,8 @@ import { StyleSheet, Button, View, Text, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
-import { Icon } from 'react-native-elements';
-import Tooltip from "rne-modal-tooltip";
+import { Icon, Tooltip } from 'react-native-elements';
+// import Tooltip from "rne-modal-tooltip";
 
 import { createNewTypeObject } from '../formHelpers';
 import { styleForm } from '../../../assets/styles/form';

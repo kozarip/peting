@@ -6,8 +6,8 @@ import {
   ImageBackground,
   Button,
 } from 'react-native';
-import { ListItem, Card, Overlay, Icon } from 'react-native-elements';
-import Tooltip from "rne-modal-tooltip";
+import { ListItem, Card, Overlay, Icon, Tooltip } from 'react-native-elements';
+// import Tooltip from "rne-modal-tooltip";
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import User from '../services/user';
@@ -77,11 +77,10 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
     return 0;
   };
 
-  const handlePressAvatar = (cognitoUserName) => {
-    friendUser.getUserByCognitoUserName(cognitoUserName).then((dataFromApi) => {
-      setFriendObject(dataFromApi.data.userByCognitoUserName.items[0]);
-      setIsCardActive(true);
-    });
+  const handlePressAvatar = async (cognitoUserName) => {
+    const dataFromApi = await friendUser.getUserByCognitoUserName(cognitoUserName)
+    setFriendObject(dataFromApi.data.userByCognitoUserName.items[0]);
+    setIsCardActive(true);
   };
 
   const image = require('../assets/images/pet_silhouettes2.jpg');

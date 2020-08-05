@@ -50,15 +50,12 @@
     "react-native-sectioned-multi-select": "^0.7.7",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-tab-view": "^2.14.0",
-    "react-native-uuid": "^1.4.9",
     "react-native-web": "~0.11.7",
     "react-redux": "^7.2.0",
     "react-redux-firebase": "^3.3.0",
     "redux": "^4.0.5",
     "redux-firestore": "^0.13.0",
     "rne-modal-tooltip": "gist:b28c003d87c619674def0878473338a0",
-    "test": "jest",
-    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

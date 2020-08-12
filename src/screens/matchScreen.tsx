@@ -47,7 +47,9 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
       compiledImages.forEach((image, i) => {
         if (myMatches.length > 0) {
           myMatches[i].avatar_url = image;
-          setMyMatches((previsous) => [...previsous, ...myMatches]);
+          setTimeout(() => {
+            setMyMatches((previsous) => [...previsous, ...myMatches]);
+          }, 0);
         }
       });
     });

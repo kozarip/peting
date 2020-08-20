@@ -48,7 +48,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
         if (myMatches.length > 0) {
           myMatches[i].avatar_url = image;
           setTimeout(() => {
-            setMyMatches((previsous) => [...previsous, ...myMatches]);
+            setMyMatches((previsous) => [...previsous, ...[myMatches[i]]]);
           }, 0);
         }
       });

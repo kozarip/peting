@@ -51,7 +51,6 @@ const Main = ({ navigation }) => {
       Promise.all(matchPromises).then((resolved) => {
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
-          console.log(fullUserData.images[fullUserData.primaryImageIndex]);
           const matchData: matchType = {
             id: matches[i].id,
             cognitoUserName: fullUserData.cognitoUserName,

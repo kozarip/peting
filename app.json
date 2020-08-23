@@ -25,11 +25,18 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "host.exp.exponent.ios",
+      "bundleIdentifier": "host.exp.exponent.peting",
+      "buildNumber": "0.0.1",
       "config": {
         "googleSignIn": {
           "reservedClientId": "987658316582-alluojp12vglaf7n3m6c3r4gunhphbka.apps.googleusercontent.com"
         }
+      },
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "location",
+          "fetch"
+        ]
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },

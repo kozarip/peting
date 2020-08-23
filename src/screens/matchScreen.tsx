@@ -63,17 +63,17 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   const orderByNewMessages = (a, b) => {
     if (a.lastNewMessageSender !== '' && b.lastNewMessageSender === '') {
-      return 1;
-    } else if (b.lastNewMessageSender !== '' && a.lastNewMessageSender === '') {
       return -1;
+    } else if (b.lastNewMessageSender !== '' && a.lastNewMessageSender === '') {
+      return 1;
     }
     return 0;
   };
 
   const orderByDate = (a, b) => {
-    if (a.timestamp > b.timestamp) {
+    if (a.subtitle > b.subtitle) {
       return -1;
-    } else if (a.timestamp < b.timestamp) {
+    } else if (a.subtitle < b.subtitle) {
       return 1;
     }
     return 0;
@@ -143,7 +143,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
           myMatches.length > 0 ?
             <ScrollView>
               {
-                myMatches.map((item, i) => (
+                orderMatches(myMatches).map((item, i) => (
                   <ListItem
                     key={i}
                     title={item.name.trim()}

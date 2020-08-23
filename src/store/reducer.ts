@@ -2,6 +2,7 @@ export const initialState = {
   searchParams: {},
   user: {},
   matches: [],
+  chatIDs: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -15,6 +16,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.user,
+      };
+    case 'Set_Chat_IDs':
+      return {
+        ...state,
+        ...action.chatIDs,
       };
     case 'Set_Matches':
       if (action.matches.length === 1) {

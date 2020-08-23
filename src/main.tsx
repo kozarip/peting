@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
+import Chat from './services/chat';
 import { getUserMatches, selectTheOtherProfileId } from './services/match';
-import { setGlobalSearchParams, setUser, setMatches } from './store/action';
+import { setGlobalSearchParams, setUser, setMatches, setChatIds } from './store/action';
 
 //import aws_exports from '../aws-exports';
 
 const Main = ({ navigation }) => {
   const user = new User();
+  const chat = new Chat();
   const dispatch = useDispatch();
 
   // PushNotification.configure(aws_exports);
@@ -24,6 +26,7 @@ const Main = ({ navigation }) => {
           user: userData,
         }));
         setGlobalMatches(userData.cognitoUserName);
+        setGlobalChatIDs(userData.cognitoUserName);
       } else {
         navigation.navigate('Settings', { newUser: true });
         if (Platform.OS === 'android') {
@@ -72,6 +75,16 @@ const Main = ({ navigation }) => {
 
   const setMatchToGlobalState = (match) => {
     dispatch(setMatches({ matches: match }));
+  };
+
+  const setGlobalChatIDs = (cognitoUserName) => {
+    chat.getMyChats(cognitoUserName).then((myChats) => {
+      const IDs = []
+      myChats.data.searchChats.items.forEach(myChat => {
+        IDs.push(myChat.id);
+      });
+      dispatch(setChatIds({ chatIDs: IDs }));
+    });
   };
 
   const image = require('./assets/images/pet_silhouettes2.jpg');

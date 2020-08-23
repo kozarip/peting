@@ -22,3 +22,10 @@ export function setMatches(matches) {
 export function clearStore() {
   return {type: 'clear_store'}
 }
+
+export function setChatIds(chatIDs) {
+  return {
+    type: 'Set_Chat_IDs',
+    chatIDs,
+  };
+}

@@ -57,8 +57,8 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   const orderMatches = (unOrderedMatches: []) => {
     return unOrderedMatches
-      .sort((a, b) => orderByDate(a, b))
-      .sort((a, b) => orderByNewMessages(a, b));
+      .sort((a, b) => orderByNewMessages(a, b))
+      .sort((a, b) => orderByDate(a, b));
   };
 
   const orderByNewMessages = (a, b) => {

@@ -5,15 +5,16 @@ import User from './services/user';
 import Chat from './services/chat';
 import { getUserMatches, selectTheOtherProfileId } from './services/match';
 import { setGlobalSearchParams, setUser, setMatches, setChatIds } from './store/action';
-
-//import aws_exports from '../aws-exports';
+import { registerFetchTask } from './components/registerFetchTask';
 
 const Main = ({ navigation }) => {
   const user = new User();
   const chat = new Chat();
   const dispatch = useDispatch();
 
-  // PushNotification.configure(aws_exports);
+  registerFetchTask('wow', ()=>{
+    console.log('WOWWW HIIIIIIIII YGNNNNNN');
+}, 5);
 
   useEffect(() => {
     user.crateNewUserIfNotExist().then((exist) => {

@@ -3,9 +3,11 @@ export const initialState = {
   user: {},
   matches: [],
   chatIDs: [],
+  activeMenu: 2,
 };
 
 export function reducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case 'Set_Search_Params':
       return {
@@ -21,6 +23,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.chatIDs,
+      };
+    case 'Set_Active_Menu_Id':
+      return {
+        ...state,
+        ...action.activeMenu,
       };
     case 'Set_Matches':
       if (action.matches.length === 1) {
@@ -43,6 +50,5 @@ export function reducer(state = initialState, action) {
 const mergeOnlyOneMatchObj = (stateMatches, newMatch) => {
   const stateMatchesWithoutTheNewOne = stateMatches.filter((match) => (
     match.cognitoUserName !== newMatch.cognitoUserName));
-  //console.log(match.cognitoUserName, newMatch.cognitoUserName);
   return { matches: [...stateMatchesWithoutTheNewOne, ...[newMatch]] };
 };

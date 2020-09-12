@@ -1,6 +1,8 @@
 import React from 'react';
 import { Header, Icon } from 'react-native-elements';
+import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '../assets/styles/variables';
+import { setActiveMenuId, setChatIds } from '../store/action';
 
 type PetingHeaderProps = {
   navigation: any,
@@ -8,6 +10,18 @@ type PetingHeaderProps = {
 
 const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
 
+  const { activeMenu } = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const setMenuIdColor = (menuId) => (menuId === activeMenu ? '#fff' : colors.darkPrimary);
+
+  const handleMenuSelect = (id, name) => {
+    dispatch(setActiveMenuId(id));
+    if (name === 'Settings') {
+      navigation.navigate('Settings', { newUser: false })
+    }
+    navigation.navigate(name);
+  };
 
   return (
     <Header
@@ -20,9 +34,9 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       leftComponent={
         <Icon
           name="sliders"
-          color="#ffffff"
+          color={setMenuIdColor(1)}
           size={25}
-          onPress={() => navigation.navigate('Match')}
+          onPress={() => { handleMenuSelect(1, 'Match')}}
           underlayColor={colors.primary}
           type="font-awesome"
         />
@@ -30,9 +44,9 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       centerComponent={
         <Icon
           name="heart"
-          color="#ffffff"
+          color={setMenuIdColor(2)}
           size={25}
-          onPress={() => navigation.navigate('Result')}
+          onPress={() => {handleMenuSelect(2, 'Result')}}
           underlayColor={colors.primary}
           type="font-awesome"
         />
@@ -40,9 +54,9 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       rightComponent={
         <Icon
           name="user"
-          color="#ffffff"
+          color={setMenuIdColor(3)}
           size={25}
-          onPress={() => navigation.navigate('Settings', { newUser: false })}
+          onPress={() => { handleMenuSelect(3, 'Settings')}}
           underlayColor={colors.primary}
           type="font-awesome"
         />

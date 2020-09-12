@@ -20,7 +20,14 @@ export function setMatches(matches) {
 }
 
 export function clearStore() {
-  return {type: 'clear_store'}
+  return { type: 'clear_store'}
+}
+
+export function setActiveMenuId(activeMenu) {
+  return {
+    type: 'Set_Active_Menu_Id',
+    activeMenu: { activeMenu },
+  };
 }
 
 export function setChatIds(chatIDs) {

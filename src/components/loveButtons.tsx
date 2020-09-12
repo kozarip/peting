@@ -12,16 +12,28 @@ type LoveButtonsProps = {
 const LoveButtons: React.FC<LoveButtonsProps> = (
   { handlePressLike, handlePressDislike, handlePressNext },
 ) => {
-  const iconSize = 27;
+  const bigIconSize = 35;
+  const smallIconSize = 30;
   return (
     <View style={styles.reviewBox}>
       <TouchableOpacity
         onPress={handlePressDislike}
       >
         <Icon
-          name="times-circle"
-          size={iconSize}
-          color="#40D18A"
+          name="times"
+          size={bigIconSize}
+          color={colors.primary}
+          type="font-awesome"
+          raised
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={handlePressNext}
+      >
+        <Icon
+          name="angle-double-up"
+          size={smallIconSize}
+          color="#ced4da"
           type="font-awesome"
           raised
         />
@@ -31,21 +43,10 @@ const LoveButtons: React.FC<LoveButtonsProps> = (
       >
         <Icon
           name="heart"
-          size={iconSize}
-          color="#ED2654"
+          size={bigIconSize}
+          color={colors.primary}
           type="font-awesome"
-          raised
-        />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handlePressNext}
-      >
-        <Icon
-          name="chevron-circle-right"
-          size={iconSize}
-          color="#3692DD"
-          type="font-awesome"
-          raised
+          reverse
         />
       </TouchableOpacity>
     </View>
@@ -59,8 +60,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    borderTopWidth: 1,
-    borderTopColor: colors.separator,
+    backgroundColor: '#00000000',
   },
 });
 

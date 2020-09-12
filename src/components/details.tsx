@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { margins, fonts } from '../assets/styles/variables';
+import { margins, fonts, colors } from '../assets/styles/variables';
 import { styleContainer } from '../assets/styles/base';
 import * as userFields from '../constants/userFields';
 
@@ -58,9 +58,6 @@ const Details: React.FC<DetailProps> = ({ details }) => {
 };
 
 const styles = StyleSheet.create({
-  detailsContainer: {
-    marginTop: margins.sm,
-  },
   detail: {
     ...styleContainer as any,
     justifyContent: 'space-between',
@@ -68,9 +65,11 @@ const styles = StyleSheet.create({
     paddingBottom: margins.xsm,
   },
   detailKey: {
+    color: colors.separator,
     fontSize: fonts.default,
   },
   detailValue: {
+    color: colors.grey,
     fontSize: fonts.default,
   },
 });

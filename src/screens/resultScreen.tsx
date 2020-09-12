@@ -14,11 +14,11 @@ import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
-import { hairColor, smokeFrequency, hobbies } from '../constants/userFields';
 import PersonCard from '../components/personCard';
 import Loader from '../components/loader';
 import EmptyResultModal from '../components/emptyResultModal';
 import { setUser, setMatches } from '../store/action';
+import HeaderTriangle from '../components/headerTriangle';
 
 type ResultScreenProps = {
   navigation: any;
@@ -35,12 +35,12 @@ const initialResultPerson = {
   smokeFrequency: '',
   height: '',
   primaryImageIndex: 0,
-  images: [require('../assets/images/elsa.jpg')],
-  animalImages: [require('../assets/images/dog_sample.jpg')],
+  images: [],
+  animalImages: [],
 };
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
-  const image = require('../assets/images/pet_silhouettes2.jpg');
+  const image = require('../assets/images/background.png');
   const pressedButton = route.params ? route.params.pressedButton : '';
 
   const { searchParams, user, matches } = useSelector((state: any) => state);
@@ -177,14 +177,15 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         <PetingHeader
           navigation={navigation}
         />
-        <View style={styles.profileBox}>
+        <View>
           <Loader isActive={isLoaderActive} />
           <ImageBackground
             source={image}
             style={styleBackground}
             resizeMode="repeat"
-            imageStyle={{ opacity: 0.04 }}
+            imageStyle={{ opacity: 0.3 }}
           >
+            <HeaderTriangle />
             <EmptyResultModal
               setIsOverlayActive={setIsOverlayActive}
               isOverlayActive={isOverlayActive}
@@ -194,14 +195,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
               person={resultPerson}
               navigation={navigation}
             />
+            <LoveButtons
+              handlePressLike={handlePressLike}
+              handlePressNext={handlePressNext}
+              handlePressDislike={handlePressDislike}
+            />
           </ImageBackground>
         </View>
       </ScrollView>
-      <LoveButtons
-        handlePressLike={handlePressLike}
-        handlePressNext={handlePressNext}
-        handlePressDislike={handlePressDislike}
-      />
     </View>
   );
 };
@@ -220,9 +221,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: margins.sm,
     paddingBottom: 25,
-  },
-  profileBox: {
-    paddingHorizontal: margins.sm,
   },
   detailsBox: {
     display: 'flex',

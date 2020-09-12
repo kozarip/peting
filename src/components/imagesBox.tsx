@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements';
 import ImageBox from './imageBox';
 import ImageStore from '../services/imageStore';
-import { margins, dimensions } from '../assets/styles/variables';
 
 type ImagesBoxProps = {
   navigation: any,
@@ -36,7 +34,7 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
 
   useEffect(() => {
     initImage();
-  });
+  }, [images]);
 
   const initImage = async () => {
     const imageURLs = await imageStore.fetchImages(images);
@@ -76,7 +74,7 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
         source={animalProfileImage}
         navigation={navigation}
       />
-      <View style={styles.moreImageIcon}>
+      {/* <View style={styles.moreImageIcon}>
         <Icon
           raised
           name="ios-images"
@@ -84,17 +82,14 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
           color="#21618C"
           type="ionicon"
         />
-      </View>
+      </View> */}
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   imageContainer: {
-    position: 'relative',
-    width: '100%',
-    marginBottom: margins.md,
-    height: dimensions.fullWidth * 0.8,
+    padding: 5,
   },
   moreImageIcon: {
     position: 'absolute',

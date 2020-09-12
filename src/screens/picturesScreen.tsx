@@ -14,7 +14,7 @@ import { styleTitle, styleBackground } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 
 const { width } = Dimensions.get('window');
-const image = require('../assets/images/pet_silhouettes2.jpg');
+const image = require('../assets/images/background.png');
 
 const PicturesScreen = ({ navigation, route }) => {
   const personImages = route.params.allImages.split(',');

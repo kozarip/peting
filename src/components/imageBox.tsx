@@ -3,6 +3,7 @@ import {
   View,
   Image,
   StyleSheet,
+  Platform,
 } from 'react-native';
 import { dimensions } from '../assets/styles/variables';
 
@@ -27,28 +28,26 @@ const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
   );
 };
 
-const profileImageToucbox = {
-  position: 'absolute',
-  bottom: 0,
-};
-
 const styles = StyleSheet.create({
-  profileImageTouchBox: {
-    ...profileImageToucbox as any,
-  },
   dogImageTouchBox: {
-    ...profileImageToucbox as any,
-    right: 0,
+    marginLeft: -14,
+    marginTop: -dimensions.fullHeight * 0.1,
+    width: dimensions.fullWidth * 0.45,
+    height: dimensions.fullWidth * 0.45,
+    borderRadius: dimensions.fullWidth * 0.72,
+    borderColor: 'rgba(255,255,255, 0.6)',
+    borderWidth: 16,
   },
   profileImage: {
-    width: dimensions.fullWidth * 0.8,
-    height: dimensions.fullWidth * 0.8,
-    borderRadius: (dimensions.fullWidth) / 2,
+    width: dimensions.fullWidth * 0.78,
+    height: dimensions.fullWidth * 0.78,
+    marginLeft: 'auto',
+    borderRadius: dimensions.fullWidth * 1.56,
   },
   dogImage: {
     width: dimensions.fullWidth * 0.36,
     height: dimensions.fullWidth * 0.36,
-    borderRadius: dimensions.fullWidth / 2,
+    borderRadius: dimensions.fullWidth * 0.72,
   },
 });
 

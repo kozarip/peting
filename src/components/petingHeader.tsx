@@ -1,48 +1,50 @@
 import React from 'react';
 import { Header, Icon } from 'react-native-elements';
 import { colors } from '../assets/styles/variables';
-import { Platform } from 'react-native';
-
 
 type PetingHeaderProps = {
   navigation: any,
 }
 
 const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
+
+
   return (
     <Header
       containerStyle={{
         paddingTop: Platform.OS === 'ios' ? 12 : 0,
         height: 60,
-        borderBottomColor: colors.separator,
-        borderBottomWidth: 1,
+        borderBottomWidth: 0,
       }}
       backgroundColor={colors.primary}
       leftComponent={
         <Icon
-          name="search"
+          name="sliders"
           color="#ffffff"
-          size={32}
-          onPress={() => navigation.navigate('Result')}
+          size={25}
+          onPress={() => navigation.navigate('Match')}
           underlayColor={colors.primary}
+          type="font-awesome"
         />
       }
       centerComponent={
         <Icon
-          name="favorite"
+          name="heart"
           color="#ffffff"
-          size={32}
-          onPress={() => navigation.navigate('Match')}
+          size={25}
+          onPress={() => navigation.navigate('Result')}
           underlayColor={colors.primary}
+          type="font-awesome"
         />
       }
       rightComponent={
         <Icon
-          name="settings"
+          name="user"
           color="#ffffff"
-          size={32}
+          size={25}
           onPress={() => navigation.navigate('Settings', { newUser: false })}
           underlayColor={colors.primary}
+          type="font-awesome"
         />
       }
     />

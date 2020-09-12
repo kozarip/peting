@@ -9,7 +9,7 @@ type BioProps = {
 
 const Bio: React.FC<BioProps> = ({ bio }) => {
   return (
-    <View style={styleBox}>
+    <View>
       <Text style={styles.bio}>{bio}</Text>
     </View>
 
@@ -19,8 +19,6 @@ const Bio: React.FC<BioProps> = ({ bio }) => {
 const styles = StyleSheet.create({
   bio: {
     fontSize: fonts.default,
-    borderTopColor: colors.separator,
-    borderTopWidth: 1,
     paddingVertical: margins.sm,
   },
 });

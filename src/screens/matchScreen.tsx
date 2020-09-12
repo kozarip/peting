@@ -85,7 +85,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
     setIsCardActive(true);
   };
 
-  const image = require('../assets/images/pet_silhouettes2.jpg');
+  const image = require('../assets/images/background.png');
 
   return (
     <View style={styles.container}>

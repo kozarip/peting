@@ -10,7 +10,7 @@ import {
 
 const Login: React.FC = () => {
   return (
-    <View>
+    <View style={styles.buttonContainer}>
       <Button
         icon={
           <Icon
@@ -29,7 +29,7 @@ const Login: React.FC = () => {
       <Button
         icon={
           <Icon
-            iconStyle={styles.icon}
+            iconStyle={styles.googleIcon}
             name="google"
             size={30}
             color="white"
@@ -47,16 +47,26 @@ const Login: React.FC = () => {
 };
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
   button: {
-    padding: margins.xsm,
+    padding: margins.sm,
     marginBottom: margins.sm,
     backgroundColor: colors.facebook,
+    borderRadius: 50,
+    width: 270,
   },
   googleButton: {
     backgroundColor: colors.google,
   },
   icon: {
     marginRight: margins.sm,
+  },
+  googleIcon: {
+    marginRight: margins.sm,
+    marginLeft: -15,
   },
 });
 

@@ -1,11 +1,10 @@
-import { fonts, margins, colors } from './variables';
+import { fonts, margins, colors, dimensions } from './variables';
 
 export const styleBackground = {
   flex: 1,
-  width: '100%',
+  width: dimensions.fullWidth,
   backgroundColor: '#808080',
   borderTopWidth: 0,
-  borderColor: colors.primary,
 };
 
 export const styleContainer = {

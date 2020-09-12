@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontSize: 34,
     marginRight: 10,
+    flexShrink: 1,
   },
   age: {
     color: colors.grey,
@@ -100,8 +101,8 @@ const styles = StyleSheet.create({
   },
   animal: {
     color: '#000',
-    fontSize: 34,
-    marginLeft: dimensions.fullWidth / 2,
+    fontSize: 26,
+    marginLeft: dimensions.fullWidth * 0.45,
     marginTop: -80,
     marginBottom: 20,
   },

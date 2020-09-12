@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import { styleForm } from '../../assets/styles/form';
-import { fonts } from '../../assets/styles/variables';
+import { fonts, colors, margins } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
 
 type SelectorProps = {
@@ -30,23 +30,24 @@ const Selector: React.FC<SelectorProps> = (
   },
 ) => {
   return (
-    <View>
+    <View style={styleForm.textBoxContainer}>
       <Text style={styleForm.label as any}>
         {label}
         {mandatory && <Text style={styleForm.mandatory}> *</Text>}
       </Text>
-      <RNPickerSelect
-        placeholder={{
-          label: 'Válassz egy elemet',
-          color: '#000',
-        }}
-        value={value}
-        style={pickerSelectStyles}
-        onValueChange={(selectedValue) => {
-          setValue(createNewTypeObject(type, selectedValue));
-        }}
-        items={options}
-      />
+      <View style={{borderRadius: 20}}>
+        <RNPickerSelect
+          placeholder={{
+            label: 'Válassz egy elemet',
+          }}
+          value={value}
+          style={pickerSelectStyles}
+          onValueChange={(selectedValue) => {
+            setValue(createNewTypeObject(type, selectedValue));
+          }}
+          items={options}
+        />
+      </View>
     </View>
   );
 };
@@ -55,11 +56,13 @@ const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     marginVertical: 5,
     fontSize: fonts.heading3,
-    color: '#000',
+    color: colors.separator,
+    backgroundColor: colors.primary,
+    borderRadius: 20,
   },
   inputAndroid: {
     fontSize: fonts.heading3,
-    color: '#000',
+    color: colors.separator,
   },
 });
 

@@ -3,11 +3,11 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   ScrollView,
-  Button,
   View,
+  Text,
   Alert,
 } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Button } from 'react-native-elements';
 
 import ImageStore from '../services/imageStore';
 
@@ -23,7 +23,7 @@ import { styleForm } from '../assets/styles/form';
 import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
-import { colors } from '../assets/styles/variables';
+import { colors, fonts, margins } from '../assets/styles/variables';
 import * as userField from '../constants/userFields';
 
 import {
@@ -227,7 +227,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={profileUser.primaryImageIndex || 0}
             setValue={setProfileUserAttribute}
             images={profileUser.images || []}
-            title="Tölts fel képeket magadról"
+            title="Képeid"
             removeImage={handleRemoveImage}
           />
           <ImageSelector
@@ -236,15 +236,10 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={0}
             setValue={setProfileUserAttribute}
             images={profileUser.animalImages || []}
-            title="Tölts fel képeket a kedvencedről"
+            title="Kedvenced képei"
             removeImage={handleRemoveImage}
           />
-        </Card>
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Alapadatok"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Alapadatok</Text>
           <TextBox
             label="Név"
             type="userName"
@@ -291,13 +286,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
             value={profileUser.cityName}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Kinézet"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Kinézet</Text>
           <TextBox
             label="Magasság (cm)"
             mandatory={mandatoryFields.includes('height')}
@@ -315,13 +304,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
             value={profileUser.hairColor}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Állatod"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Állatod</Text>
           <TextBox
             label="Állatod neve"
             type="animalName"
@@ -345,13 +328,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
             value={profileUser.animalSize}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Egyéb"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Egyéb</Text>
           <Selector
             label={smokeFrequency.label}
             options={smokeFrequency.options}
@@ -368,12 +345,13 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             value={profileUser.hobbies}
           />
         </Card>
+        <Button
+          buttonStyle={styles.btnSave}
+          titleStyle={{ fontSize: fonts.heading2 }}
+          title="Mentés"
+          onPress={handleSaveProfile}
+        />
       </ScrollView>
-      <Button
-        color={colors.darkPrimary}
-        title="Mentés"
-        onPress={handleSaveProfile}
-      />
     </View>
   );
 };
@@ -381,6 +359,15 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 20,
+  },
+  btnSave: {
+    width: 120,
+    padding: 10,
+    borderRadius: 20,
+    marginBottom: margins.md,
+    marginRight: margins.md,
+    marginLeft: 'auto',
+    backgroundColor: colors.primary,
   },
 });
 

@@ -1,7 +1,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Button, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text, Alert } from 'react-native';
+import { Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
@@ -105,10 +106,31 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         deleteImageConfirm={deleteImageConfirm}
         setPrimary={setPrimary}
       />
-      <Text style={styles.title}>
-        {title}
-        {mandatory && <Text style={styleForm.mandatory}> *</Text>}
-      </Text>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>
+          {title}
+          {mandatory && <Text style={styleForm.mandatory}> *</Text>}
+        </Text>
+        <Tooltip
+            backgroundColor={colors.primary}
+            height={80}
+            width={dimensions.fullWidth * 0.8}
+            popover={
+              <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
+                Egyszere csak egy képet tudsz feltölteni.
+                Nyomd hosszan a képet a beállításokhoz!
+              </Text>
+            }
+          >
+            <Icon
+              name="info"
+              size={10}
+              reverse
+              color={colors.primary}
+              type="font-awesome"
+            />
+          </Tooltip>
+      </View>
       <View style={styles.imageCardHeader}>
         {
           maxImageNumber > 0  ?
@@ -116,25 +138,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
             :
             <Text style={styles.imageText}>Több képet már nem tölthetsz fel</Text>
         }
-        <Tooltip
-          backgroundColor={colors.primary}
-          height={80}
-          width={dimensions.fullWidth * 0.8}
-          popover={
-            <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
-              Egyszere csak egy képet tudsz feltölteni.
-              Nyomd hosszan a képet a beállításokhoz!
-            </Text>
-          }
-        >
-          <Icon
-            name="info"
-            size={15}
-            raised
-            color="#000"
-            type="font-awesome"
-          />
-        </Tooltip>
       </View>
       <ImageList
         images={images}
@@ -144,9 +147,9 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
       {
         maxImageNumber > 0 &&
         <Button
-          color={colors.primary}
           title="Tölts fel egy képet"
           onPress={pickImage}
+          buttonStyle={styles.btnUploadPic}
         />
       }
     </View>
@@ -155,18 +158,23 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
 
 const styles = StyleSheet.create({
   imageSelectorContainer: {
-    marginBottom: margins.lg,
   },
   imageText: {
     fontSize: fonts.default,
     marginBottom: margins.sm,
+    color: colors.separator,
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: fonts.heading2,
+    color: colors.grey,
   },
   toolTipImageText: {
     color: '#fff',
-    paddingTop: margins.xsm,
   },
   imageCardHeader: {
     display: 'flex',
@@ -174,6 +182,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-end',
+  },
+  btnUploadPic:{
+    color: '#fff',
+    backgroundColor: '#ccc',
+    borderRadius: 20,
   }
 })
 

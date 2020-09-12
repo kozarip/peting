@@ -23,19 +23,23 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
     navigation.navigate(name);
   };
 
+  const iconSize = 28;
+
   return (
     <Header
       containerStyle={{
-        paddingTop: Platform.OS === 'ios' ? 12 : 0,
-        height: 60,
+        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+        height: 70,
         borderBottomWidth: 0,
+        marginTop: 20,
+        paddingHorizontal: 20,
       }}
       backgroundColor={colors.primary}
       leftComponent={
         <Icon
           name="sliders"
           color={setMenuIdColor(1)}
-          size={25}
+          size={iconSize}
           onPress={() => { handleMenuSelect(1, 'Match')}}
           underlayColor={colors.primary}
           type="font-awesome"
@@ -45,7 +49,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
         <Icon
           name="heart"
           color={setMenuIdColor(2)}
-          size={25}
+          size={iconSize}
           onPress={() => {handleMenuSelect(2, 'Result')}}
           underlayColor={colors.primary}
           type="font-awesome"
@@ -55,7 +59,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
         <Icon
           name="user"
           color={setMenuIdColor(3)}
-          size={25}
+          size={iconSize}
           onPress={() => { handleMenuSelect(3, 'Settings')}}
           underlayColor={colors.primary}
           type="font-awesome"

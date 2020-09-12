@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
     marginBottom: margins.sm,
   },
   primaryImage: {
-    borderColor: colors.grey,
-    borderWidth: 4,
+    borderColor: colors.primary,
+    borderWidth: 5,
   },
 });
 

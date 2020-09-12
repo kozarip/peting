@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import PetingHeader from '../components/petingHeader';
+import HeaderTriangle from '../components/headerTriangle';
 
 import Profile from '../components/profile';
 import AppSettings from '../components/appSettings';
@@ -17,7 +18,7 @@ import NewUserAlert from '../components/newUserAlert';
 import Loader from '../components/loader';
 
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import { margins, colors, fonts } from '../assets/styles/variables';
 import { setUser } from '../store/action';
 import User from '../services/user';
 
@@ -67,7 +68,7 @@ const SettingsScreen = ({ navigation, route }) => {
   const [index, setIndex] = React.useState(defaultScreenNumber);
   const [routes] = React.useState([
     { key: 'search', title: 'Keresés' },
-    { key: 'profile', title: 'Profilom' },
+    { key: 'profile', title: 'Profil' },
     { key: 'appSettings', title: 'Beállítás' },
   ]);
 
@@ -77,10 +78,17 @@ const SettingsScreen = ({ navigation, route }) => {
     appSettings: appSettingsRoute,
   });
 
+ /*  const renderLabel = ({ route }) => (
+    <Text style={styles.tabTitle}>{route.title}</Text>
+  ); */
+
   const image = require('../assets/images/background.png');
 
   return (
     <View style={styles.container}>
+      <PetingHeader
+        navigation={navigation}
+      />
       <Loader isActive={isLoaderActive} />
       <NewUserAlert
         isNewUser={isNewUser}
@@ -90,26 +98,23 @@ const SettingsScreen = ({ navigation, route }) => {
         source={image}
         style={styleBackground}
         resizeMode="repeat"
-        imageStyle={{ opacity: 0.04 }}
+        imageStyle={{ opacity: 0.3 }}
       >
-        <PetingHeader
-          navigation={navigation}
-        />
-        <Text style={styles.title}>Beállítások</Text>
+        <HeaderTriangle />
         <TabView
           navigationState={{ index, routes }}
           renderScene={renderScene}
           onIndexChange={setIndex}
           initialLayout={initialLayout}
-          swipeEnabled={false}
           renderTabBar={(props) => (
             <TabBar
-              inactiveColor="#000"
-              pressColor="#000"
+              indicatorStyle={{backgroundColor: colors.primary}}
+              inactiveColor={colors.darkPrimary}
+              pressColor={colors.grey}
               labelStyle={{ fontSize: 15 }}
-              activeColor="#000"
+              activeColor="#fff"
               {...props}
-              style={{ backgroundColor: '#fff' }}
+              style={styles.tabBar}
             />
           )}
         />
@@ -129,6 +134,18 @@ const styles = StyleSheet.create({
   title: {
     ...styleTitle as any,
     marginTop: margins.md,
+  },
+  tabBar: {
+    backgroundColor: colors.primary,
+    shadowOffset: { height: 0, width: 0 }, 
+    shadowColor: 'transparent',
+    shadowOpacity: 0,
+    elevation: 0,
+  },
+  tabTitle: {
+    fontSize: fonts.heading3,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

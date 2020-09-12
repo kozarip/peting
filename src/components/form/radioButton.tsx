@@ -6,7 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { styleForm } from '../../assets/styles/form';
-import { colors, dimensions } from '../../assets/styles/variables';
+import { colors, dimensions, margins } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
 
 type RadioButtonProps = {
@@ -35,7 +35,6 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       {Array.isArray(options) && options.map((res: any) => {
         return (
           <View key={res.key} style={styles.container}>
-            <Text style={{ ...styleForm.cardInput, ...styles.radioInput }}>{res.text}</Text>
             <TouchableOpacity
               style={styles.radioCircle}
               onPress={() => {
@@ -44,6 +43,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
             >
               {value === res.key && <View style={styles.selectedRb} />}
             </TouchableOpacity>
+            <Text style={{ ...styleForm.cardInput, ...styles.radioInput }}>{res.text}</Text>
           </View>
         );
       })}
@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    marginRight: margins.sm,
   },
   selectedRb: {
     width: 12,

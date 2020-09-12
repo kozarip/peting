@@ -6,7 +6,7 @@ import {
   ImageBackground,
   Button,
 } from 'react-native';
-import { ListItem, Card, Overlay, Icon, Tooltip } from 'react-native-elements';
+import { ListItem, Card, Overlay, Icon, Tooltip, Avatar } from 'react-native-elements';
 // import Tooltip from "rne-modal-tooltip";
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -14,8 +14,8 @@ import User from '../services/user';
 import ImageStore from '../services/imageStore';
 import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
-import { margins, colors, dimensions } from '../assets/styles/variables';
-import { styleTitle, styleBackground } from '../assets/styles/base';
+import { margins, colors, dimensions, fonts } from '../assets/styles/variables';
+import { styleTitle, styleBackground, styleContainer } from '../assets/styles/base';
 import HeaderTriangle from '../components/headerTriangle';
 
 type MatchScreenProps = {
@@ -81,7 +81,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   };
 
   const handlePressAvatar = async (cognitoUserName) => {
-    const dataFromApi = await friendUser.getUserByCognitoUserName(cognitoUserName)
+    const dataFromApi = await friendUser.getUserByCognitoUserName(cognitoUserName);
     setFriendObject(dataFromApi.data.userByCognitoUserName.items[0]);
     setIsCardActive(true);
   };
@@ -97,7 +97,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
         source={image}
         style={styleBackground}
         resizeMode="repeat"
-        imageStyle={{ opacity: 0.04 }}
+        imageStyle={{ opacity: 0.3 }}
       >
         <HeaderTriangle />
         <View style={styles.screenHeader}>
@@ -108,23 +108,23 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={styles.infoText}>
-                A név hosszan nyomásával, elő tudod hozni a személy profilját
+                Az avatar képre kattintva, elő tudod hozni a személy profilját
               </Text>
             }
           >
             <Icon
               name="info"
-              size={15}
+              size={12}
               raised
-              color="#000"
+              color={colors.primary}
               type="font-awesome"
             />
           </Tooltip>
         </View>
         <Overlay
           isVisible={isCardActive}
-          width="100%"
           height="90%"
+          overlayStyle={{ padding: 0,}}
         >
           <View>
             <ScrollView>
@@ -148,11 +148,19 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                 orderMatches(myMatches).map((item, i) => (
                   <ListItem
                     key={i}
-                    title={item.name.trim()}
-                    subtitle={item.subtitle}
-                    leftAvatar={{ source: { uri: item.avatar_url } }}
                     containerStyle={styles.listItem}
-                    rightIcon={
+                  >
+                    <Avatar
+                      rounded
+                      size="large"
+                      onPress={() => handlePressAvatar(item.cognitoUserName)}
+                      source={{ uri: item.avatar_url }}
+                    />
+                    <ListItem.Content>
+                      <ListItem.Title style={{color: colors.grey, fontSize: fonts.heading3, minWidth: 150}}>{item.name.trim()}</ListItem.Title>
+                      <ListItem.Subtitle style={{color: colors.separator}}>{item.subtitle}</ListItem.Subtitle>
+                    </ListItem.Content>
+                    {
                       item.lastNewMessageSender === item.cognitoUserName ?
                         <Icon
                           name="envelope"
@@ -163,21 +171,22 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                         />
                         : <></>
                     }
-                    bottomDivider
-                    chevron
-                    onPress={() => {
-                      navigation.navigate('Chat', {
-                        id: item.id,
-                        name: item.name,
-                        userId: user.cognitoUserName,
-                        friendId: item.cognitoUserName,
-                        avatar: item.avatar_url,
-                        timestamp: item.subtitle,
-                        lastNewMessageSender: item.lastNewMessageSender,
-                      });
-                    }}
-                    onLongPress={() => handlePressAvatar(item.cognitoUserName)}
-                  />
+                    <ListItem.Chevron
+                      size={40}
+                      color={colors.separator}
+                      onPress={() => {
+                        navigation.navigate('Chat', {
+                          id: item.id,
+                          name: item.name,
+                          userId: user.cognitoUserName,
+                          friendId: item.cognitoUserName,
+                          avatar: item.avatar_url,
+                          timestamp: item.subtitle,
+                          lastNewMessageSender: item.lastNewMessageSender,
+                        });
+                      }}
+                    />
+                  </ListItem>
                 ))
               }
             </ScrollView>
@@ -197,11 +206,13 @@ const styles = StyleSheet.create({
     ...styleTitle as any,
     paddingHorizontal: margins.sm,
     marginTop: margins.sm,
+    fontWeight: 'bold',
   },
   listItem: {
     marginBottom: margins.md,
     marginHorizontal: margins.md,
     borderRadius: 20,
+    marginTop: margins.sm,
   },
   screenHeader: {
     display: 'flex',

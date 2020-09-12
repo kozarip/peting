@@ -26,7 +26,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
 
   return (
-    <View>
+    <View style={styleForm.textBoxContainer}>
       <Text style={styleForm.label as any}>
         {label}
         {mandatory && <Text style={styleForm.mandatory}> *</Text>}
@@ -38,7 +38,7 @@ const TextBox: React.FC<TextBoxProps> = ({
         onChangeText={(changedText) => {
           setValue(createNewTypeObject(type, changedText));
         }}
-        value={value?.toString()}
+        value={value?.toString().trim()}
       />
     </View>
   );

@@ -183,6 +183,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             source={image}
             style={styleBackground}
             resizeMode="repeat"
+
             imageStyle={{ opacity: 0.3 }}
           >
             <HeaderTriangle />

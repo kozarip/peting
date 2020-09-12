@@ -1,22 +1,31 @@
-import { fonts, colors } from './variables';
+import { fonts, colors, margins } from './variables';
 
 export const styleForm = {
   cardBlock: {
     marginHorizontal: 10,
   },
   cardTitle: {
-    textAlign: 'left',
-    fontSize: fonts.heading3,
+    fontSize: fonts.heading2,
+    color: colors.grey,
+    marginBottom: 15,
+    marginTop: margins.lg,
   },
   label: {
-    fontSize: 15,
-    textTransform: 'uppercase',
-    color: '#888888',
+    fontSize: fonts.heading3,
+    color: colors.grey,
+    fontWeight: 'bold',
+    marginBottom: margins.xsm,
   },
   cardInput: {
-    fontSize: fonts.heading3,
     marginBottom: 10,
     marginHorizontal: 0,
+    fontSize: fonts.heading3,
+    color: colors.separator,
+  },
+  textBoxContainer: {
+    borderBottomWidth: 1,
+    borderColor: '#d9d9d9',
+    marginBottom: margins.sm,
   },
   mandatory: {
     color: colors.darkPrimary,

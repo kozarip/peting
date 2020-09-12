@@ -25,7 +25,7 @@ export const margins = {
 
 export const fonts = {
   default: 16,
-  heading1: 28,
+  heading1: 24,
   heading2: 20,
   heading3: 18,
 };

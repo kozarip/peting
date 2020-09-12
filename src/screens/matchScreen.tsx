@@ -16,6 +16,7 @@ import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
 import { margins, colors, dimensions } from '../assets/styles/variables';
 import { styleTitle, styleBackground } from '../assets/styles/base';
+import HeaderTriangle from '../components/headerTriangle';
 
 type MatchScreenProps = {
   navigation: any
@@ -89,15 +90,16 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <PetingHeader
+        navigation={navigation}
+      />
       <ImageBackground
         source={image}
         style={styleBackground}
         resizeMode="repeat"
         imageStyle={{ opacity: 0.04 }}
       >
-        <PetingHeader
-          navigation={navigation}
-        />
+        <HeaderTriangle />
         <View style={styles.screenHeader}>
           <Text style={styles.title}>Matchek</Text>
           <Tooltip
@@ -149,6 +151,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                     title={item.name.trim()}
                     subtitle={item.subtitle}
                     leftAvatar={{ source: { uri: item.avatar_url } }}
+                    containerStyle={styles.listItem}
                     rightIcon={
                       item.lastNewMessageSender === item.cognitoUserName ?
                         <Icon
@@ -194,6 +197,11 @@ const styles = StyleSheet.create({
     ...styleTitle as any,
     paddingHorizontal: margins.sm,
     marginTop: margins.sm,
+  },
+  listItem: {
+    marginBottom: margins.md,
+    marginHorizontal: margins.md,
+    borderRadius: 20,
   },
   screenHeader: {
     display: 'flex',

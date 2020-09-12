@@ -22,6 +22,8 @@ export const styleBox = {
 };
 
 export const styleTitle = {
+  color: '#fff',
+  marginLeft: margins.sm,
   fontSize: fonts.heading1,
   marginBottom: margins.sm,
   paddingHorizontal: margins.md,

@@ -10,7 +10,7 @@ import {
 import { Overlay } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { styleForm } from '../../assets/styles/form';
-import { fonts, colors } from '../../assets/styles/variables';
+import { fonts, colors, margins, dimensions } from '../../assets/styles/variables';
 
 const CitySelector = ({
   label,
@@ -33,10 +33,7 @@ const CitySelector = ({
         </Text>
         <Overlay
           isVisible={isCityOverlayActive}
-          windowBackgroundColor="rgba(255, 255, 255, 0.3)"
-          overlayBackgroundColor="#fff"
-          width="80%"
-          height="70%"
+          overlayStyle={styles.modalContainer}
         >
           <View style={styles.overlayContainer}>
             <GooglePlacesAutocomplete
@@ -121,6 +118,14 @@ const CitySelector = ({
 const styles = StyleSheet.create({
   overlayContainer: {
     flex: 1,
+  },
+  modalContainer: {
+    paddingHorizontal: margins.lg,
+    paddingVertical: margins.lg,
+    borderRadius: 20,
+    width: dimensions.fullWidth * 0.9,
+    height: '300',
+    top: '-10%',
   },
   closeButton: {
     position: 'absolute',

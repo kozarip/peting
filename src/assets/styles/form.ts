@@ -9,6 +9,7 @@ export const styleForm = {
     color: colors.grey,
     marginBottom: 15,
     marginTop: margins.lg,
+    textAlign: 'center',
   },
   label: {
     fontSize: fonts.heading3,

@@ -14,11 +14,12 @@ const Details: React.FC<DetailProps> = ({ details }) => {
     let result = { label: userFields[type].label, value };
     switch (type) {
       case 'hobbies':
-        itemObject = userFields[type].filter((hobby) => value.includes(hobby.id));
-        // eslint-disable-next-line no-case-declarations
-        const onlyNames = itemObject.map((hobby) => hobby.name);
-        result.value = onlyNames.join(', ');
-        result.label = 'Hobbik';
+        itemObject = [];
+        value.forEach((v) => {
+          itemObject.push(userFields[type].options[v].label);
+        });
+        result.value = itemObject.join(', ');
+        result.label = userFields[type].label;
         break;
       case 'hairColor':
         itemObject = userFields[type].options.find((element) => element.value === value);

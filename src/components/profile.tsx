@@ -25,6 +25,7 @@ import { createNewTypeObject } from './form/formHelpers';
 import Loader from './loader';
 import { colors, fonts, margins } from '../assets/styles/variables';
 import * as userField from '../constants/userFields';
+import Modal from './modal';
 
 import {
   gender,
@@ -219,7 +220,11 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         keyboardShouldPersistTaps="always"
         style={styles.container}
       >
-        <Loader isActive={isLoaderActive} />
+        <Modal
+          iconName="spinner"
+          isVisible={isLoaderActive}
+          description="Adatok betöltése..."
+        />
         <Card>
           <ImageSelector
             type="images"
@@ -304,9 +309,9 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
             value={profileUser.hairColor}
           />
-          <Text style={styleForm.cardTitle}>Állatod</Text>
+          <Text style={styleForm.cardTitle}>Kedvenced</Text>
           <TextBox
-            label="Állatod neve"
+            label="Kedvenced neve"
             type="animalName"
             mandatory={mandatoryFields.includes('animalName')}
             value={profileUser.animalName}
@@ -339,19 +344,19 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <MultiSelector
             label="Hobbijaid"
-            options={transformOptionsForMultiselect(hobbies)}
+            options={transformOptionsForMultiselect(hobbies.options)}
             type="hobbies"
             setValue={setProfileUserAttribute}
             value={profileUser.hobbies}
           />
         </Card>
-        <Button
-          buttonStyle={styles.btnSave}
-          titleStyle={{ fontSize: fonts.heading2 }}
-          title="Mentés"
-          onPress={handleSaveProfile}
-        />
       </ScrollView>
+      <Button
+        buttonStyle={styles.btnSave}
+        titleStyle={{ fontSize: fonts.heading2 }}
+        title="Mentés"
+        onPress={handleSaveProfile}
+      />
     </View>
   );
 };
@@ -361,12 +366,6 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   btnSave: {
-    width: 120,
-    padding: 10,
-    borderRadius: 20,
-    marginBottom: margins.md,
-    marginRight: margins.md,
-    marginLeft: 'auto',
     backgroundColor: colors.primary,
   },
 });

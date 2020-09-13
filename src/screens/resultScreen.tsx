@@ -16,9 +16,9 @@ import { styleBackground, styleContainer } from '../assets/styles/base';
 import { margins } from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
 import Loader from '../components/loader';
-import EmptyResultModal from '../components/emptyResultModal';
-import { setUser, setMatches } from '../store/action';
+import { setUser, setMatches, setActiveMenuId } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
+import Modal from '../components/modal';
 
 type ResultScreenProps = {
   navigation: any;
@@ -178,7 +178,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           navigation={navigation}
         />
         <View>
-          <Loader isActive={isLoaderActive} />
+          <Modal
+            iconName="spinner"
+            isVisible={isLoaderActive}
+            description="Adatok betöltése..."
+          />
           <ImageBackground
             source={image}
             style={styleBackground}
@@ -187,10 +191,16 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             imageStyle={{ opacity: 0.3 }}
           >
             <HeaderTriangle />
-            <EmptyResultModal
-              setIsOverlayActive={setIsOverlayActive}
-              isOverlayActive={isOverlayActive}
-              navigation={navigation}
+            <Modal
+              isVisible={isOverlayActive}
+              description="Nincs a keresésnek megfelő személy"
+              buttonPrimaryText="Vissza a kereséshez"
+              iconName="search"
+              handlePressButtonPrimary={() => {
+                setIsOverlayActive(false);
+                dispatch(setActiveMenuId(3));
+                navigation.navigate('Settings', { newUser: false });
+              }}
             />
             <PersonCard
               person={resultPerson}

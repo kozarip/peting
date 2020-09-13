@@ -38,7 +38,7 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
         selectedItems={value || []}
         colors={{
           primary: colors.primary,
-          selectToggleTextColor: colors.separator,
+          selectToggleTextColor: colors.grey,
         }}
       />
     </View>

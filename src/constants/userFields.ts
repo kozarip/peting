@@ -60,29 +60,14 @@ export const smokeFrequency = {
   ],
 };
 
-export const hobbies = [
-  {
-    name: 'Kosárlabda',
-    id: 1,
-  },
-  {
-    name: 'Asztalitenisz',
-    id: 2,
-  },
-  {
-    name: 'Tenisz',
-    id: 3,
-  },
-  {
-    name: 'Foci',
-    id: 4,
-  },
-  {
-    name: 'Túrázás',
-    id: 5,
-  },
-  {
-    name: 'Festés',
-    id: 6,
-  },
-];
+export const hobbies = {
+  label: 'Hobbik',
+  options: [
+    { label: 'Kosárlabda', value: 'basketball' },
+    { label: 'Asztalitenisz', value: 'tabletenis' },
+    { label: 'Tenisz', value: 'tenis' },
+    { label: 'Labdarúgás', value: 'football' },
+    { label: 'Túrázás', value: 'hiking' },
+    { label: 'Festés', value: 'painting' },
+  ],
+};

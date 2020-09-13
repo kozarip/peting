@@ -14,17 +14,16 @@ import HeaderTriangle from '../components/headerTriangle';
 import Profile from '../components/profile';
 import AppSettings from '../components/appSettings';
 import SearchComponent from '../components/search';
-import NewUserAlert from '../components/newUserAlert';
-import Loader from '../components/loader';
 
 import { styleTitle, styleBackground } from '../assets/styles/base';
 import { margins, colors, fonts } from '../assets/styles/variables';
 import { setUser } from '../store/action';
 import User from '../services/user';
+import Modal from '../components/modal';
 
 const SettingsScreen = ({ navigation, route }) => {
   const [userAttributes, setUserAttributes] = useState({});
-  const [isNewUser, setIsNewUser] = useState(route.params.newUser || false);
+  const [isNewUser, setIsNewUser] = useState(route.params.newUser || true);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
   const loggedInUser = new User();
   const dispatch = useDispatch();
@@ -89,10 +88,19 @@ const SettingsScreen = ({ navigation, route }) => {
       <PetingHeader
         navigation={navigation}
       />
-      <Loader isActive={isLoaderActive} />
-      <NewUserAlert
-        isNewUser={isNewUser}
-        setIsNewUser={setIsNewUser}
+      <Modal
+        iconName="spinner"
+        isVisible={isLoaderActive}
+        description="Adatok betöltése..."
+      />
+      <Modal
+        iconName="heart"
+        isVisible={isNewUser}
+        title="Üdvözöllek"
+        iconColor={colors.primary}
+        description="Kérlek töltsd ki az adataidat"
+        buttonPrimaryText="Rendben"
+        handlePressButtonPrimary={() => { setIsNewUser(false); }}
       />
       <ImageBackground
         source={image}

@@ -158,6 +158,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
 
 const styles = StyleSheet.create({
   imageSelectorContainer: {
+    marginBottom: margins.sm,
   },
   imageText: {
     fontSize: fonts.default,

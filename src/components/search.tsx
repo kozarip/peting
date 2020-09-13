@@ -3,27 +3,26 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   ScrollView,
-  Button,
+  Text,
   View,
 } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Card, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { setGlobalSearchParams } from '../store/action';
+import Modal from './modal';
 
 import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
-import MultiSelector from './form/multiSelector';
 
 import { styleForm } from '../assets/styles/form';
-import { colors } from '../assets/styles/variables';
-import Loader from './loader';
 
 import {
   gender,
   animalType,
   smokeFrequency,
 } from '../constants/userFields';
+import { fonts, colors } from '../assets/styles/variables';
 
 type searchComponentProps = {
   userAttributes: any,
@@ -84,12 +83,15 @@ const SearchComponent: React.FC<searchComponentProps> = (
         keyboardShouldPersistTaps="always"
         style={styles.container}
       >
-        <Loader isActive={isLoaderActive} />
+        <Modal
+          iconName="spinner"
+          isVisible={isLoaderActive}
+          description="Adatok betöltése..."
+        />
         <Card
           containerStyle={styleForm.cardBlock}
-          title="Alapadatok"
-          titleStyle={styleForm.cardTitle as any}
         >
+          <Text style={styleForm.cardTitle}>Alapadatok</Text>
           <RadioButton
             options={gender}
             value={searchParams.gender}
@@ -118,13 +120,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             value={searchParams.distance}
             setValue={setSearchParamsValue}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}d
-          title="Kinézet"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Kinézet</Text>
           <TextBox
             label="Minimum agasság (cm)"
             type="minHeight"
@@ -139,13 +135,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             value={searchParams.maxHeight}
             setValue={setSearchParamsValue}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Állat"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Kedvenc</Text>
           {/* 
           <MultiSelector
             label="Állat fajták"
@@ -161,13 +151,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             setValue={setSearchParamsValue}
             value={searchParams.animalType}
           />
-        </Card>
-
-        <Card
-          containerStyle={styleForm.cardBlock}
-          title="Egyéb"
-          titleStyle={styleForm.cardTitle as any}
-        >
+          <Text style={styleForm.cardTitle}>Egyéb</Text>
           <Selector
             label={smokeFrequency.label}
             options={smokeFrequency.options}
@@ -178,8 +162,9 @@ const SearchComponent: React.FC<searchComponentProps> = (
         </Card>
       </ScrollView>
       <Button
-        color={colors.darkPrimary}
-        title="Mentés és Keresés"
+        buttonStyle={styles.btnSave}
+        titleStyle={{ fontSize: fonts.heading2 }}
+        title="Mentés és keresés"
         onPress={handleSaveSearch}
       />
     </View>
@@ -189,6 +174,9 @@ const SearchComponent: React.FC<searchComponentProps> = (
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 20,
+  },
+  btnSave: {
+    backgroundColor: colors.primary,
   },
 });
 

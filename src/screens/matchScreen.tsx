@@ -17,6 +17,7 @@ import PetingHeader from '../components/petingHeader';
 import { margins, colors, dimensions, fonts } from '../assets/styles/variables';
 import { styleTitle, styleBackground, styleContainer } from '../assets/styles/base';
 import HeaderTriangle from '../components/headerTriangle';
+import Modal from 'components/modal';
 
 type MatchScreenProps = {
   navigation: any

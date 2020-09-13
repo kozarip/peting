@@ -23,7 +23,7 @@ import Modal from '../components/modal';
 
 const SettingsScreen = ({ navigation, route }) => {
   const [userAttributes, setUserAttributes] = useState({});
-  const [isNewUser, setIsNewUser] = useState(route.params.newUser || true);
+  const [isNewUser, setIsNewUser] = useState(route.params.newUser || false);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
   const loggedInUser = new User();
   const dispatch = useDispatch();

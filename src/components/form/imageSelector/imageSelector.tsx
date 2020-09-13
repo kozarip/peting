@@ -11,6 +11,7 @@ import { Icon, Tooltip } from 'react-native-elements';
 
 import { createNewTypeObject } from '../formHelpers';
 import { styleForm } from '../../../assets/styles/form';
+import Modal from '../../modal';
 
 import ImageList from './imageList';
 import ImageSettings from './imageSettings';
@@ -100,11 +101,15 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
 
   return (
     <View style={styles.imageSelectorContainer}>
-      <ImageSettings
-        selectedImageIndex={selectedImageIndex}
-        closeSelectedImageOverlay={closeSelectedImageOverlay}
-        deleteImageConfirm={deleteImageConfirm}
-        setPrimary={setPrimary}
+      <Modal
+        iconName="image"
+        handleClose={closeSelectedImageOverlay}
+        isVisible={selectedImageIndex > -1}
+        description="Kérlek válassz a lehetőségek közül"
+        buttonPrimaryText='Kezdőképnek'
+        handlePressButtonPrimary={setPrimary}
+        buttonSecondaryText='Kép törlése'
+        handlePressButtonSecondary={deleteImageConfirm}
       />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>

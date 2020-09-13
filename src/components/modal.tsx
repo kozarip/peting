@@ -14,6 +14,7 @@ type modalProps = {
   buttonSecondaryText?: string,
   handlePressButtonPrimary?: any,
   handlePressButtonSecondary?: any,
+  handleClose?: any,
 }
 
 let overlayHeight = 'auto';
@@ -30,6 +31,7 @@ const Modal: React.FC<modalProps> = (
     buttonSecondaryText,
     handlePressButtonPrimary,
     handlePressButtonSecondary,
+    handleClose,
   },
 ) => {
   if (height) {
@@ -68,6 +70,15 @@ const Modal: React.FC<modalProps> = (
           />
         }
       </View>
+      {
+        handleClose &&
+        <Button
+          buttonStyle={styles.btnPrimary}
+          titleStyle={{ fontSize: fonts.heading2 }}
+          title="Bezárás"
+          onPress={handleClose}
+        />
+      }
     </Overlay>
   );
 };
@@ -97,7 +108,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
   },
@@ -106,14 +117,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     borderRadius: 20,
     marginBottom: margins.sm,
-    paddingHorizontal: margins.sm,
   },
   btnSecondary: {
     backgroundColor: colors.separator,
     color: '#fff',
     borderRadius: 20,
     marginBottom: margins.sm,
-    paddingHorizontal: margins.sm,
   },
 });
 

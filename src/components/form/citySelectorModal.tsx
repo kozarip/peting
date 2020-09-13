@@ -124,8 +124,7 @@ const styles = StyleSheet.create({
     paddingVertical: margins.lg,
     borderRadius: 20,
     width: dimensions.fullWidth * 0.9,
-    height: '300',
-    top: '-10%',
+    height: 400,
   },
   closeButton: {
     position: 'absolute',

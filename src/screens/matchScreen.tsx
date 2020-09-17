@@ -15,9 +15,8 @@ import ImageStore from '../services/imageStore';
 import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
 import { margins, colors, dimensions, fonts } from '../assets/styles/variables';
-import { styleTitle, styleBackground, styleContainer } from '../assets/styles/base';
+import { styleTitle, styleBackground } from '../assets/styles/base';
 import HeaderTriangle from '../components/headerTriangle';
-import Modal from 'components/modal';
 
 type MatchScreenProps = {
   navigation: any
@@ -158,7 +157,13 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                       source={{ uri: item.avatar_url }}
                     />
                     <ListItem.Content>
-                      <ListItem.Title style={{color: colors.grey, fontSize: fonts.heading3, minWidth: 150}}>{item.name.trim()}</ListItem.Title>
+                      <ListItem.Title
+                        style={
+                          { color: colors.grey, fontSize: fonts.heading3, minWidth: 150 }
+                        }
+                      >
+                        {item.name.trim()}
+                      </ListItem.Title>
                       <ListItem.Subtitle style={{color: colors.separator}}>{item.subtitle}</ListItem.Subtitle>
                     </ListItem.Content>
                     {

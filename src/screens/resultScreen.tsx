@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   ImageBackground,
   ScrollView,
-  Alert,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Search from '../services/search';
@@ -13,12 +13,12 @@ import { saveNewMatch, subscriptionMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import { margins, dimensions, colors, fonts } from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
-import Loader from '../components/loader';
 import { setUser, setMatches, setActiveMenuId } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
+import { Card, Icon, Button } from 'react-native-elements';
 
 type ResultScreenProps = {
   navigation: any;
@@ -49,7 +49,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [resultPersonIndex, setResultPersonIndex] = useState(0);
   const [resultPerson, setResultPerson] = useState(initialResultPerson);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
-  const [isOverlayActive, setIsOverlayActive] = useState(false);
+  const [isMatchModalActive, setIsMatchModalActive] = useState(false);
 
   const search = new Search();
   const chat = new Chat();
@@ -69,9 +69,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         }
       }
       setResultPersons(res.data.searchUsers.items);
-      if (res.data.searchUsers.items.length === 0) {
-        setIsOverlayActive(true);
-      } else {
+      if (res.data.searchUsers.items.length !== 0) {
         if (resultPersonIndex > resultPersons.length - 1) {
           setResultPersonIndex(0);
         }
@@ -82,6 +80,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     matches.forEach((match) => {
       subscriptionMatch(match, setMatchToGlobalState);
     });
+
   }, [searchParams, pressedButton]);
 
   const setMatchToGlobalState = (match) => {
@@ -148,7 +147,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     if (resultPerson.likes
       && Array.isArray(resultPerson.likes)
       && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
-      Alert.alert('Match! Gratulálok');
+      setIsMatchModalActive(true);
 
       const matchData: matchType = {
         id: Math.random(),
@@ -169,6 +168,23 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         timestamp: new Date(),
       });
     }
+  };
+
+  const connectedEmotions = () => {
+    const like = Boolean(user.likes.find(
+      (likeObj) => likeObj.cognitoUserName === resultPerson.cognitoUserName,
+    ));
+    const dislike = Boolean(user.dislikes.find(
+      (likeObj) => likeObj.cognitoUserName === resultPerson.cognitoUserName,
+    ));
+    return {
+      like,
+      dislike,
+    };
+  };
+
+  const isHasResult = () => {
+    return resultPerson.age > -1 && resultPerson.userName !== '';
   };
 
   return (
@@ -192,25 +208,48 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           >
             <HeaderTriangle />
             <Modal
-              isVisible={isOverlayActive}
-              description="Nincs a keresésnek megfelő személy"
-              buttonPrimaryText="Vissza a kereséshez"
-              iconName="search"
-              handlePressButtonPrimary={() => {
-                setIsOverlayActive(false);
-                dispatch(setActiveMenuId(3));
-                navigation.navigate('Settings', { newUser: false });
-              }}
+              isVisible={isMatchModalActive}
+              title="Match!"
+              description="Gratulálunk, jó randit!"
+              buttonSecondaryText="Bezárás"
+              iconName="heart"
+              iconColor={colors.primary}
+              handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
             />
-            <PersonCard
-              person={resultPerson}
-              navigation={navigation}
-            />
-            <LoveButtons
-              handlePressLike={handlePressLike}
-              handlePressNext={handlePressNext}
-              handlePressDislike={handlePressDislike}
-            />
+            { isHasResult() ?
+              <PersonCard
+                person={resultPerson}
+                navigation={navigation}
+                connectedEmotions={connectedEmotions()}
+              />
+              :
+              <Card containerStyle={styles.noResultBox}>
+                <Icon
+                  name="search"
+                  size={60}
+                  color={colors.grey}
+                  type="font-awesome"
+                />
+                <Text style={styles.title}>Nincs a keresésnek megfelő személy :(</Text>
+                <Button
+                  buttonStyle={styles.btnPrimary}
+                  titleStyle={{ fontSize: fonts.heading2 }}
+                  title="Vissza a kereséshez"
+                  onPress={() => {
+                    dispatch(setActiveMenuId(3));
+                    navigation.navigate('Settings', { newUser: false });
+                  }}
+                />
+              </Card>
+            }
+            {
+              isHasResult() &&
+              <LoveButtons
+                handlePressLike={handlePressLike}
+                handlePressNext={handlePressNext}
+                handlePressDislike={handlePressDislike}
+              />
+            }
           </ImageBackground>
         </View>
       </ScrollView>
@@ -238,6 +277,24 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flexWrap: 'wrap',
     flexDirection: 'column',
+  },
+  noResultBox: {
+    height: dimensions.fullHeight * 0.79,
+    paddingTop: margins.lg,
+    marginBottom: margins.lg,
+  },
+  title: {
+    textAlign: 'center',
+    fontSize: 24,
+    color: colors.grey,
+    marginTop: margins.lg,
+  },
+  btnPrimary: {
+    backgroundColor: colors.primary,
+    color: '#fff',
+    borderRadius: 20,
+    padding: 10,
+    marginTop: margins.md,
   },
 });
 

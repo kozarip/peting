@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   Text,
-  Alert,
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
@@ -85,6 +84,8 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   const [profileUser, setProfileUser] = useState(initialProfileUser);
   const [removedImageKeys, setRemovedImageKeys] = useState([]);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
+  const [isActiveRequireModal, setIsActiveRequireModal] = useState(false);
+  const [errorFields, setErrorFields] = useState([]);
 
   const imageStore = new ImageStore('Unknown');
   const compiledImagesObj = {};
@@ -133,9 +134,10 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   };
 
   const handleSaveProfile = async () => {
-    const errorFields = checkMandatoryFields();
-    if (errorFields.length > 0) {
-      Alert.alert(`Az alábbi mezők kitőltése kötelező: ${formatMandatoryErrorList(errorFields)}`);
+    const localErrorFields = checkMandatoryFields();
+    if (localErrorFields.length > 0) {
+      setErrorFields(localErrorFields);
+      setIsActiveRequireModal(true);
     } else {
       setIsLoaderActive(true);
 
@@ -163,7 +165,6 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         }
         setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
         saveUser({ ...userAttributes, ...modifiedProfileUser });
-        Alert.alert('Sikeres mentés');
         setIsLoaderActive(false);
       });
     }
@@ -224,6 +225,14 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           iconName="spinner"
           isVisible={isLoaderActive}
           description="Adatok betöltése..."
+        />
+        <Modal
+          iconName="exclamation"
+          iconColor={colors.darkPrimary}
+          isVisible={isActiveRequireModal}
+          description={`Az alábbi mezők kitőltése kötelező: ${formatMandatoryErrorList(errorFields)}`}
+          buttonPrimaryText="Rendben"
+          handlePressButtonPrimary={() => { setIsActiveRequireModal(false); }}
         />
         <Card>
           <ImageSelector

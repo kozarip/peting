@@ -28,41 +28,47 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
   return (
     <Header
       containerStyle={{
-        paddingTop: Platform.OS === 'ios' ? 12 : 10,
+        paddingTop: Platform.OS === 'ios' ? 0 : 10,
         height: 70,
         borderBottomWidth: 0,
         marginTop: 20,
-        paddingHorizontal: 20,
+        paddingHorizontal: 5,
       }}
       backgroundColor={colors.primary}
       leftComponent={
         <Icon
           name="sliders"
-          color={setMenuIdColor(1)}
+          color={colors.primary}
           size={iconSize}
           onPress={() => { handleMenuSelect(1, 'Match')}}
           underlayColor={colors.primary}
           type="font-awesome"
+          reverse
+          reverseColor={setMenuIdColor(1)}
         />
       }
       centerComponent={
         <Icon
           name="heart"
-          color={setMenuIdColor(2)}
+          color={colors.primary}
           size={iconSize}
           onPress={() => {handleMenuSelect(2, 'Result')}}
           underlayColor={colors.primary}
           type="font-awesome"
+          reverse
+          reverseColor={setMenuIdColor(2)}
         />
       }
       rightComponent={
         <Icon
           name="user"
-          color={setMenuIdColor(3)}
+          color={colors.primary}
           size={iconSize}
           onPress={() => { handleMenuSelect(3, 'Settings')}}
           underlayColor={colors.primary}
           type="font-awesome"
+          reverse
+          reverseColor={setMenuIdColor(3)}
         />
       }
     />

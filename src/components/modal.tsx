@@ -73,7 +73,7 @@ const Modal: React.FC<modalProps> = (
       {
         handleClose &&
         <Button
-          buttonStyle={styles.btnPrimary}
+          buttonStyle={styles.btnSecondary}
           titleStyle={{ fontSize: fonts.heading2 }}
           title="Bezárás"
           onPress={handleClose}
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     alignItems: 'center',
     alignContent: 'center',
   },
@@ -116,12 +116,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     color: '#fff',
     borderRadius: 20,
+    padding: 10,
     marginBottom: margins.sm,
   },
   btnSecondary: {
     backgroundColor: colors.separator,
     color: '#fff',
     borderRadius: 20,
+    padding: 10,
     marginBottom: margins.sm,
   },
 });

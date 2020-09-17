@@ -9,9 +9,10 @@ import { margins, colors, dimensions } from '../assets/styles/variables';
 type PersonCardProps = {
   person: any,
   navigation: any,
+  connectedEmotions?: any
 }
 
-const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
+const PersonCard: React.FC<PersonCardProps> = ({ person, navigation, connectedEmotions }) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
@@ -22,6 +23,26 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation }) => {
       <View style={styles.titleContainer}>
         <Text style={styles.name}>{person.userName.trim()}</Text>
         <Text style={styles.age}>{person.age}</Text>
+        {
+          connectedEmotions && connectedEmotions.like && 
+          <Icon
+            containerStyle={styles.emotionMark}
+            name="heart"
+            size={20}
+            color={colors.primary}
+            type="font-awesome"
+          />
+        }
+        {
+          connectedEmotions && connectedEmotions.dislike && 
+          <Icon
+            containerStyle={styles.emotionMark}
+            name="heart"
+            size={20}
+            color="#000"
+            type="font-awesome"
+          />
+        }
       </View>
       <Text style={styles.city}>{onlyCityName}</Text>
       <ImagesBox
@@ -105,6 +126,10 @@ const styles = StyleSheet.create({
     marginLeft: dimensions.fullWidth * 0.45,
     marginTop: -80,
     marginBottom: 20,
+  },
+  emotionMark: {
+    marginLeft: 10,
+    marginTop: 15,
   },
 });
 

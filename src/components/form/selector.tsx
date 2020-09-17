@@ -35,7 +35,7 @@ const Selector: React.FC<SelectorProps> = (
         {label}
         {mandatory && <Text style={styleForm.mandatory}> *</Text>}
       </Text>
-      <View style={{borderRadius: 20}}>
+      <View style={{ borderRadius: 20 }}>
         <RNPickerSelect
           placeholder={{
             label: 'Válassz egy elemet',
@@ -56,13 +56,15 @@ const pickerSelectStyles = StyleSheet.create({
   inputIOS: {
     marginVertical: 5,
     fontSize: fonts.heading3,
-    color: colors.separator,
+    color: '#fff',
+    padding: 10,
     backgroundColor: colors.primary,
     borderRadius: 20,
   },
   inputAndroid: {
     fontSize: fonts.heading3,
-    color: colors.separator,
+    /* backgroundColor: colors.primary,
+    color: '#fff', */
   },
 });
 

@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -14,7 +14,6 @@ import { styleForm } from '../../../assets/styles/form';
 import Modal from '../../modal';
 
 import ImageList from './imageList';
-import ImageSettings from './imageSettings';
 import { fonts, margins, colors, dimensions } from '../../../assets/styles/variables';
 
 type ImageSelectorProps = {
@@ -32,6 +31,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
 ) => {
   const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);;
+  const [isActiveConfirmImageDeleteModal, setIsActiveConfirmImageDeleteModal] = useState(false)
   const maxImageNumber = initialMaxImagesNumber - images.length;
   const imageQuality = 0.2;
 
@@ -64,24 +64,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
     }
   };
 
-  const deleteImageConfirm = () => {
-    Alert.alert(
-      'Kép törlése',
-      'Biztos törölni akarod?',
-      [
-        {
-          text: 'Igen',
-          onPress: () => {deleteImage()}
-        },
-        {
-          text: 'Nem',
-          style: 'cancel',
-        },
-      ],
-    );
-
-  }
-
   const deleteImage = () => {
     removeImage(selectedImageIndex, type);
     if (selectedImageIndex === primaryImageIndex) {
@@ -109,7 +91,17 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         buttonPrimaryText='Kezdőképnek'
         handlePressButtonPrimary={setPrimary}
         buttonSecondaryText='Kép törlése'
-        handlePressButtonSecondary={deleteImageConfirm}
+        handlePressButtonSecondary={() => { setIsActiveConfirmImageDeleteModal(true); }}
+      />
+      <Modal
+        iconName="trash"
+        isVisible={isActiveConfirmImageDeleteModal}
+        title="Kép törlése"
+        description="Biztos törölni akarod?"
+        buttonPrimaryText='Igen'
+        handlePressButtonPrimary={() => { deleteImage(); setIsActiveConfirmImageDeleteModal(false);}}
+        buttonSecondaryText='Nem'
+        handlePressButtonSecondary={() => { setIsActiveConfirmImageDeleteModal(false); }}
       />
       <View style={styles.titleContainer}>
         <Text style={styles.title}>

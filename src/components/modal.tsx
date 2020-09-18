@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Overlay, Button, Icon } from 'react-native-elements';
 import { colors, fonts, margins, dimensions } from '../assets/styles/variables';
+import { styleForm } from '../assets/styles/form';
 
 type modalProps = {
   isVisible: boolean,
@@ -63,7 +64,7 @@ const Modal: React.FC<modalProps> = (
         {
           buttonPrimaryText &&
           <Button
-            buttonStyle={styles.btnPrimary}
+            buttonStyle={{...styleForm.btnPrimary, ...styles.noTopMargin}}
             titleStyle={{ fontSize: fonts.heading2 }}
             title={buttonPrimaryText}
             onPress={handlePressButtonPrimary}
@@ -112,19 +113,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
   },
-  btnPrimary: {
-    backgroundColor: colors.primary,
-    color: '#fff',
-    borderRadius: 20,
-    padding: 10,
-    marginBottom: margins.sm,
-  },
   btnSecondary: {
     backgroundColor: colors.separator,
     color: '#fff',
     borderRadius: 20,
     padding: 10,
     marginBottom: margins.sm,
+  },
+  noTopMargin: {
+    marginTop: 0,
   },
 });
 

@@ -31,4 +31,12 @@ export const styleForm = {
   mandatory: {
     color: colors.darkPrimary,
   },
+  btnPrimary: {
+    backgroundColor: colors.primary,
+    color: '#fff',
+    borderRadius: 20,
+    padding: 10,
+    marginBottom: margins.sm,
+    marginTop: margins.sm,
+  },
 };

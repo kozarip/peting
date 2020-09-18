@@ -19,6 +19,7 @@ import { setUser, setMatches, setActiveMenuId } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { Card, Icon, Button } from 'react-native-elements';
+import { styleForm } from '../assets/styles/form';
 
 type ResultScreenProps = {
   navigation: any;
@@ -203,7 +204,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             source={image}
             style={styleBackground}
             resizeMode="repeat"
-
             imageStyle={{ opacity: 0.3 }}
           >
             <HeaderTriangle />
@@ -232,7 +232,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                 />
                 <Text style={styles.title}>Nincs a keresésnek megfelő személy :(</Text>
                 <Button
-                  buttonStyle={styles.btnPrimary}
+                  buttonStyle={styleForm.btnPrimary}
                   titleStyle={{ fontSize: fonts.heading2 }}
                   title="Vissza a kereséshez"
                   onPress={() => {
@@ -288,13 +288,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: colors.grey,
     marginTop: margins.lg,
-  },
-  btnPrimary: {
-    backgroundColor: colors.primary,
-    color: '#fff',
-    borderRadius: 20,
-    padding: 10,
-    marginTop: margins.md,
   },
 });
 

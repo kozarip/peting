@@ -15,7 +15,6 @@ import store from './src/store/store';
 import Main from './src/main';
 import MatchScreen from './src/screens/matchScreen';
 import ResultScreen from './src/screens/resultScreen';
-import PicturesScreen from './src/screens/picturesScreen';
 import ChatScreen from './src/screens/chatScreen';
 import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
@@ -78,7 +77,6 @@ const App = (props) => {
             <Stack.Screen name="Main" component={Main} />
             <Stack.Screen name="Result" component={ResultScreen} />
             <Stack.Screen name="Match" component={MatchScreen} />
-            <Stack.Screen name="Pictures" component={PicturesScreen} />
             <Stack.Screen name="Chat" component={ChatScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
           </Stack.Navigator>

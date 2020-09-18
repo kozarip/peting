@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import ImageBox from './imageBox';
 import ImageStore from '../services/imageStore';
+import MorePictures from './morePictures';
+import { Overlay } from 'react-native-elements';
+import { dimensions } from '../assets/styles/variables';
 
 type ImagesBoxProps = {
   navigation: any,
@@ -29,6 +32,7 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   const [animalProfileImage, setAnimalProfileImage] = useState('https://www.jtsoftex.com/wp-content/uploads/2015/01/dummy-person.jpg');
   const [allImages, setAllImages] = useState('');
   const [allAnimalImages, setAllAnimalImages] = useState(',');
+  const [isActiveMorePicture, setIsActiveMorePicture] = useState(false);
 
   const imageStore = new ImageStore('');
 
@@ -53,17 +57,22 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   return (
     <TouchableOpacity
       style={styles.imageContainer}
-      onPress={() => {
-        navigation.navigate('Pictures', {
-          id: 1,
-          allImages,
-          allAnimalImages,
-          name,
-          age,
-          animalName,
-        });
-      }}
+      onPress={() => { setIsActiveMorePicture(true); }}
     >
+      <Overlay
+        overlayStyle={styles.moreImagesBox}
+        isVisible={isActiveMorePicture}
+      >
+        <MorePictures
+          id={1}
+          allImages={allImages}
+          allAnimalImages={allAnimalImages}
+          name={name}
+          age={age}
+          animalName={animalName}
+          handleClose={() => { setIsActiveMorePicture(false); }}
+        />
+      </Overlay>
       <ImageBox
         type="person"
         source={profileImage}
@@ -88,6 +97,10 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
 };
 
 const styles = StyleSheet.create({
+  moreImagesBox: {
+    margin: 0,
+    padding: 0,
+  },
   imageContainer: {
     padding: 5,
   },

@@ -29,7 +29,14 @@ const MorePictures = (props) => {
             {', '}
             {age}
           </Text>
+          <ImageView
+            images={images}
+            imageIndex={0}
+            isVisible
+          />
           <SliderBox
+            resizeMethod={'resize'}
+            resizeMode={'cover'}
             images={personImages}
             parentWidth={dimensions.fullWidth * 0.8}
             sliderBoxHeight={dimensions.fullWidth * 0.8}
@@ -40,13 +47,13 @@ const MorePictures = (props) => {
             parentWidth={dimensions.fullWidth * 0.8}
             sliderBoxHeight={dimensions.fullWidth * 0.8}
           />
-          <Button
-            buttonStyle={styleForm.btnPrimary}
-            titleStyle={{ fontSize: fonts.heading2 }}
-            title="Bezárás"
-            onPress={handleClose}
-          />
         </Card>
+        <Button
+          buttonStyle={{ ...styleForm.btnPrimary, ...{ marginHorizontal: 50 }}}
+          titleStyle={{ fontSize: fonts.heading2 }}
+          title="Bezárás"
+          onPress={handleClose}
+        />
       </ScrollView>
     </View>
   );

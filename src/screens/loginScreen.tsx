@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     ...styleBackground as any,
   },
   overlayStyle: {
-    marginTop: '65%',
+    marginTop: 'auto',
+    marginBottom: margins.md,
     padding: 0,
     paddingBottom: margins.md,
     backgroundColor: 'rgba(255, 255, 255, 0.55)',

@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { Auth } from 'aws-amplify';
 import {
+  dimensions,
   margins,
   colors,
 } from '../assets/styles/variables';
@@ -55,8 +56,8 @@ const styles = StyleSheet.create({
     padding: margins.sm,
     marginBottom: margins.sm,
     backgroundColor: colors.facebook,
-    borderRadius: 50,
-    width: 270,
+    borderRadius: 20,
+    width: dimensions.fullWidth * 0.80,
   },
   googleButton: {
     backgroundColor: colors.google,
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
   },
   googleIcon: {
     marginRight: margins.sm,
-    marginLeft: -15,
   },
 });
 

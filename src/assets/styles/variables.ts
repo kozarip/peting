@@ -5,6 +5,7 @@ export const dimensions = {
   fullHeight: Dimensions.get('window').height,
   fullWidth: Dimensions.get('window').width,
   third: Dimensions.get('window').width * 0.3333,
+  ratio: Dimensions.get('window').width / Dimensions.get('window').height,
 };
 
 export const colors = {

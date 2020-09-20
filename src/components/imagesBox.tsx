@@ -52,27 +52,11 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
       setAnimalProfileImage(compiledImages[0]);
     });
   };
-
-
   return (
     <TouchableOpacity
       style={styles.imageContainer}
-      onPress={() => { setIsActiveMorePicture(true); }}
+      onPress={() => { console.log('click'); setIsActiveMorePicture(true); }}
     >
-      <Overlay
-        overlayStyle={styles.moreImagesBox}
-        isVisible={isActiveMorePicture}
-      >
-        <MorePictures
-          id={1}
-          allImages={allImages}
-          allAnimalImages={allAnimalImages}
-          name={name}
-          age={age}
-          animalName={animalName}
-          handleClose={() => { setIsActiveMorePicture(false); }}
-        />
-      </Overlay>
       <ImageBox
         type="person"
         source={profileImage}
@@ -92,17 +76,33 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
           type="ionicon"
         />
       </View> */}
+      <Overlay
+        overlayStyle={styles.moreImagesBox}
+        isVisible={isActiveMorePicture}
+      >
+        <MorePictures
+          allImages={allImages}
+          allAnimalImages={allAnimalImages}
+          name={name}
+          age={age}
+          animalName={animalName}
+          handleClose={() => { setIsActiveMorePicture(false); }}
+        />
+      </Overlay>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
+  imageContainer: {
+    display: 'flex',
+    alignItems: 'center',
+  },
   moreImagesBox: {
     margin: 0,
     padding: 0,
-  },
-  imageContainer: {
-    padding: 5,
+    height: dimensions.fullHeight * 0.95,
+    paddingBottom: 10,
   },
   moreImageIcon: {
     position: 'absolute',

@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { Card, Icon } from 'react-native-elements';
+import { Card, Icon, Tooltip } from 'react-native-elements';
+import { isSmallScreenByHeight } from '../services/shared';
 import Bio from './bio';
 import Details from './details';
 import ImagesBox from './imagesBox';
 import { margins, colors, dimensions } from '../assets/styles/variables';
+import EmotionMark from './emotionMark';
 
 type PersonCardProps = {
   person: any,
   navigation: any,
-  connectedEmotions?: any
+  connectedEmotions?: any,
+  handlePressConectedEmotions?: any,
 }
 
-const PersonCard: React.FC<PersonCardProps> = ({ person, navigation, connectedEmotions }) => {
+const PersonCard: React.FC<PersonCardProps> = (
+  { person, navigation, connectedEmotions, handlePressConectedEmotions }
+) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-
   return (
     <Card
       containerStyle={styles.profileCard}
@@ -24,24 +28,31 @@ const PersonCard: React.FC<PersonCardProps> = ({ person, navigation, connectedEm
         <Text style={styles.name}>{person.userName.trim()}</Text>
         <Text style={styles.age}>{person.age}</Text>
         {
-          connectedEmotions && connectedEmotions.like && 
-          <Icon
-            containerStyle={styles.emotionMark}
-            name="heart"
-            size={20}
-            color={colors.primary}
-            type="font-awesome"
-          />
+          connectedEmotions && connectedEmotions.map((emotion) => (
+            <EmotionMark key={emotion} type={emotion} handlePressConectedEmotions={handlePressConectedEmotions} />
+          ))
         }
-        {
-          connectedEmotions && connectedEmotions.dislike && 
-          <Icon
-            containerStyle={styles.emotionMark}
-            name="heart"
-            size={20}
-            color="#000"
-            type="font-awesome"
-          />
+        {connectedEmotions &&
+          <Tooltip
+            backgroundColor={colors.primary}
+            height={80}
+            width={dimensions.fullWidth * 0.8}
+            popover={
+              <Text style={styles.toolTipImageText}>
+                A szív azt jelzi hogy az adott szemére már nyomtál like vagy dislike gombot
+                Újra rákattintva törölheted ezt.
+              </Text>
+            }
+          >
+            <Icon
+              name="info"
+              size={12}
+              raised
+              color={colors.primary}
+              type="font-awesome"
+              containerStyle={{marginTop: margins.xsm}}
+            />
+          </Tooltip>
         }
       </View>
       <Text style={styles.city}>{onlyCityName}</Text>
@@ -97,6 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: margins.sm,
     paddingBottom: margins.sm,
+    minHeight: dimensions.fullHeight - 198,
   },
   titleContainer: {
     display: 'flex',
@@ -105,31 +117,30 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.primary,
-    fontSize: 34,
+    fontSize: isSmallScreenByHeight() ? 26 : 34,
     marginRight: 10,
     flexShrink: 1,
   },
   age: {
     color: colors.grey,
-    fontSize: 34,
+    fontSize: isSmallScreenByHeight() ? 26 : 34,
   },
   city: {
-    fontSize: 22,
+    fontSize: isSmallScreenByHeight() ? 18 : 22,
     color: '#999',
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: isSmallScreenByHeight() ? -5 : margins.xsm,
+    marginBottom: margins.sm,
     textAlign: 'center',
   },
   animal: {
     color: '#000',
-    fontSize: 26,
+    fontSize: isSmallScreenByHeight() ? 20 : 26,
     marginLeft: dimensions.fullWidth * 0.45,
-    marginTop: -80,
-    marginBottom: 20,
+    marginTop: dimensions.fullWidth * -0.18,
+    marginBottom: 0,
   },
-  emotionMark: {
-    marginLeft: 10,
-    marginTop: 15,
+  toolTipImageText: {
+    color: '#fff',
   },
 });
 

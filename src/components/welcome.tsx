@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { useFonts } from '@use-expo/font';
-import { fonts, margins } from '../assets/styles/variables';
+import { fonts, margins, dimensions } from '../assets/styles/variables';
 
 const Welcome = () => {
   const logo = require('../assets/images/logo.png');
@@ -18,7 +18,7 @@ const Welcome = () => {
     return (
       <View>
         <Text style={styles.title}>PETing</Text>
-        <Image resizeMode="center" style={styles.logo} source={logo} />
+        <Image resizeMode="contain" style={styles.logo} source={logo} />
         <Text style={styles.motto}>Az állatbarátok társkeresője</Text>
       </View>
     );
@@ -29,9 +29,10 @@ const Welcome = () => {
 
 const styles = StyleSheet.create({
   logo: {
-    width: '100%',
-    height: 200,
+    width: dimensions.fullWidth * 0.5,
+    height: dimensions.fullWidth * 0.5,
     marginBottom: margins.xsm,
+    marginLeft: dimensions.fullWidth * 0.21,
   },
   title: {
     fontFamily: 'segoeprb',

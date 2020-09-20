@@ -147,7 +147,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const checkMatch = () => {
     if (resultPerson.likes
       && Array.isArray(resultPerson.likes)
-      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
+      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserNamlikese)) {
       setIsMatchModalActive(true);
 
       const matchData: matchType = {
@@ -172,16 +172,25 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const connectedEmotions = () => {
-    const like = Boolean(user.likes.find(
-      (likeObj) => likeObj.cognitoUserName === resultPerson.cognitoUserName,
-    ));
-    const dislike = Boolean(user.dislikes.find(
-      (likeObj) => likeObj.cognitoUserName === resultPerson.cognitoUserName,
-    ));
-    return {
-      like,
-      dislike,
-    };
+    const emotionArrayNames = ['likes', 'dislikes'];
+    const result = [];
+    emotionArrayNames.forEach((emotionName) => {
+      const isExist = Boolean(user[emotionName].find(
+        (emotionObj) => emotionObj.cognitoUserName === resultPerson.cognitoUserName,
+      ));
+      if (isExist) {
+        result.push(emotionName);
+      }
+    });
+    return result;
+  };
+
+  const handlePressConectedEmotions = (emotionArrayName) => {
+    const newEmotions = user[emotionArrayName].filter(
+      (emotion) => emotion.cognitoUserName !== resultPerson.cognitoUserName,
+    );
+    user[emotionArrayName] = newEmotions;
+    dispatch(setUser(user));
   };
 
   const isHasResult = () => {
@@ -190,10 +199,10 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1 }}>
+      <PetingHeader
+        navigation={navigation}
+      />
       <ScrollView style={styles.userContainer}>
-        <PetingHeader
-          navigation={navigation}
-        />
         <View>
           <Modal
             iconName="spinner"
@@ -221,6 +230,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                 person={resultPerson}
                 navigation={navigation}
                 connectedEmotions={connectedEmotions()}
+                handlePressConectedEmotions={handlePressConectedEmotions}
               />
               :
               <Card containerStyle={styles.noResultBox}>

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Platform,
 } from 'react-native';
+import { isSmallScreenByHeight } from '../services/shared';
 import { dimensions } from '../assets/styles/variables';
 
 type ImageBoxProps = {
@@ -14,7 +15,7 @@ type ImageBoxProps = {
 }
 
 const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
-  const touchBoxCssStyle = type === 'person' ? styles.profileImageTouchBox : styles.dogImageTouchBox;
+  const touchBoxCssStyle = type === 'person' ? {} : styles.dogImageTouchBox;
   const imageCssStyle = type === 'person' ? styles.profileImage : styles.dogImage;
 
   return (
@@ -28,26 +29,29 @@ const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
   );
 };
 
+const calcRationNumberBySceenSize = (originalRatio) => {
+  return isSmallScreenByHeight() ? originalRatio * 0.8 : originalRatio;
+}
+
 const styles = StyleSheet.create({
   dogImageTouchBox: {
-    marginLeft: -14,
-    marginTop: -dimensions.fullHeight * 0.1,
-    width: dimensions.fullWidth * 0.45,
-    height: dimensions.fullWidth * 0.45,
-    borderRadius: dimensions.fullWidth * 0.72,
+    marginTop: -dimensions.fullHeight * calcRationNumberBySceenSize(0.1),
+    width: dimensions.fullHeight * calcRationNumberBySceenSize(0.2) + 32,
+    height: dimensions.fullHeight * calcRationNumberBySceenSize(0.2) + 32,
     borderColor: 'rgba(255,255,255, 0.6)',
     borderWidth: 16,
+    marginLeft: dimensions.fullWidth * -0.4,
+    borderRadius: dimensions.fullHeight,
   },
   profileImage: {
-    width: dimensions.fullWidth * 0.78,
-    height: dimensions.fullWidth * 0.78,
-    marginLeft: 'auto',
-    borderRadius: dimensions.fullWidth * 1.56,
+    width: dimensions.fullHeight * calcRationNumberBySceenSize(0.4),
+    height: dimensions.fullHeight * calcRationNumberBySceenSize(0.4),
+    borderRadius: dimensions.fullHeight,
   },
   dogImage: {
-    width: dimensions.fullWidth * 0.36,
-    height: dimensions.fullWidth * 0.36,
-    borderRadius: dimensions.fullWidth * 0.72,
+    width: dimensions.fullHeight * calcRationNumberBySceenSize(0.2),
+    height: dimensions.fullHeight * calcRationNumberBySceenSize(0.2),
+    borderRadius: dimensions.fullHeight,
   },
 });
 

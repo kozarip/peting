@@ -37,7 +37,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       backgroundColor={colors.primary}
       leftComponent={
         <Icon
-          name="sliders"
+          name="heart"
           color={colors.primary}
           size={iconSize}
           onPress={() => { handleMenuSelect(1, 'Match')}}
@@ -49,7 +49,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       }
       centerComponent={
         <Icon
-          name="heart"
+          name="sliders"
           color={colors.primary}
           size={iconSize}
           onPress={() => {handleMenuSelect(2, 'Result')}}

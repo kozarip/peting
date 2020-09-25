@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import ImageView from 'react-native-image-view';
 import ImageBox from './imageBox';
 import ImageStore from '../services/imageStore';
 import MorePictures from './morePictures';
-import { Overlay } from 'react-native-elements';
-import { dimensions } from '../assets/styles/variables';
+import { dimensions, margins } from '../assets/styles/variables';
 
 type ImagesBoxProps = {
   navigation: any,
@@ -101,6 +101,8 @@ const styles = StyleSheet.create({
   moreImagesBox: {
     margin: 0,
     padding: 0,
+    width: dimensions.fullWidth,
+    paddingHorizontal: margins.sm,
     height: dimensions.fullHeight * 0.95,
     paddingBottom: 10,
   },

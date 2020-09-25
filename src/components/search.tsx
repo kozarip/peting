@@ -122,7 +122,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
           />
           <Text style={styleForm.cardTitle}>Kinézet</Text>
           <TextBox
-            label="Minimum agasság (cm)"
+            label="Minimum magasság (cm)"
             type="minHeight"
             keyboardType="number-pad"
             value={searchParams.minHeight}

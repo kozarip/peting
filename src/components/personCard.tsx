@@ -50,7 +50,6 @@ const PersonCard: React.FC<PersonCardProps> = (
               raised
               color={colors.primary}
               type="font-awesome"
-              containerStyle={{marginTop: margins.xsm}}
             />
           </Tooltip>
         }

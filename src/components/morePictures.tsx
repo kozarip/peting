@@ -49,7 +49,6 @@ const MorePictures = (props) => {
           </Tooltip>
         </View>
         <GallerySwiper
-          renderIndicator={(currentIndex, allSize) => ( <Text style={{ alignSelf: 'center', position: 'absolute', top: 10 }}> {currentIndex + '/' + allSize} </Text> )}
           style={styles.slider}
           enableTranslate={false}
           pageMargin={margins.sm}

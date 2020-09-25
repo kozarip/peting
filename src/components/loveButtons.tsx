@@ -6,27 +6,31 @@ import { colors } from '../assets/styles/variables';
 type LoveButtonsProps = {
   handlePressLike: any,
   handlePressDislike: any,
-  handlePressNext: any
+  handlePressNext: any,
+  isShowEmotionButtons?: boolean,
 }
 
 const LoveButtons: React.FC<LoveButtonsProps> = (
-  { handlePressLike, handlePressDislike, handlePressNext },
+  { handlePressLike, handlePressDislike, handlePressNext, isShowEmotionButtons },
 ) => {
   const bigIconSize = 35;
   const smallIconSize = 30;
   return (
     <View style={styles.reviewBox}>
-      <TouchableOpacity
-        onPress={handlePressDislike}
-      >
-        <Icon
-          name="times"
-          size={bigIconSize}
-          color={colors.primary}
-          type="font-awesome"
-          raised
-        />
-      </TouchableOpacity>
+      {
+        isShowEmotionButtons &&
+        <TouchableOpacity
+          onPress={handlePressDislike}
+        >
+          <Icon
+            name="times"
+            size={bigIconSize}
+            color={colors.primary}
+            type="font-awesome"
+            raised
+          />
+        </TouchableOpacity>
+      }
       <TouchableOpacity
         onPress={handlePressNext}
       >
@@ -38,17 +42,20 @@ const LoveButtons: React.FC<LoveButtonsProps> = (
           raised
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={handlePressLike}
-      >
-        <Icon
-          name="heart"
-          size={bigIconSize}
-          color={colors.primary}
-          type="font-awesome"
-          reverse
-        />
-      </TouchableOpacity>
+      {
+        isShowEmotionButtons &&
+        <TouchableOpacity
+          onPress={handlePressLike}
+        >
+          <Icon
+            name="heart"
+            size={bigIconSize}
+            color={colors.primary}
+            type="font-awesome"
+            reverse
+          />
+        </TouchableOpacity>
+      }
     </View>
   );
 };

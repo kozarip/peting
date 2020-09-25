@@ -7,18 +7,23 @@ import {
   ScrollView,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { Card, Icon, Button } from 'react-native-elements';
 import Search from '../services/search';
 import Chat from '../services/chat';
 import { saveNewMatch, subscriptionMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
-import { margins, dimensions, colors, fonts } from '../assets/styles/variables';
+import {
+  margins,
+  dimensions,
+  colors,
+  fonts,
+} from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
 import { setUser, setMatches, setActiveMenuId } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
-import { Card, Icon, Button } from 'react-native-elements';
 import { styleForm } from '../assets/styles/form';
 
 type ResultScreenProps = {
@@ -51,6 +56,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [resultPerson, setResultPerson] = useState(initialResultPerson);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
   const [isMatchModalActive, setIsMatchModalActive] = useState(false);
+  const [emotionsWithTheResultPerson, setEmotionsWithTheResultPerson] = useState([]);
 
   const search = new Search();
   const chat = new Chat();
@@ -98,6 +104,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         }
       });
       setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
+      setEmotionsWithTheResultPerson(connectedEmotions(resultWithValidValues.cognitoUserName));
     }
   };
 
@@ -171,12 +178,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     }
   };
 
-  const connectedEmotions = () => {
+  const connectedEmotions = (userName) => {
+    const resultUserName = userName || resultPerson.cognitoUserName;
     const emotionArrayNames = ['likes', 'dislikes'];
     const result = [];
     emotionArrayNames.forEach((emotionName) => {
       const isExist = Boolean(user[emotionName].find(
-        (emotionObj) => emotionObj.cognitoUserName === resultPerson.cognitoUserName,
+        (emotionObj) => emotionObj.cognitoUserName === resultUserName,
       ));
       if (isExist) {
         result.push(emotionName);
@@ -191,6 +199,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     );
     user[emotionArrayName] = newEmotions;
     dispatch(setUser(user));
+    setEmotionsWithTheResultPerson([]);
   };
 
   const isHasResult = () => {
@@ -221,15 +230,15 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
               title="Match!"
               description="Gratulálunk, jó randit!"
               buttonSecondaryText="Bezárás"
-              iconName="heart"
+              iconName="heart"connectedEmotions
               iconColor={colors.primary}
               handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
             />
-            { isHasResult() ?
+            {isHasResult() ?
               <PersonCard
                 person={resultPerson}
                 navigation={navigation}
-                connectedEmotions={connectedEmotions()}
+                connectedEmotions={emotionsWithTheResultPerson}
                 handlePressConectedEmotions={handlePressConectedEmotions}
               />
               :
@@ -255,6 +264,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             {
               isHasResult() &&
               <LoveButtons
+                isShowEmotionButtons={emotionsWithTheResultPerson.length === 0}
                 handlePressLike={handlePressLike}
                 handlePressNext={handlePressNext}
                 handlePressDislike={handlePressDislike}

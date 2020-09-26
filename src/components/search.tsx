@@ -142,7 +142,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             options={animalType.options}
             type="animalTypes"
             setValue={setSearchParamsValue}
-            value={searchParams.animalTypes.map((type) => parseInt(type, 10))}
+            value={searchParams.animalTypes}
           />
           {/* <Selector
             label={animalType.label}

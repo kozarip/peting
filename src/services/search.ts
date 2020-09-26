@@ -3,6 +3,7 @@
 
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import * as queries from '../graphql/queries';
+import { animalType } from '../constants/userFields';
 class Search {
 
   async search(searchParams: {}, currentCityCoordinates) {
@@ -12,15 +13,14 @@ class Search {
     const filter = {
       filter: {}
     }
-
     if (searchParams) {
       for (let [key, value] of Object.entries(searchParams)) {
         if (value || (key === 'gender' && value !== null )) {
           if (key === 'exceptUsers' && Array.isArray(value)) {
             filter.filter['and'] = value.map((v) => { return {'cognitoUserName': {'ne' : v}}})
           }
-          if (key === 'animalType' && Array.isArray(value) && value.length > 0 ) {
-            filter.filter['or'] = value.map((v) => { return {'animalType': {'eq' : v}}})
+          if (key === 'animalTypes' && Array.isArray(value) && value.length > 0) {
+            filter.filter['or'] = value.map((v) => { return {'animalType': {'eq' : animalType.options[v].value}}})
           }
           if (key === 'distance') {
             const distances = this.calculateCoordinates(currentCityCoordinates, value);

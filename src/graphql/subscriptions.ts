@@ -61,7 +61,6 @@ export const onCreateUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -111,7 +110,6 @@ export const onUpdateUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -161,7 +159,6 @@ export const onDeleteUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes

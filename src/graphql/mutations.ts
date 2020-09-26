@@ -38,7 +38,6 @@ export const createUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -91,7 +90,6 @@ export const updateUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -144,7 +142,6 @@ export const deleteUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -254,6 +251,5 @@ export const deleteChat = /* GraphQL */ `
         createdAt
         messagesOwner
       }
-    }
   }
 `;

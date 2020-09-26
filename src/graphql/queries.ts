@@ -35,7 +35,6 @@ export const getUser = /* GraphQL */ `
       search {
         minAge
         maxAge
-        animalType
         animalSize
         gender
         animalTypes
@@ -90,7 +89,6 @@ export const listUsers = /* GraphQL */ `
         search {
           minAge
           maxAge
-          animalType
           animalSize
           gender
           animalTypes
@@ -221,7 +219,6 @@ export const userByCognitoUserName = /* GraphQL */ `
         search {
           minAge
           maxAge
-          animalType
           animalSize
           gender
           animalTypes
@@ -284,7 +281,6 @@ export const searchUsers = /* GraphQL */ `
         search {
           minAge
           maxAge
-          animalType
           animalSize
           gender
           animalTypes

@@ -38,6 +38,7 @@ export const getUser = /* GraphQL */ `
         animalType
         animalSize
         gender
+        animalTypes
         minHeight
         maxHeight
         smokeFrequency
@@ -92,6 +93,7 @@ export const listUsers = /* GraphQL */ `
           animalType
           animalSize
           gender
+          animalTypes
           minHeight
           maxHeight
           smokeFrequency
@@ -222,6 +224,7 @@ export const userByCognitoUserName = /* GraphQL */ `
           animalType
           animalSize
           gender
+          animalTypes
           minHeight
           maxHeight
           smokeFrequency
@@ -284,6 +287,7 @@ export const searchUsers = /* GraphQL */ `
           animalType
           animalSize
           gender
+          animalTypes
           minHeight
           maxHeight
           smokeFrequency

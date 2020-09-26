@@ -22,11 +22,17 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
     type,
   },
 ) => {
+  const transformOptionsForMultiselect = (rawOptions) => {
+    return rawOptions.map((opt, i) => {
+      return { id: i, name: opt.label };
+    });
+  };
+
   return (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
       <SectionedMultiSelect
-        items={options}
+        items={transformOptionsForMultiselect(options)}
         uniqueKey="id"
         selectedText="kiválasztva"
         selectText="Válassz elemeket"

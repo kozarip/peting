@@ -41,6 +41,7 @@ export const createUser = /* GraphQL */ `
         animalType
         animalSize
         gender
+        animalTypes
         minHeight
         maxHeight
         smokeFrequency
@@ -93,6 +94,7 @@ export const updateUser = /* GraphQL */ `
         animalType
         animalSize
         gender
+        animalTypes
         minHeight
         maxHeight
         smokeFrequency
@@ -145,6 +147,7 @@ export const deleteUser = /* GraphQL */ `
         animalType
         animalSize
         gender
+        animalTypes
         minHeight
         maxHeight
         smokeFrequency

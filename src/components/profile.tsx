@@ -209,12 +209,6 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     return images.filter((image) => image.startsWith('file://'));
   };
 
-  const transformOptionsForMultiselect = (options) => {
-    return options.map((opt, i) => {
-      return { id: i, name: opt.label };
-    });
-  };
-
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -353,7 +347,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <MultiSelector
             label="Hobbijaid"
-            options={transformOptionsForMultiselect(hobbies.options)}
+            options={hobbies.options}
             type="hobbies"
             setValue={setProfileUserAttribute}
             value={profileUser.hobbies}

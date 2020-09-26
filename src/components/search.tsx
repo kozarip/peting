@@ -14,6 +14,7 @@ import Modal from './modal';
 import TextBox from './form/textBox';
 import Selector from './form/selector';
 import RadioButton from './form/radioButton';
+import MultiSelector from './form/multiSelector';
 
 import { styleForm } from '../assets/styles/form';
 
@@ -44,7 +45,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
     minHeight: 0,
     maxHeight: 999,
     animalSize: '',
-    animalType: '',
+    animalTypes: [],
     smokeFrequency: '',
     hairColor: '',
     minAge: 0,
@@ -136,21 +137,20 @@ const SearchComponent: React.FC<searchComponentProps> = (
             setValue={setSearchParamsValue}
           />
           <Text style={styleForm.cardTitle}>Kedvenc</Text>
-          {/* 
           <MultiSelector
             label="Állat fajták"
             options={animalType.options}
-            type="animalType"
+            type="animalTypes"
             setValue={setSearchParamsValue}
-            value={searchParams.animalType}
-          /> */}
-          <Selector
+            value={searchParams.animalTypes.map((type) => parseInt(type, 10))}
+          />
+          {/* <Selector
             label={animalType.label}
             options={animalType.options}
             type="animalType"
             setValue={setSearchParamsValue}
             value={searchParams.animalType}
-          />
+          /> */}
           <Text style={styleForm.cardTitle}>Egyéb</Text>
           <Selector
             label={smokeFrequency.label}

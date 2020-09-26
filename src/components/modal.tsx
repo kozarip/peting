@@ -43,43 +43,45 @@ const Modal: React.FC<modalProps> = (
       isVisible={isVisible}
       overlayStyle={styles.modalContainer}
     >
-      <Icon
-        name={iconName}
-        size={60}
-        color={iconColor || colors.grey}
-        type="font-awesome"
-      />
-      {title && <Text style={styles.title}>{title}</Text>}
-      {description && <Text style={styles.description}>{description}</Text>}
-      <View style={styles.buttonContainer}>
+      <View>
+        <Icon
+          name={iconName}
+          size={60}
+          color={iconColor || colors.grey}
+          type="font-awesome"
+        />
+        {title && <Text style={styles.title}>{title}</Text>}
+        {description && <Text style={styles.description}>{description}</Text>}
+        <View style={styles.buttonContainer}>
+          {
+            buttonSecondaryText &&
+            <Button
+              buttonStyle={styles.btnSecondary}
+              titleStyle={{ fontSize: fonts.heading2 }}
+              title={buttonSecondaryText}
+              onPress={handlePressButtonSecondary}
+            />
+          }
+          {
+            buttonPrimaryText &&
+            <Button
+              buttonStyle={{...styleForm.btnPrimary, ...styles.noTopMargin}}
+              titleStyle={{ fontSize: fonts.heading2 }}
+              title={buttonPrimaryText}
+              onPress={handlePressButtonPrimary}
+            />
+          }
+        </View>
         {
-          buttonSecondaryText &&
+          handleClose &&
           <Button
             buttonStyle={styles.btnSecondary}
             titleStyle={{ fontSize: fonts.heading2 }}
-            title={buttonSecondaryText}
-            onPress={handlePressButtonSecondary}
-          />
-        }
-        {
-          buttonPrimaryText &&
-          <Button
-            buttonStyle={{...styleForm.btnPrimary, ...styles.noTopMargin}}
-            titleStyle={{ fontSize: fonts.heading2 }}
-            title={buttonPrimaryText}
-            onPress={handlePressButtonPrimary}
+            title="Bezárás"
+            onPress={handleClose}
           />
         }
       </View>
-      {
-        handleClose &&
-        <Button
-          buttonStyle={styles.btnSecondary}
-          titleStyle={{ fontSize: fonts.heading2 }}
-          title="Bezárás"
-          onPress={handleClose}
-        />
-      }
     </Overlay>
   );
 };

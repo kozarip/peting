@@ -7,16 +7,20 @@ class Search {
 
   async search(searchParams: {}, currentCityCoordinates) {
     const intervalValues = ['minHeight', 'maxHeight', 'minAge', 'maxAge'];
-    const equalValues = ['animalType', 'animalSize', 'gender', 'hairColor', 'smokeFrequency'];
+    const equalValues = ['animalSize', 'gender', 'hairColor', 'smokeFrequency'];
     // const arrayValue = ['animalType']
     const filter = {
       filter: {}
     }
+
     if (searchParams) {
       for (let [key, value] of Object.entries(searchParams)) {
         if (value || (key === 'gender' && value !== null )) {
           if (key === 'exceptUsers' && Array.isArray(value)) {
             filter.filter['and'] = value.map((v) => { return {'cognitoUserName': {'ne' : v}}})
+          }
+          if (key === 'animalType' && Array.isArray(value) && value.length > 0 ) {
+            filter.filter['or'] = value.map((v) => { return {'animalType': {'eq' : v}}})
           }
           if (key === 'distance') {
             const distances = this.calculateCoordinates(currentCityCoordinates, value);
@@ -52,6 +56,7 @@ class Search {
         }
       }
     }
+    console.log(filter);
     return await API.graphql(graphqlOperation(queries.searchUsers, filter));
   };
 

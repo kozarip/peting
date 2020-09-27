@@ -32,7 +32,7 @@ const PersonCard: React.FC<PersonCardProps> = (
             <EmotionMark key={emotion} type={emotion} handlePressConectedEmotions={handlePressConectedEmotions} />
           ))
         }
-        {connectedEmotions > 0 &&
+        {connectedEmotions.length > 0 &&
           <Tooltip
             backgroundColor={colors.primary}
             height={80}

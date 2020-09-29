@@ -55,7 +55,7 @@ const Main = ({ navigation }) => {
 
   const setGlobalChatIDs = (cognitoUserName) => {
     chat.getMyChats(cognitoUserName).then((myChats) => {
-      const IDs = []
+      const IDs = [];
       myChats.data.searchChats.items.forEach(myChat => {
         IDs.push(myChat.id);
       });

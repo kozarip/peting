@@ -73,4 +73,8 @@ type Subscription {
         @aws_subscribe(mutations: ["updateChat"])
     subscribeToUserMatches(id: ID!): Matches
         @aws_subscribe(mutations: ["updateMatches"])
+    subscribeToMyMatchesByUser1(user1: String!): Matches
+        @aws_subscribe(mutations: ["createMatches"])
+    subscribeToMyMatchesByUser2(user2: String!): Matches
+        @aws_subscribe(mutations: ["createMatches"])
 }

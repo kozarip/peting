@@ -11,7 +11,11 @@ import { Card, Icon, Button } from 'react-native-elements';
 import Search from '../services/search';
 import Chat from '../services/chat';
 import { uuidv4 } from '../services/shared';
-import { saveNewMatch, subscriptionMatch } from '../services/match';
+import {
+  saveNewMatch,
+  subscriptionMatch,
+  subscriptionMyMatchByUser2,
+} from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
 import { styleBackground, styleContainer } from '../assets/styles/base';
@@ -22,7 +26,7 @@ import {
   fonts,
 } from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
-import { setUser, setMatches, setActiveMenuId, addMatch, deleteMatch } from '../store/action';
+import { setUser, setMatches, setActiveMenuId, addMatch } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { styleForm } from '../assets/styles/form';
@@ -88,6 +92,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     matches.forEach((match) => {
       subscriptionMatch(match, changeGlobalStateMatch);
     });
+    subscriptionMyMatchByUser2(user.cognitoUserName, addNewMatch);
   }, [searchParams, pressedButton, matches]);
 
   const changeGlobalStateMatch = (match) => {
@@ -98,6 +103,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       return m;
     });
     dispatch(setMatches(newMatches));
+  };
+
+  const addNewMatch = (matchData) => {
+    setIsMatchModalActive(true);
+    dispatch(addMatch(matchData));
   };
 
   const setCurrentResultPerson = (personIndex, persons?) => {
@@ -170,6 +180,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         name: resultPerson.userName,
         avatar_url: resultPerson.images[resultPerson.primaryImageIndex],
         subtitle: new Date().toISOString().split('T', 1).join(''),
+        lastNewMessageSender: '',
       };
       dispatch(addMatch(matchData));
       chat.createNewChat({

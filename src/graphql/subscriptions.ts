@@ -28,6 +28,28 @@ export const subscribeToUserMatches = /* GraphQL */ `
     }
   }
 `;
+export const subscribeToMyMatchesByUser1 = /* GraphQL */ `
+  subscription SubscribeToMyMatchesByUser1($user1: String!) {
+    subscribeToMyMatchesByUser1(user1: $user1) {
+      id
+      user1
+      user2
+      timestamp
+      lastNewMessageSender
+    }
+  }
+`;
+export const subscribeToMyMatchesByUser2 = /* GraphQL */ `
+  subscription SubscribeToMyMatchesByUser2($user2: String!) {
+    subscribeToMyMatchesByUser2(user2: $user2) {
+      id
+      user1
+      user2
+      timestamp
+      lastNewMessageSender
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {

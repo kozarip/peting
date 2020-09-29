@@ -3,6 +3,7 @@ import { graphqlOperation, API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 import * as subscriptions from '../graphql/subscriptions';
+import User from './user';
 
 const saveNewMatch = (match) => {
   API.graphql(graphqlOperation(mutations.createMatches, { input: match }));
@@ -49,13 +50,17 @@ const subscriptionMatch = async (match: matchType, changeGlobalStateMatch) => {
   return subscription;
 };
 
-const subscriptionMyMatch = async (id: string) => {
+const subscriptionMyMatchByUser2 = async (cognitoUserName, updateGlobalMatch) => {
   const subscription = await API.graphql(
-    graphqlOperation(subscriptions.subscribeToMyMatches, { id: id }),
+    graphqlOperation(subscriptions.subscribeToMyMatchesByUser2, { user2: cognitoUserName }),
   ).subscribe({
-    next: (messages) => {
-      if (typeof changeGlobalStateMatch === 'function'
-      && messages.value.data.subscribeToUserMatches
+    next: (matches) => {
+      const user = new User();
+      const match = matches.value.data.subscribeToMyMatchesByUser2;
+      user.getUserByCognitoUserName(match.user1).then((fullUser) => {
+        const fullUserData = fullUser.data.userByCognitoUserName.items[0];
+        updateGlobalMatch(createMatchData(match, fullUserData));
+      });
     },
   });
   return subscription;
@@ -69,19 +74,10 @@ const setGlobalMatches = (user, cognitoUserName, setMatchToGlobalState, navigati
       const matchPromises = await matches.map((match) => {
         return user.getUserByCognitoUserName(selectTheOtherProfileId(match, cognitoUserName));
       });
-      console.log(matches);
       Promise.all(matchPromises).then((resolved) => {
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
-          const matchData: matchType = {
-            id: matches[i].id,
-            cognitoUserName: fullUserData.cognitoUserName,
-            name: fullUserData.userName,
-            avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
-            subtitle: matches[i].timestamp.split('T', 1).join(''),
-            lastNewMessageSender: matches[i].lastNewMessageSender,
-          };
-          globalMatches.push(matchData);
+          globalMatches.push(createMatchData(matches[i], fullUserData));
         });
         setMatchToGlobalState(globalMatches);
         if (navigation) {
@@ -97,6 +93,17 @@ const setGlobalMatches = (user, cognitoUserName, setMatchToGlobalState, navigati
   });
 };
 
+const createMatchData = (match, fullUserData) => {
+  return {
+    id: match.id,
+    cognitoUserName: fullUserData.cognitoUserName,
+    name: fullUserData.userName,
+    avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
+    subtitle: match.timestamp.split('T', 1).join(''),
+    lastNewMessageSender: match.lastNewMessageSender,
+  };
+};
+
 export {
   saveNewMatch,
   getUserMatches,
@@ -105,4 +112,5 @@ export {
   updateMatch,
   subscriptionMatch,
   setGlobalMatches,
+  subscriptionMyMatchByUser2,
 };

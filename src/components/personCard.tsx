@@ -29,10 +29,14 @@ const PersonCard: React.FC<PersonCardProps> = (
         <Text style={styles.age}>{person.age}</Text>
         {
           connectedEmotions && connectedEmotions.map((emotion) => (
-            <EmotionMark key={emotion} type={emotion} handlePressConectedEmotions={handlePressConectedEmotions} />
+            <EmotionMark
+              key={emotion}
+              type={emotion}
+              handlePressConectedEmotions={handlePressConectedEmotions}
+            />
           ))
         }
-        {connectedEmotions.length > 0 &&
+        {connectedEmotions && connectedEmotions.length > 0 &&
           <Tooltip
             backgroundColor={colors.primary}
             height={80}

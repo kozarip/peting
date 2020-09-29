@@ -31,7 +31,10 @@ const EmotionMark: React.FC<emotionMarkProps> = ({ type, handlePressConectedEmot
         description="Biztos törölni akarod a jelölést?"
         buttonPrimaryText="Igen"
         buttonSecondaryText="Nem"
-        handlePressButtonPrimary={() => { handlePressConectedEmotions(type); setIsActiveRemoveEmotionModal(false); }}
+        handlePressButtonPrimary={() => {
+          handlePressConectedEmotions(type);
+          setIsActiveRemoveEmotionModal(false);
+        }}
         handlePressButtonSecondary={() => { setIsActiveRemoveEmotionModal(false); }}
       />
     </View>

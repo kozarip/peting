@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 type matchType = {
-  id: number,
+  id: string,
   cognitoUserName: string,
   name: string,
   avatar_url: string,

@@ -29,7 +29,6 @@ const CitySelector = ({
                 lng: details?.geometry.location.lng,
               },
             });
-            console.log(data.description, details.geometry);
           }}
           styles={{
             container: {
@@ -49,7 +48,6 @@ const CitySelector = ({
             },
           }}
           getDefaultValue={() => {
-            console.log(value);
             if (value !== ' ') {
               return value;
             }

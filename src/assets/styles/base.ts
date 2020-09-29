@@ -5,6 +5,8 @@ export const styleBackground = {
   width: dimensions.fullWidth,
   backgroundColor: '#808080',
   borderTopWidth: 0,
+  margin: 0,
+  padding: 0,
   minHeight: dimensions.fullHeight - 70,
 };
 

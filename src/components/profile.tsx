@@ -5,6 +5,7 @@ import {
   ScrollView,
   View,
   Text,
+  Platform,
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
@@ -21,8 +22,7 @@ import { styleForm } from '../assets/styles/form';
 // eslint-disable-next-line no-unused-vars
 import { UserType } from '../types/user';
 import { createNewTypeObject } from './form/formHelpers';
-import Loader from './loader';
-import { colors, fonts, margins } from '../assets/styles/variables';
+import { colors, fonts } from '../assets/styles/variables';
 import * as userField from '../constants/userFields';
 import Modal from './modal';
 
@@ -212,7 +212,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
         style={styles.container}
       >
         <Modal
@@ -369,6 +369,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   btnSave: {
+    marginBottom: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: colors.primary,
   },
 });

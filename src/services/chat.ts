@@ -52,9 +52,12 @@ class Chat {
     ).subscribe({
       next: (messages) => {
         if (typeof setNewChat === 'function' && messages.value.data.subscribeToGivenChat.messages) {
-          sendNotificationImmediately('Hi', 'You have a new message '+ chatId);
-          return setNewChat(messages.value.data.subscribeToGivenChat.messages);
+          const newMessages = messages.value.data.subscribeToGivenChat.messages;
+          console.log(newMessages[newMessages.length - 1].text);
+          sendNotificationImmediately('Üzenet', newMessages[newMessages.length - 1].text);
+          return setNewChat(newMessages);
         } else {
+          console.log('Chat subscribe else');
         }
         return false;
       },

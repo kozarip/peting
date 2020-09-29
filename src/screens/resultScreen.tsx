@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Icon, Button } from 'react-native-elements';
 import Search from '../services/search';
 import Chat from '../services/chat';
+import { uuidv4 } from '../services/shared';
 import { saveNewMatch, subscriptionMatch } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
@@ -21,7 +22,7 @@ import {
   fonts,
 } from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
-import { setUser, setMatches, setActiveMenuId } from '../store/action';
+import { setUser, setMatches, setActiveMenuId, addMatch, deleteMatch } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { styleForm } from '../assets/styles/form';
@@ -63,7 +64,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoaderActive(true);
+    setIsLoaderActive(false);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     const matchedUsers = matches.map((match) => match.cognitoUserName);
@@ -85,13 +86,18 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       setIsLoaderActive(false);
     });
     matches.forEach((match) => {
-      subscriptionMatch(match, setMatchToGlobalState);
+      subscriptionMatch(match, changeGlobalStateMatch);
     });
+  }, [searchParams, pressedButton, matches]);
 
-  }, [searchParams, pressedButton]);
-
-  const setMatchToGlobalState = (match) => {
-    dispatch(setMatches({ matches: match }));
+  const changeGlobalStateMatch = (match) => {
+    const newMatches = matches.map((m) => {
+      if (m.id === match.id) {
+        return match;
+      }
+      return m;
+    });
+    dispatch(setMatches(newMatches));
   };
 
   const setCurrentResultPerson = (personIndex, persons?) => {
@@ -154,23 +160,25 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const checkMatch = () => {
     if (resultPerson.likes
       && Array.isArray(resultPerson.likes)
-      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserNamlikese)) {
+      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
       setIsMatchModalActive(true);
+      const id = uuidv4();
 
       const matchData: matchType = {
-        id: Math.random(),
+        id,
         cognitoUserName: resultPerson.cognitoUserName,
         name: resultPerson.userName,
         avatar_url: resultPerson.images[resultPerson.primaryImageIndex],
         subtitle: new Date().toISOString().split('T', 1).join(''),
       };
-      dispatch(setMatches({ matches: [matchData] }));
+      dispatch(addMatch(matchData));
       chat.createNewChat({
         user1: user.cognitoUserName,
         user2: resultPerson.cognitoUserName,
         messages: [],
       });
       saveNewMatch({
+        id,
         user1: user.cognitoUserName,
         user2: resultPerson.cognitoUserName,
         timestamp: new Date(),
@@ -182,10 +190,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     const resultUserName = userName || resultPerson.cognitoUserName;
     const emotionArrayNames = ['likes', 'dislikes'];
     const result = [];
+    let isExist = false;
     emotionArrayNames.forEach((emotionName) => {
-      const isExist = Boolean(user[emotionName].find(
-        (emotionObj) => emotionObj.cognitoUserName === resultUserName,
-      ));
+      if (user[emotionName]) {
+        isExist = Boolean(user[emotionName].find(
+          (emotionObj) => emotionObj.cognitoUserName === resultUserName,
+        ));
+      }
       if (isExist) {
         result.push(emotionName);
       }

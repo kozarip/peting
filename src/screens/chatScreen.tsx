@@ -76,7 +76,6 @@ const ChatScreen = ({ route, navigation }) => {
   const onSend = useCallback((messagesFromGiftedChat = []) => {
     setMessages((previousMessages) => {
       saveToApi([...previousMessages, messagesFromGiftedChat[0]]);
-      console.log(id);
       updateMatch(createMatchObj(true));
       return GiftedChat.append(previousMessages, messagesFromGiftedChat);
     });

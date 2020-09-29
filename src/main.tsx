@@ -3,7 +3,7 @@ import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
-import { getUserMatches, selectTheOtherProfileId } from './services/match';
+import { setGlobalMatches } from './services/match';
 import { setGlobalSearchParams, setUser, setMatches, setChatIds } from './store/action';
 import { registerFetchTask } from './components/registerFetchTask';
 
@@ -26,7 +26,12 @@ const Main = ({ navigation }) => {
         dispatch(setUser({
           user: userData,
         }));
-        setGlobalMatches(userData.cognitoUserName);
+        setGlobalMatches(
+          user,
+          userData.cognitoUserName,
+          setMatchToGlobalState,
+          navigation, navigationReset,
+        );
         setGlobalChatIDs(userData.cognitoUserName);
       } else {
         navigation.navigate('Settings', { newUser: true });
@@ -44,38 +49,8 @@ const Main = ({ navigation }) => {
     });
   };
 
-  const setGlobalMatches = (cognitoUserName) => {
-    const globalMatches: matchType[] = [];
-    getUserMatches(cognitoUserName).then((rawMatches) => {
-      const matches = rawMatches.data.searchMatchess.items;
-      const matchPromises = matches.map((match) => {
-        return user.getUserByCognitoUserName(selectTheOtherProfileId(match, cognitoUserName));
-      });
-      const imageIds = [];
-      Promise.all(matchPromises).then((resolved) => {
-        resolved.forEach((fullUser: any, i) => {
-          const fullUserData = fullUser.data.userByCognitoUserName.items[0];
-          const matchData: matchType = {
-            id: matches[i].id,
-            cognitoUserName: fullUserData.cognitoUserName,
-            name: fullUserData.userName,
-            avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
-            subtitle: matches[i].timestamp.split('T', 1).join(''),
-            lastNewMessageSender: matches[i].lastNewMessageSender,
-          };
-          globalMatches.push(matchData);
-        });
-        setMatchToGlobalState(globalMatches);
-        navigation.navigate('Result');
-        if (Platform.OS === 'android') {
-          navigationReset('Result', {});
-        }
-      });
-    });
-  };
-
   const setMatchToGlobalState = (match) => {
-    dispatch(setMatches({ matches: match }));
+    dispatch(setMatches(match));
   };
 
   const setGlobalChatIDs = (cognitoUserName) => {

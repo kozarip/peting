@@ -15,12 +15,26 @@ export function setUser(user) {
 export function setMatches(matches) {
   return {
     type: 'Set_Matches',
-    matches: matches.matches,
+    matches: { matches },
+  };
+}
+
+export function addMatch(match) {
+  return {
+    type: 'Add_To_Matches',
+    match,
+  };
+}
+
+export function deleteMatch(match) {
+  return {
+    type: 'Remove_From_Matches',
+    match,
   };
 }
 
 export function clearStore() {
-  return { type: 'clear_store'}
+  return { type: 'clear_store' };
 }
 
 export function setActiveMenuId(activeMenu) {

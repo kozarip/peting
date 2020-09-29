@@ -8,10 +8,13 @@ import {
 } from 'react-native';
 import { ListItem, Card, Overlay, Icon, Tooltip, Avatar } from 'react-native-elements';
 // import Tooltip from "rne-modal-tooltip";
-import { useSelector } from 'react-redux';
-import { ScrollView } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from 'react-redux';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { deleteMatch, setUser, setMatches } from '../store/action';
 import User from '../services/user';
 import ImageStore from '../services/imageStore';
+import { removeMatch, setGlobalMatches } from '../services/match';
+import Modal from '../components/modal';
 import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
 import { margins, colors, dimensions, fonts } from '../assets/styles/variables';
@@ -27,32 +30,45 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   const [myMatches, setMyMatches] = useState<matchType[]>([]);
   const [friendObject, setFriendObject] = useState({});
   const [isCardActive, setIsCardActive] = useState(false);
+  const [isActiveRemoveMatchModal, setIsActiveRemoveMatchModal] = useState(false);
+  const [removableMatchId, setRemovableMatchId] = useState('');
+  const dispatch = useDispatch();
+  const userClass = new User();
 
   const imageStore = new ImageStore('Unknown');
   const friendUser = new User();
 
   useEffect(() => {
-    setMyMatches(orderMatches(matches));
+    // setGlobalMatches(userClass, user.cognitoUserName, setMatchToGlobalState);
+    setMyMatches([]);
     const images: string[] = [];
-    myMatches.forEach((match: matchType) => {
-      if (match.avatar_url && !match.avatar_url.startsWith('https://')) {
-        images.push(match.avatar_url);
-      }
-    });
-    setCompiledImages(images);
-  });
-
-  const setCompiledImages = async (imageIds) => {
-    const imageURLs = await imageStore.fetchImages(imageIds);
-    Promise.all(imageURLs).then((compiledImages: string[]) => {
-      compiledImages.forEach((image, i) => {
-        if (myMatches.length > 0) {
-          myMatches[i].avatar_url = image;
-          setTimeout(() => {
-            setMyMatches((previsous) => [...previsous, ...[myMatches[i]]]);
-          }, 0);
+    if (matches && matches.length > 0) {
+      matches.forEach((match: matchType) => {
+        if (match.avatar_url && !match.avatar_url.startsWith('https://')) {
+          images.push(match.avatar_url);
         }
       });
+      compileImages(images);
+    }
+  }, [matches]);
+/* 
+  const setMatchToGlobalState = (match) => {
+    dispatch(setMatches(match));
+  };
+ */
+  const compileImages = async (imageIds) => {
+    const imageURLs = await imageStore.fetchImages(imageIds);
+    Promise.all(imageURLs).then((compiledImages: string[]) => {
+      let compiledImageCounter = 0;
+      if (matches.length > 0) {
+        matches.forEach((match) => {
+          if (match.avatar_url && !match.avatar_url.startsWith('https://')) {
+            match.avatar_url = compiledImages[compiledImageCounter];
+            compiledImageCounter++;
+          }
+          setMyMatches((previsous) => [...previsous, ...[match]]);
+        });
+      }
     });
   };
 
@@ -86,6 +102,25 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
     setIsCardActive(true);
   };
 
+  const handleRemoveMatch = () => {
+    removeMatch(removableMatchId);
+    const removableMatch = myMatches.filter(
+      (myMatch) => myMatch.id === removableMatchId,
+    );
+    dispatch(deleteMatch(removableMatch[0]));
+    removeUserLike(removableMatch[0].cognitoUserName);
+    setRemovableMatchId('');
+    setIsActiveRemoveMatchModal(false);
+  };
+
+  const removeUserLike = (removableCongnitoUserName) => {
+    const newLikes = user.likes.filter(
+      (like) => like.cognitoUserName !== removableCongnitoUserName,
+    );
+    user.likes = newLikes;
+    dispatch(setUser(user));
+  };
+
   const image = require('../assets/images/background.png');
 
   return (
@@ -101,6 +136,16 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
       >
         <HeaderTriangle />
         <View style={styles.screenHeader}>
+          {/* <Text>{myMatches.length}</Text> */}
+          <Modal
+            isVisible={isActiveRemoveMatchModal}
+            iconName="trash"
+            description="Biztos törölni akarod a matchet?"
+            buttonPrimaryText="Igen"
+            buttonSecondaryText="Nem"
+            handlePressButtonPrimary={handleRemoveMatch}
+            handlePressButtonSecondary={() => { setIsActiveRemoveMatchModal(false); }}
+          />
           <Text style={styles.title}>Matchek</Text>
           <Tooltip
             backgroundColor={colors.primary}
@@ -123,10 +168,9 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
         </View>
         <Overlay
           isVisible={isCardActive}
-          height="90%"
-          overlayStyle={{ padding: 0,}}
+          overlayStyle={styles.cardOverlay}
         >
-          <View>
+          <View style={{flex: 1}}>
             <ScrollView>
               <PersonCard
                 navigation={navigation}
@@ -162,21 +206,41 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                           { color: colors.grey, fontSize: fonts.heading3, minWidth: 150 }
                         }
                       >
-                        {item.name.trim()}
+                        {item && item.name.trim()}
                       </ListItem.Title>
-                      <ListItem.Subtitle style={{color: colors.separator}}>{item.subtitle}</ListItem.Subtitle>
+                      <ListItem.Subtitle style={styles.subtitle}>
+                        {item.subtitle}
+                      </ListItem.Subtitle>
                     </ListItem.Content>
-                    {
-                      item.lastNewMessageSender === item.cognitoUserName ?
+                    <View
+                      style={{marginRight: -15}}
+                    >
+                      {
+                        item.lastNewMessageSender === item.cognitoUserName ?
+                          <Icon
+                            name="envelope"
+                            size={15}
+                            raised
+                            color={colors.grey}
+                            type="font-awesome"
+                          />
+                          : <></>
+                      }
+                      <TouchableOpacity
+                        onPress={() => {
+                          setRemovableMatchId(item.id);
+                          setIsActiveRemoveMatchModal(true);
+                        }}
+                      >
                         <Icon
-                          name="envelope"
+                          name="trash"
                           size={15}
                           raised
                           color={colors.primary}
                           type="font-awesome"
                         />
-                        : <></>
-                    }
+                      </TouchableOpacity>
+                    </View>
                     <ListItem.Chevron
                       size={40}
                       color={colors.separator}
@@ -214,6 +278,10 @@ const styles = StyleSheet.create({
     marginTop: margins.sm,
     fontWeight: 'bold',
   },
+  subtitle: {
+    color: colors.separator,
+    fontSize: 13,
+  },
   listItem: {
     marginBottom: margins.md,
     marginHorizontal: margins.md,
@@ -228,6 +296,11 @@ const styles = StyleSheet.create({
   },
   infoText: {
     color: '#fff',
+  },
+  cardOverlay: {
+    width: dimensions.fullWidth,
+    height: dimensions.fullHeight,
+    backgroundColor: 'rgba(255, 255, 255, 0.55)',
   },
 });
 

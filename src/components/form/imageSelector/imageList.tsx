@@ -20,7 +20,7 @@ const ImageList: React.FC<ImageListProps> = (
           const primaryClass = i === primaryImageIndex ? styles.primaryImage : {};
           return (
             <TouchableOpacity
-              key={image}
+              key={i}
               onLongPress={() => { setSelectedImageIndex(i); }}
             >
               <Image

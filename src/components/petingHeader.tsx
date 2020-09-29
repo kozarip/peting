@@ -1,8 +1,9 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { Header, Icon } from 'react-native-elements';
 import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '../assets/styles/variables';
-import { setActiveMenuId, setChatIds } from '../store/action';
+import { setActiveMenuId } from '../store/action';
 
 type PetingHeaderProps = {
   navigation: any,

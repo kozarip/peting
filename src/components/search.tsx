@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   View,
+  Platform,
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
@@ -81,7 +82,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
         style={styles.container}
       >
         <Modal
@@ -176,6 +177,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   btnSave: {
+    marginBottom: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: colors.primary,
   },
 });

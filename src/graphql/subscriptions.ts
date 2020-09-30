@@ -50,6 +50,23 @@ export const subscribeToMyMatchesByUser2 = /* GraphQL */ `
     }
   }
 `;
+export const subscribeToGivenUser = /* GraphQL */ `
+  subscription SubscribeToGivenUser($id: ID!) {
+    subscribeToGivenUser(id: $id) {
+      id
+      cognitoUserName
+      userName
+      likes {
+        cognitoUserName
+        timestamp
+      }
+      dislikes {
+        cognitoUserName
+        timestamp
+      }
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {

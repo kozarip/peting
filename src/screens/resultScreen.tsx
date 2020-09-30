@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Card, Icon, Button } from 'react-native-elements';
 import Search from '../services/search';
 import Chat from '../services/chat';
+import User from '../services/user';
 import { uuidv4 } from '../services/shared';
 import {
   saveNewMatch,
@@ -65,6 +66,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   const search = new Search();
   const chat = new Chat();
+  const userClass = new User();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -80,13 +82,17 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           ResultScreen.loveButtonHandlers[pressedButton]
         }
       }
-      setResultPersons(res.data.searchUsers.items);
-      if (res.data.searchUsers.items.length !== 0) {
+      const { items } = res.data.searchUsers;
+      setResultPersons(items);
+      if (items.length !== 0) {
         if (resultPersonIndex > resultPersons.length - 1) {
           setResultPersonIndex(0);
         }
-        setCurrentResultPerson(resultPersonIndex, res.data.searchUsers.items);
+        setCurrentResultPerson(resultPersonIndex, items);
       }
+      items.forEach((item) => {
+        userClass.subscribeToUser(item.id, updateResultPerson, items);
+      });
       setIsLoaderActive(false);
     });
     matches.forEach((match) => {
@@ -108,6 +114,29 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const addNewMatch = (matchData) => {
     setIsMatchModalActive(true);
     dispatch(addMatch(matchData));
+  };
+
+  const updateResultPerson = (rawPerson, items) => {
+    if (items && items.length > 0) {
+      const newResultPersons = items.map((person) => {
+        if (person.cognitoUserName === rawPerson.cognitoUserName) {
+          return updatePersonAttributes(person, rawPerson);
+        }
+        return person;
+      });
+      setResultPersons(newResultPersons);
+      setCurrentResultPerson(resultPersonIndex, newResultPersons);
+    }
+  };
+
+  const updatePersonAttributes = (person, rawPerson) => {
+    const updatablePerson = person;
+    Object.keys(updatablePerson).forEach((key) => {
+      if (rawPerson[key] && updatablePerson[key] !== rawPerson[key]) {
+        updatablePerson[key] = rawPerson[key];
+      }
+    });
+    return updatablePerson;
   };
 
   const setCurrentResultPerson = (personIndex, persons?) => {

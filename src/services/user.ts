@@ -4,6 +4,7 @@
 import { graphqlOperation, API, Auth } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
+import * as subscriptions from '../graphql/subscriptions';
 import { UserType } from '../types/user';
 
 class User {
@@ -76,6 +77,17 @@ class User {
   public updateUser(user: UserType) {
     //console.log({savedUser: user});
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
+  }
+
+  public async subscribeToUser(id, updateUser, items) {
+    const subscription = await API.graphql(
+      graphqlOperation(subscriptions.subscribeToGivenUser, { id: id }),
+    ).subscribe({
+      next: (resultUser) => {
+        updateUser(resultUser.value.data.subscribeToGivenUser, items);
+      },
+    });
+    return subscription;
   }
 
 }

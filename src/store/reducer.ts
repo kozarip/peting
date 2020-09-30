@@ -34,10 +34,17 @@ export function reducer(state = initialState, action) {
         ...action.matches,
       };
     case 'Add_To_Matches':
-      return {
-        ...state,
-        matches: [...state.matches, action.match],
-      };
+      const findSamMatches = state.matches.find((match) => match.id === action.match.id);
+      if (state.matches.find((match) => match.id === action.match.id)) {
+        return {
+          ...state,
+        };
+      } else {
+        return {
+          ...state,
+          matches: [...state.matches, action.match],
+        };
+      }
     case 'Remove_From_Matches':
       return {
         ...state,

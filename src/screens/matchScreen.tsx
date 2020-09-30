@@ -41,7 +41,6 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   useEffect(() => {
     // setGlobalMatches(userClass, user.cognitoUserName, setMatchToGlobalState);
     setMyMatches([]);
-    console.log(matches.length);
     const images: string[] = [];
     if (matches && matches.length > 0) {
       matches.forEach((match: matchType) => {

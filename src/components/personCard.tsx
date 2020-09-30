@@ -27,36 +27,39 @@ const PersonCard: React.FC<PersonCardProps> = (
       <View style={styles.titleContainer}>
         <Text style={styles.name}>{person.userName.trim()}</Text>
         <Text style={styles.age}>{person.age}</Text>
-        {
-          connectedEmotions && connectedEmotions.map((emotion) => (
-            <EmotionMark
-              key={emotion}
-              type={emotion}
-              handlePressConectedEmotions={handlePressConectedEmotions}
-            />
-          ))
-        }
-        {connectedEmotions && connectedEmotions.length > 0 &&
-          <Tooltip
-            backgroundColor={colors.primary}
-            height={80}
-            width={dimensions.fullWidth * 0.8}
-            popover={
-              <Text style={styles.toolTipImageText}>
-                A szív azt jelzi hogy az adott szemére már nyomtál like vagy dislike gombot
-                Újra rákattintva törölheted ezt.
-              </Text>
-            }
-          >
-            <Icon
-              name="info"
-              size={12}
-              raised
-              color={colors.primary}
-              type="font-awesome"
-            />
-          </Tooltip>
-        }
+        <View style={styles.emotionMarkBox}>
+          {
+            connectedEmotions && connectedEmotions.map((emotion) => (
+              <EmotionMark
+                key={emotion}
+                type={emotion}
+                handlePressConectedEmotions={handlePressConectedEmotions}
+              />
+            ))
+          }
+          {connectedEmotions && connectedEmotions.length > 0 &&
+            <Tooltip
+              backgroundColor={colors.primary}
+              height={80}
+              width={dimensions.fullWidth * 0.8}
+              popover={
+                <Text style={styles.toolTipImageText}>
+                  A szív azt jelzi hogy az adott szemére már nyomtál like vagy dislike gombot
+                  Újra rákattintva törölheted ezt.
+                </Text>
+              }
+            >
+              <Icon
+                name="info"
+                size={12}
+                raised
+                color={colors.primary}
+                containerStyle={{marginTop: 10}}
+                type="font-awesome"
+              />
+            </Tooltip>
+          }
+        </View>
       </View>
       <Text style={styles.city}>{onlyCityName}</Text>
       <ImagesBox
@@ -144,6 +147,9 @@ const styles = StyleSheet.create({
   },
   toolTipImageText: {
     color: '#fff',
+  },
+  emotionMarkBox: {
+    flexDirection: 'row',
   },
 });
 

@@ -89,6 +89,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           setResultPersonIndex(0);
         }
         setCurrentResultPerson(resultPersonIndex, items);
+      } else {
+        setResultPerson(initialResultPerson);
       }
       items.forEach((item) => {
         userClass.subscribeToUser(item.id, updateResultPerson, items);

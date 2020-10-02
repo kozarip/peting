@@ -50,7 +50,7 @@ const subscriptionMatch = async (match: matchType, changeGlobalStateMatch) => {
   return subscription;
 };
 
-const subscriptionMyMatchByUser2 = async (cognitoUserName, updateGlobalMatch) => {
+const subscriptionMyFutureMatches = async (cognitoUserName, updateGlobalMatch) => {
   const subscription = await API.graphql(
     graphqlOperation(subscriptions.subscribeToMyMatchesByUser2, { user2: cognitoUserName }),
   ).subscribe({
@@ -112,5 +112,5 @@ export {
   updateMatch,
   subscriptionMatch,
   setGlobalMatches,
-  subscriptionMyMatchByUser2,
+  subscriptionMyFutureMatches,
 };

@@ -34,7 +34,6 @@ export function reducer(state = initialState, action) {
         ...action.matches,
       };
     case 'Add_To_Matches':
-      const findSamMatches = state.matches.find((match) => match.id === action.match.id);
       if (state.matches.find((match) => match.id === action.match.id)) {
         return {
           ...state,

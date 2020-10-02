@@ -15,7 +15,7 @@ import { uuidv4 } from '../services/shared';
 import {
   saveNewMatch,
   subscriptionMatch,
-  subscriptionMyMatchByUser2,
+  subscriptionMyFutureMatches,
 } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
@@ -90,17 +90,20 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         }
         setCurrentResultPerson(resultPersonIndex, items);
       } else {
-        setResultPerson(initialResultPerson);
+        setResultPersons(0);
+        setCurrentResultPerson(initialResultPerson);
+        setResultPersonIndex(0);
       }
       items.forEach((item) => {
         userClass.subscribeToUser(item.id, updateResultPerson, items);
       });
       setIsLoaderActive(false);
     });
+
     matches.forEach((match) => {
       subscriptionMatch(match, changeGlobalStateMatch);
     });
-    subscriptionMyMatchByUser2(user.cognitoUserName, addNewMatch);
+    subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
   }, [searchParams, pressedButton, matches]);
 
   const changeGlobalStateMatch = (match) => {
@@ -127,7 +130,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         return person;
       });
       setResultPersons(newResultPersons);
-      setCurrentResultPerson(resultPersonIndex, newResultPersons);
+      if(resultPersons.length > 0){
+        setCurrentResultPerson(resultPersonIndex, newResultPersons);
+      }
     }
   };
 
@@ -156,13 +161,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const handlePressNext = () => {
-    // console.log(resultPersonIndex, resultPersons.length);
     if (resultPersonIndex < resultPersons.length - 1) {
       setResultPersonIndex(resultPersonIndex + 1);
     } else {
       setResultPersonIndex(0);
     }
-    setCurrentResultPerson(resultPersonIndex);
+    if(resultPersons.length > 0){
+      setCurrentResultPerson(resultPersonIndex);
+    }
   };
 
   const handlePressLike = () => {

@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
-import { setGlobalSearchParams } from '../store/action';
+import { setActiveMenuId, setGlobalSearchParams } from '../store/action';
 import Modal from './modal';
 
 import TextBox from './form/textBox';
@@ -76,6 +76,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
     dispatch(setGlobalSearchParams({
       searchParams: newUserObject.search,
     }));
+    dispatch(setActiveMenuId(2))
     navigation.navigate('Result');
   };
 

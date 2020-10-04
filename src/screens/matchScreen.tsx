@@ -132,7 +132,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
         source={image}
         style={styleBackground}
         resizeMode="repeat"
-        imageStyle={{ opacity: 0.3 }}
+        imageStyle={{ opacity: 0.3, flex: 1, resizeMode: 'repeat',}}
       >
         <HeaderTriangle />
         <View style={styles.screenHeader}>

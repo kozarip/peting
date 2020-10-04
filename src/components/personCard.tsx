@@ -25,8 +25,10 @@ const PersonCard: React.FC<PersonCardProps> = (
       containerStyle={styles.profileCard}
     >
       <View style={styles.titleContainer}>
-        <Text style={styles.name}>{person.userName.trim()}</Text>
-        <Text style={styles.age}>{person.age}</Text>
+        <View style={styles.titleContainer} >
+          <Text style={styles.name}>{person.userName.trim()}</Text>
+          <Text style={styles.age}>{person.age}</Text>
+        </View>
         <View style={styles.emotionMarkBox}>
           {
             connectedEmotions && connectedEmotions.map((emotion) => (
@@ -120,6 +122,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   name: {
     color: colors.primary,
@@ -150,6 +153,7 @@ const styles = StyleSheet.create({
   },
   emotionMarkBox: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
 

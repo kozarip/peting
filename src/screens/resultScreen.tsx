@@ -63,6 +63,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [isLoaderActive, setIsLoaderActive] = useState(false);
   const [isMatchModalActive, setIsMatchModalActive] = useState(false);
   const [emotionsWithTheResultPerson, setEmotionsWithTheResultPerson] = useState([]);
+  const [userSubscribes, setUserSubscribes] = useState([]);
 
   const search = new Search();
   const chat = new Chat();
@@ -77,6 +78,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     const exceptUsers = { exceptUsers: [...[user.cognitoUserName], ...matchedUsers] };
     const city = { lat: user.cityLat, lng: user.cityLng };
     search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
+      userSubscribes.forEach(subscribe => {
+        subscribe.unsubscribe();
+      });
       if (pressedButton) {
         if (typeof ResultScreen.loveButtonHandlers[pressedButton] === 'function') {
           ResultScreen.loveButtonHandlers[pressedButton]
@@ -89,14 +93,12 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           setResultPersonIndex(0);
         }
         setCurrentResultPerson(resultPersonIndex, items);
-      } else {
-        setResultPersons(0);
-        setCurrentResultPerson(initialResultPerson);
-        setResultPersonIndex(0);
       }
+      const subscribes = [];
       items.forEach((item) => {
-        userClass.subscribeToUser(item.id, updateResultPerson, items);
+        subscribes.push(userClass.subscribeToUser(item.id, updateResultPerson, items));
       });
+      setUserSubscribes(subscribes);
       setIsLoaderActive(false);
     });
 
@@ -129,10 +131,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         }
         return person;
       });
-      setResultPersons(newResultPersons);
-      if(resultPersons.length > 0){
-        setCurrentResultPerson(resultPersonIndex, newResultPersons);
-      }
+      setResultPersons([...resultPersons, ...newResultPersons]);
+      setCurrentResultPerson(resultPersonIndex, newResultPersons);
     }
   };
 

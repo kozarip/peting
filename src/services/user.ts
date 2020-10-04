@@ -79,8 +79,8 @@ class User {
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }
 
-  public async subscribeToUser(id, updateUser, items) {
-    const subscription = await API.graphql(
+  public subscribeToUser(id, updateUser, items) {
+    const subscription = API.graphql(
       graphqlOperation(subscriptions.subscribeToGivenUser, { id: id }),
     ).subscribe({
       next: (resultUser) => {

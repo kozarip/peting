@@ -6,13 +6,45 @@ import {
   Text,
 } from 'react-native';
 import { Auth } from 'aws-amplify';
+import { useSelector } from 'react-redux';
 import { CheckBox, Button, Card } from 'react-native-elements';
+import User from '../services/user';
+import Chat from '../services/chat';
+import { removeMatch } from '../services/match';
+import ImageStore from '../services/imageStore';
 import { colors, fonts } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
 import { clearStore } from '../store/action';
+import Modal from './modal';
 
 const AppSettings: React.FC = () => {
   const [hasNotification, setHasNotification] = useState(true);
+  const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false)
+  const {matches, user} = useSelector((state) => state);
+
+  const removeUser = () => {
+    const userClass = new User();
+    const chatClass = new Chat();
+    const imageStore = new ImageStore(user.cognitoUserName);
+
+    userClass.removeUser(user.id)
+
+    chatClass.getMyChats(user.cognitoUserName).then((rawChats) => {
+      const chats = rawChats.data.searchChats.items
+      chats.forEach(givenChat => {
+        chatClass.removeChat(givenChat.id);
+      });
+    })
+
+    matches.forEach((match) => {
+      removeMatch(match.id);
+    })
+
+    user.images.forEach((image) => {
+      imageStore.removeFileFromStore(image)
+    });
+  } 
+
   return (
     <View>
       <ScrollView
@@ -22,6 +54,16 @@ const AppSettings: React.FC = () => {
         <Card
           containerStyle={styleForm.cardBlock}
         >
+          <Modal
+            iconName="trash"
+            isVisible={isActiveConfirmUserDeleteModal}
+            title="Profilom törlése"
+            description="Biztos törölni akarod? Ezzel minden adatod törlésre kerül!"
+            buttonPrimaryText='Igen'
+            handlePressButtonPrimary={() => { removeUser(); setIsActiveConfirmUserDeleteModal(false);}}
+            buttonSecondaryText='Nem'
+            handlePressButtonSecondary={() => { setIsActiveConfirmUserDeleteModal(false); }}
+          />
           <Text style={styleForm.cardTitle}>Értesítések</Text>
           <CheckBox
             title="Kérek értesítést (Nem működik)"
@@ -43,6 +85,16 @@ const AppSettings: React.FC = () => {
             textStyle={styles.checkBoxText}
             size={30}
           />
+          <Text style={styleForm.cardTitle}>Felhasználó</Text>
+            <Button
+              buttonStyle={styles.btnRemoveMyUser}
+              titleStyle={{ fontSize: fonts.heading2 }}
+              title="Profilom törlés"
+              onPress={() => {
+                setIsActiveConfirmUserDeleteModal(true);
+              }}
+            />
+
         </Card>
       </ScrollView>
       <Button
@@ -65,6 +117,9 @@ const styles = StyleSheet.create({
   },
   btnSave: {
     backgroundColor: colors.primary,
+  },
+  btnRemoveMyUser: {
+    backgroundColor:colors.darkPrimary,
   },
   checkBox: {
     backgroundColor: '#fff',

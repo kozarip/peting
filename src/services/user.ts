@@ -79,6 +79,10 @@ class User {
     API.graphql(graphqlOperation(mutations.updateUser, { input: user }));
   }
 
+  public removeUser(userId) {
+    API.graphql(graphqlOperation(mutations.deleteUser, { input: {id: userId} }));
+  }
+
   public subscribeToUser(id, updateUser, items) {
     const subscription = API.graphql(
       graphqlOperation(subscriptions.subscribeToGivenUser, { id: id }),

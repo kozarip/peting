@@ -46,6 +46,10 @@ class Chat {
     API.graphql(graphqlOperation(mutations.updateChat, { input: chat }));
   }
 
+  async removeChat(chatId) {
+    API.graphql(graphqlOperation(mutations.deleteChat, { input: {id: chatId} }));
+  }
+
   async subscriptionChat(chatId, setNewChat = false) {
     const subscription = await API.graphql(
       graphqlOperation(subscriptions.subscribeToGivenChat, { id: chatId }),

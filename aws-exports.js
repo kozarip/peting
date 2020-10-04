@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "exp://8u-s5r.kozarip.peting.exp.direct:80/--/,exp://127.0.0.1:19000/--/,exp://127.0.0.1:19000/--/,peting://,exp://exp.host/@kozarip/peting/",
-        "redirectSignOut": "exp://exp.host/@kozarip/peting/,exp://exp.host/@kozarip/peting/,peting://,exp://127.0.0.1:19000/--/",
+        "redirectSignIn": "exp://8u-s5r.kozarip.peting.exp.direct:80/--/,exp://127.0.0.1:19000/--/,exp://127.0.0.1:19000/--/,peting://,exp://exp.host/@kozarip/peting/, exp://192.168.0.199:19000/--/",
+        "redirectSignOut": "exp://exp.host/@kozarip/peting/,exp://exp.host/@kozarip/peting/,peting://,exp://127.0.0.1:19000/--/, exp://192.168.0.199:19000/--/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",

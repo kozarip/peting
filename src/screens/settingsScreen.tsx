@@ -85,9 +85,6 @@ const SettingsScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <PetingHeader
-        navigation={navigation}
-      />
       <Modal
         iconName="spinner"
         isVisible={isLoaderActive}
@@ -108,6 +105,9 @@ const SettingsScreen = ({ navigation, route }) => {
         resizeMode="repeat"
         imageStyle={{ opacity: 0.3 }}
       >
+        <PetingHeader
+          navigation={navigation}
+        />
         <HeaderTriangle />
         <TabView
           navigationState={{ index, routes }}

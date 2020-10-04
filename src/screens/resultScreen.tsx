@@ -267,9 +267,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <PetingHeader
-        navigation={navigation}
-      />
       <ScrollView style={styles.userContainer}>
         <View>
           <Modal
@@ -283,6 +280,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             resizeMode="repeat"
             imageStyle={{ opacity: 0.3 }}
           >
+            <PetingHeader
+              navigation={navigation}
+            />
             <HeaderTriangle />
             <Modal
               isVisible={isMatchModalActive}

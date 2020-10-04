@@ -125,15 +125,15 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <PetingHeader
-        navigation={navigation}
-      />
       <ImageBackground
         source={image}
         style={styleBackground}
         resizeMode="repeat"
-        imageStyle={{ opacity: 0.3, flex: 1, resizeMode: 'repeat',}}
+        imageStyle={{ opacity: 0.3, flex: 1, resizeMode: 'repeat'}}
       >
+        <PetingHeader
+          navigation={navigation}
+        />
         <HeaderTriangle />
         <View style={styles.screenHeader}>
           {/* <Text>{myMatches.length}</Text> */}

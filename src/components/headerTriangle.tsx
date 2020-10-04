@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: 0,
     height: 0,
     left: 0,
-    top: -(dimensions.fullWidth * 0.8),
+    top: -(dimensions.fullWidth * 0.5),
     backgroundColor: 'transparent',
     borderStyle: 'solid',
     borderRightWidth: dimensions.fullWidth / 2,

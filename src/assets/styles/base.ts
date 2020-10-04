@@ -2,6 +2,7 @@ import { fonts, margins, colors, dimensions } from './variables';
 
 export const styleBackground = {
   flex: 1,
+  alignItems: 'stretch',
   backgroundColor: '#808080',
   borderTopWidth: 0,
   margin: 0,

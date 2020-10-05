@@ -29,10 +29,10 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
   return (
     <Header
       containerStyle={{
-        paddingTop: Platform.OS === 'ios' ? 0 : 10,
-        height: 70,
+        paddingTop: Platform.OS === 'ios' ? 20 : 10,
+        height: 80,
         borderBottomWidth: 0,
-        marginTop: 20,
+        marginTop: Platform.OS === 'ios' ? 0 : 10,
         paddingHorizontal: 5,
       }}
       backgroundColor={colors.primary}

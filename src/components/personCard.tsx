@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: margins.sm,
     paddingBottom: margins.sm,
-    minHeight: dimensions.fullHeight - 178,
+    minHeight: dimensions.fullHeight - 182,
   },
   titleContainer: {
     display: 'flex',

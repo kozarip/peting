@@ -29,7 +29,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
   return (
     <Header
       containerStyle={{
-        paddingTop: Platform.OS === 'ios' ? 20 : 10,
+        paddingTop: 20,
         height: 80,
         borderBottomWidth: 0,
         marginTop: Platform.OS === 'ios' ? 0 : 10,

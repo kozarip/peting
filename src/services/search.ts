@@ -27,12 +27,6 @@ class Search {
             filter.filter['cityLat'] = { gte: distances.minLat, lte: distances.maxLat };
             filter.filter['cityLng'] = { gte: distances.minLng, lte: distances.maxLng };
           }
-          /* if (arrayValue.includes(key) && Array.isArray(value)) {
-            filter.filter['or'] = value.map((v) => {
-              const obj = {}
-              return obj[key] =  { eq: v }
-            })
-          } */
           if (equalValues.includes(key)) {
             filter.filter[key] = { eq: value }
           }

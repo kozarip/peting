@@ -87,12 +87,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         }
       }
       const { items } = res.data.searchUsers;
-      setResultPersons(items);
+
+      setResultPersons(items.sort( () => Math.random() - 0.5));
       if (items.length !== 0) {
         if (resultPersonIndex > resultPersons.length - 1) {
           setResultPersonIndex(0);
         }
-        setCurrentResultPerson(resultPersonIndex, items);
+        setCurrentResultPerson(0, items);
       }
       const subscribes = [];
       items.forEach((item) => {
@@ -161,13 +162,16 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const handlePressNext = () => {
+    let index = resultPersonIndex;
     if (resultPersonIndex < resultPersons.length - 1) {
-      setResultPersonIndex(resultPersonIndex + 1);
+      setResultPersonIndex((prev) => prev + 1 );
+      index = resultPersonIndex + 1;
     } else {
       setResultPersonIndex(0);
+      index = 0;
     }
     if(resultPersons.length > 0){
-      setCurrentResultPerson(resultPersonIndex);
+      setCurrentResultPerson(index);
     }
   };
 

@@ -39,6 +39,7 @@ type Search {
   hairColor: String
   hobbies: [Int]
   distance: Int
+  isWithMarked: Boolean
 }
 
 type Emotions {

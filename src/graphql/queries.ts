@@ -44,6 +44,7 @@ export const getUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -98,6 +99,7 @@ export const listUsers = /* GraphQL */ `
           hairColor
           hobbies
           distance
+          isWithMarked
         }
         cityName
         cityLat
@@ -228,6 +230,7 @@ export const userByCognitoUserName = /* GraphQL */ `
           hairColor
           hobbies
           distance
+          isWithMarked
         }
         cityName
         cityLat
@@ -290,6 +293,7 @@ export const searchUsers = /* GraphQL */ `
           hairColor
           hobbies
           distance
+          isWithMarked
         }
         cityName
         cityLat

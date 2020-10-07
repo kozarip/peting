@@ -47,6 +47,7 @@ export const createUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -99,6 +100,7 @@ export const updateUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -151,6 +153,7 @@ export const deleteUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -251,5 +254,6 @@ export const deleteChat = /* GraphQL */ `
         createdAt
         messagesOwner
       }
+    }
   }
 `;

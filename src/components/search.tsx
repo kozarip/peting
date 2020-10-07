@@ -7,7 +7,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { Card, Button, CheckBox } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { setActiveMenuId, setGlobalSearchParams } from '../store/action';
 import Modal from './modal';
@@ -53,6 +53,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
     maxAge: 99,
     hobbies: [],
     distance: 20,
+    isWithMarked: false,
   };
 
   const [searchParams, setSearchParams] = useState(initialSearchParams);
@@ -161,6 +162,19 @@ const SearchComponent: React.FC<searchComponentProps> = (
             setValue={setSearchParamsValue}
             value={searchParams.smokeFrequency}
           />
+          <Text style={styleForm.cardTitle}>Kereső feltételek</Text>
+          <CheckBox
+            title='Csak a jelöletlenek keresése'
+            checkedIcon='dot-circle-o'
+            uncheckedIcon='circle-o'
+            checkedColor={colors.primary}
+            size={30}
+            uncheckedColor={colors.primary}
+            checked={searchParams.isWithMarked}
+            textStyle={{color: colors.separator, fontWeight: 'normal', fontSize: fonts.heading3}}
+            containerStyle={styleForm.checkBox}
+            onPress={() => setSearchParamsValue({'isWithMarked': !searchParams.isWithMarked})}
+        />
         </Card>
       </ScrollView>
       <Button

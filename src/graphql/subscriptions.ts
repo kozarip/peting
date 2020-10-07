@@ -64,8 +64,8 @@ export const subscribeToGivenUser = /* GraphQL */ `
         cognitoUserName
         timestamp
       }
+      }
     }
-  }
 `;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
@@ -109,6 +109,7 @@ export const onCreateUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -158,6 +159,7 @@ export const onUpdateUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat
@@ -207,6 +209,7 @@ export const onDeleteUser = /* GraphQL */ `
         hairColor
         hobbies
         distance
+        isWithMarked
       }
       cityName
       cityLat

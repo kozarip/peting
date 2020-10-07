@@ -39,4 +39,10 @@ export const styleForm = {
     marginBottom: margins.sm,
     marginTop: margins.sm,
   },
+  checkBox: {
+    backgroundColor: '#fff',
+    borderWidth: 0,
+    margin: 0,
+    padding: 0
+  },
 };

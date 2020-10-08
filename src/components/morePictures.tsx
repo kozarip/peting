@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -19,6 +19,8 @@ const MorePictures = (props) => {
   const age = props.age > 0 ? props.age : '';
   const animalName = props.animalName || '';
   const { handleClose } = props;
+  const [acticveImageNumber, setActicveImageNumber] = useState(1);
+  const [acticveAnimalImageNumber, setActicveAnimalImageNumber] = useState(1);
 
   return (
     <View style={{ flex: 1 }}>
@@ -26,8 +28,6 @@ const MorePictures = (props) => {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>
             {name}
-            {', '}
-            {age}
           </Text>
           <Tooltip
             backgroundColor={colors.primary}
@@ -52,14 +52,21 @@ const MorePictures = (props) => {
           style={styles.slider}
           enableTranslate={false}
           pageMargin={margins.sm}
+          onPageScroll={({position}) => setActicveImageNumber(position + 1)}
           images={personImages.map((image) => { return { uri: image }; })}
         />
+        <Text style={styles.counter}>{acticveImageNumber} / {personImages.length}</Text>
+        <Text style={styles.title}>
+          {animalName}
+        </Text>
         <GallerySwiper
           style={styles.slider}
           enableTranslate={false}
           pageMargin={margins.sm}
+          onPageScroll={({position}) => setActicveAnimalImageNumber(position + 1)}
           images={animalImages.map((image) => { return { uri: image }; })}
         />
+        <Text style={styles.counter}>{acticveAnimalImageNumber} / {animalImages.length}</Text>
         <Button
           buttonStyle={{ ...styleForm.btnPrimary, ...{ marginHorizontal: 50 } }}
           titleStyle={{ fontSize: fonts.heading2 }}
@@ -94,10 +101,13 @@ const styles = StyleSheet.create({
   slider: {
     width: dimensions.fullWidth,
     height: dimensions.fullWidth,
-    marginBottom: margins.lg,
+    marginBottom: margins.xsm,
   },
   infoText: {
     color: '#fff',
+  },
+  counter: {
+    color: colors.separator,
   },
 });
 

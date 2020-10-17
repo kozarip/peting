@@ -1,6 +1,6 @@
 {
     "identityPoolName": "petingdatesc1a79563_identitypool_c1a79563",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "petingc1a79563",
     "userPoolName": "petingdatesc1a79563_userpool_c1a79563",
     "autoVerifiedAttributes": [

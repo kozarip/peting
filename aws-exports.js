@@ -26,7 +26,9 @@ const awsmobile = {
     "aws_appsync_authenticationType": "API_KEY",
     "aws_appsync_apiKey": "da2-4sjeimaplfdldmxuor4xqeafgu",
     "aws_user_files_s3_bucket": "petingdatesa24bb58985164c809faa1948c109ca8394042-dev",
-    "aws_user_files_s3_bucket_region": "eu-central-1"
+    "aws_user_files_s3_bucket_region": "eu-central-1",
+    "aws_mobile_analytics_app_id": "f9c16ef10fb74cc1955dbaa5972606df",
+    "aws_mobile_analytics_app_region": "eu-central-1"
 };
 
 

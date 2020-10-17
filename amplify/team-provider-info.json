@@ -16,6 +16,13 @@
                 "petingdatesc1a79563": {
                     "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"583951345538571\",\"client_secret\":\"d326fc32be86dced16026b24cc0e40a0\"},{\"ProviderName\":\"Google\",\"client_id\":\"987658316582-hr989q665mmfasaoqvrc91jfh6rg8pm4.apps.googleusercontent.com\",\"client_secret\":\"GFuykP_cjTH8lyKGE8qHf_hK\"}]"
                 }
+            },
+            "notifications": {
+                "Pinpoint": {
+                    "Name": "petigdates_fcm-dev",
+                    "Id": "f9c16ef10fb74cc1955dbaa5972606df",
+                    "Region": "eu-central-1"
+                }
             }
         }
     }

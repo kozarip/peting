@@ -30,5 +30,13 @@
             "service": "S3",
             "providerPlugin": "awscloudformation"
         }
+    },
+    "notifications": {
+        "petigdates_fcm": {
+            "service": "Pinpoint",
+            "channels": [
+                "FCM"
+            ]
+        }
     }
 }

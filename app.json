@@ -42,7 +42,8 @@
     "facebookAppId": "583951345538571",
     "android": {
       "package": "host.exp.exponent.android",
-      "googleServicesFile": "google-services.json"
+      "googleServicesFile": "google-services.json",
+      "useNextNotificationsApi": true
     },
     "description": ""
   }

@@ -52,6 +52,7 @@ export const createUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;
@@ -105,6 +106,7 @@ export const updateUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;
@@ -158,6 +160,7 @@ export const deleteUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;

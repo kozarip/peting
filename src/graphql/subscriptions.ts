@@ -56,6 +56,7 @@ export const subscribeToGivenUser = /* GraphQL */ `
       id
       cognitoUserName
       userName
+      deviceId
       likes {
         cognitoUserName
         timestamp
@@ -64,8 +65,8 @@ export const subscribeToGivenUser = /* GraphQL */ `
         cognitoUserName
         timestamp
       }
-      }
     }
+  }
 `;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
@@ -114,6 +115,7 @@ export const onCreateUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;
@@ -164,6 +166,7 @@ export const onUpdateUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;
@@ -214,6 +217,7 @@ export const onDeleteUser = /* GraphQL */ `
       cityName
       cityLat
       cityLng
+      deviceId
     }
   }
 `;

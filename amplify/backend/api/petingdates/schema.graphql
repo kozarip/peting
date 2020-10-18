@@ -25,6 +25,7 @@ type User @model @searchable
   cityName: String
   cityLat: Float
   cityLng: Float
+  deviceId: String
 }
 
 type Search {

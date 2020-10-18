@@ -22,4 +22,5 @@ export type UserType = {
   cityName: string;
   cityLat: number;
   cityLng: number;
+  deviceId: string;
 };

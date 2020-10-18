@@ -1,44 +1,61 @@
 import React, { useEffect } from 'react';
-import { View, ImageBackground, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  Platform,
+} from 'react-native';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
 import { setGlobalSearchParams, setUser, setMatches, setChatIds } from './store/action';
-import { registerFetchTask } from './components/registerFetchTask';
 
 const Main = ({ navigation }) => {
   const user = new User();
   const chat = new Chat();
   const dispatch = useDispatch();
 
-  registerFetchTask('wow', ()=>{
+/*   registerFetchTask('wow', ()=>{
     console.log('WOWWW HIIIIIIIII YGNNNNNN');
-}, 5);
+  }, 5); */
+
+  const registerForPushNotificationsAsync = async () => {
+    // requestPermissionsAsync();
+    return Notifications.getExpoPushTokenAsync();
+  };
 
   useEffect(() => {
-    user.crateNewUserIfNotExist().then((exist) => {
-      if (exist) {
-        const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
-        dispatch(setGlobalSearchParams({
-          searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
-        }));
-        dispatch(setUser({
-          user: userData,
-        }));
-        setGlobalMatches(
-          user,
-          userData.cognitoUserName,
-          setMatchToGlobalState,
-          navigation, navigationReset,
-        );
-        setGlobalChatIDs(userData.cognitoUserName);
-      } else {
-        navigation.navigate('Settings', { newUser: true });
-        if (Platform.OS === 'android') {
-          navigationReset('Settings', { newUser: true });
+    Permissions.getAsync(Permissions.NOTIFICATIONS);
+    const tokenResponse = registerForPushNotificationsAsync();
+    tokenResponse.then((token) => {
+      console.log(token);
+      user.crateNewUserIfNotExist().then((exist) => {
+        if (exist) {
+          const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
+          userData.deviceId = token.data;
+          dispatch(setGlobalSearchParams({
+            searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
+          }));
+          dispatch(setUser({
+            user: userData,
+          }));
+          setGlobalMatches(
+            user,
+            userData.cognitoUserName,
+            setMatchToGlobalState,
+            navigation, navigationReset,
+          );
+          setGlobalChatIDs(userData.cognitoUserName);
+        } else {
+          navigation.navigate('Settings', { newUser: true });
+          if (Platform.OS === 'android') {
+            navigationReset('Settings', { newUser: true });
+          }
         }
-      }
+      });
     });
   }, []);
 

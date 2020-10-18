@@ -66,6 +66,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     cityName: ' ',
     cityLat: 0,
     cityLng: 0,
+    deviceId: '',
   };
   const mandatoryFields = [
     'images',

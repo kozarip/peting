@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "api": {
+      "petingdates": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -23,12 +23,18 @@ const Main = ({ navigation }) => {
   }, 5); */
 
   const registerForPushNotificationsAsync = async () => {
-    // requestPermissionsAsync();
     return Notifications.getExpoPushTokenAsync();
   };
 
+  async function alertIfRemoteNotificationsDisabledAsync() {
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== 'granted') {
+      alert('Hey! You might want to enable notifications for my app, they are good.');
+    }
+  }
+
   useEffect(() => {
-    Permissions.getAsync(Permissions.NOTIFICATIONS);
+    // alertIfRemoteNotificationsDisabledAsync();
     const tokenResponse = registerForPushNotificationsAsync();
     tokenResponse.then((token) => {
       console.log(token);

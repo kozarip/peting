@@ -13,7 +13,7 @@
     "icon": "./src/assets/images/logo.png",
     "splash": {
       "image": "./src/assets/images/splash_peting.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "notification": {

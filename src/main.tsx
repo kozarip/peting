@@ -23,7 +23,7 @@ const Main = ({ navigation }) => {
   }, 5); */
 
   const registerForPushNotificationsAsync = async () => {
-    return Notifications.getExpoPushTokenAsync();
+    return Notifications.getDevicePushTokenAsync();
   };
 
   async function alertIfRemoteNotificationsDisabledAsync() {

@@ -16,6 +16,7 @@ import {
   saveNewMatch,
   subscriptionMatch,
   subscriptionMyFutureMatches,
+  subscriptionRemoveMatch,
 } from '../services/match';
 import PetingHeader from '../components/petingHeader';
 import LoveButtons from '../components/loveButtons';
@@ -27,10 +28,11 @@ import {
   fonts,
 } from '../assets/styles/variables';
 import PersonCard from '../components/personCard';
-import { setUser, setMatches, setActiveMenuId, addMatch } from '../store/action';
+import { setUser, setMatches, setActiveMenuId, addMatch, setHasNotification } from '../store/action';
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { styleForm } from '../assets/styles/form';
+import { match } from 'assert';
 
 type ResultScreenProps = {
   navigation: any;
@@ -113,6 +115,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
     matches.forEach((match) => {
       subscriptionMatch(match, changeGlobalStateMatch);
+      subscriptionRemoveMatch(match, removeFromGlobalStateMatch);
     });
     subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
   }, [searchParams, pressedButton, matches]);
@@ -124,12 +127,19 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       }
       return m;
     });
+    dispatch(setHasNotification(true));
+    dispatch(setMatches(newMatches));
+  };
+
+  const removeFromGlobalStateMatch = (matchId) => {
+    const newMatches = matches.filter((m) => m.id !== matchId);
     dispatch(setMatches(newMatches));
   };
 
   const addNewMatch = (matchData) => {
     setIsMatchModalActive(true);
     dispatch(addMatch(matchData));
+    dispatch(setHasNotification(true));
   };
 
   const updateResultPerson = (rawPerson, items) => {

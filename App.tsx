@@ -6,8 +6,6 @@ import * as Permissions from 'expo-permissions'; */
 
 import { Provider } from 'react-redux';
 import Amplify from 'aws-amplify';
-/* import PushNotification from '@aws-amplify/pushnotification';
-import PushNotificationIOS from '@react-native-community/push-notification-ios'; */
 import { withOAuth } from 'aws-amplify-react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -22,18 +20,6 @@ import ResultScreen from './src/screens/resultScreen';
 import ChatScreen from './src/screens/chatScreen';
 import SettingsScreen from './src/screens/settingsScreen';
 import LoginScreen from './src/screens/loginScreen';
-/* 
-const requestPermissionsAsync = async () => {
-  return await Notifications.requesPermissionsAsync({
-    ios: {
-      allowAlert: true,
-      allowBadge: true,
-      allowSound: true,
-      allowAnnouncements: true,
-    },
-  });
-}
- */
 
 const amplifyConfig = {
   ...config,

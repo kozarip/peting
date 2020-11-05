@@ -1,9 +1,11 @@
+import { setHasNotification } from './action';
 export const initialState = {
   searchParams: {},
   user: {},
   matches: [],
   chatIDs: [],
   activeMenu: 2,
+  hasNotification: false,
 };
 
 export function reducer(state = initialState, action) {
@@ -48,6 +50,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         matches: state.matches.filter((oldMatch) => oldMatch.id !== action.match.id),
+      };
+    case 'Set_Has_Notification':
+      return {
+        ...state,
+        ...action.hasNotification,
       };
     case 'clear_store':
       return initialState;

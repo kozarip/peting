@@ -56,7 +56,22 @@ export const subscribeToGivenUser = /* GraphQL */ `
       id
       cognitoUserName
       userName
-      deviceId
+      email
+      firstName
+      surName
+      age
+      animalType
+      animalSize
+      gender
+      height
+      smokeFrequency
+      hairColor
+      hobbies
+      images
+      animalImages
+      primaryImageIndex
+      animalName
+      bio
       likes {
         cognitoUserName
         timestamp
@@ -65,6 +80,35 @@ export const subscribeToGivenUser = /* GraphQL */ `
         cognitoUserName
         timestamp
       }
+      search {
+        minAge
+        maxAge
+        animalSize
+        gender
+        animalTypes
+        minHeight
+        maxHeight
+        smokeFrequency
+        hairColor
+        hobbies
+        distance
+        isWithMarked
+      }
+      cityName
+      cityLat
+      cityLng
+      deviceId
+    }
+  }
+`;
+export const subscribeToRemoveUserMatches = /* GraphQL */ `
+  subscription SubscribeToRemoveUserMatches($id: ID!) {
+    subscribeToRemoveUserMatches(id: $id) {
+      id
+      user1
+      user2
+      timestamp
+      lastNewMessageSender
     }
   }
 `;

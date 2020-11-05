@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1006344582861-s8bvjp727k63ir2k7ea0n784r7opje6s.apps.googleusercontent.com</string>
+	<string>1006344582861-a9eq9kdad4leab41lmm5112ilq7dgo5q.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1006344582861-s8bvjp727k63ir2k7ea0n784r7opje6s</string>
+	<string>com.googleusercontent.apps.1006344582861-a9eq9kdad4leab41lmm5112ilq7dgo5q</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1006344582861-i5jf419dktsmpr1vudrmv83dlqikvqrn.apps.googleusercontent.com</string>
+	<string>1006344582861-nj9ivgr3gosg8ucbokohsnama3mdq9lv.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBeZE4T2VFjLAeEQnhDxxu2QoDRJhkcxKo</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>host.exp.exponent.ios</string>
+	<string>host.exp.exponent.peting</string>
 	<key>PROJECT_ID</key>
 	<string>petingdate</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1006344582861:ios:71aa5ac7607331c3f75b84</string>
+	<string>1:1006344582861:ios:dfccd12a52523432f75b84</string>
 	<key>DATABASE_URL</key>
 	<string>https://petingdate.firebaseio.com</string>
 </dict>

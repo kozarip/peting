@@ -292,6 +292,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           />
           <CitySelector
             label="Lakhelyed"
+            mandatory={mandatoryFields.includes('cityName')}
             setValue={setProfileUserAttribute}
             value={profileUser.cityName}
           />

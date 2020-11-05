@@ -81,4 +81,7 @@ type Subscription {
         @aws_subscribe(mutations: ["createMatches"])
     subscribeToGivenUser(id: ID!): User
         @aws_subscribe(mutations: ["updateUser"])
+    subscribeToRemoveUserMatches(id: ID!): Matches
+        @aws_subscribe(mutations: ["deleteMatches"])
+
 }

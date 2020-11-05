@@ -1,9 +1,10 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { Header, Icon } from 'react-native-elements';
+import { Platform, View, Text } from 'react-native';
+import { Header, Icon as RNEIcon } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '../assets/styles/variables';
-import { setActiveMenuId } from '../store/action';
+import { setActiveMenuId, setHasNotification } from '../store/action';
 
 type PetingHeaderProps = {
   navigation: any,
@@ -11,7 +12,7 @@ type PetingHeaderProps = {
 
 const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
 
-  const { activeMenu } = useSelector((state) => state);
+  const { activeMenu, hasNotification } = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const setMenuIdColor = (menuId) => (menuId === activeMenu ? '#fff' : colors.darkPrimary);
@@ -20,6 +21,9 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
     dispatch(setActiveMenuId(id));
     if (name === 'Settings') {
       navigation.navigate('Settings', { newUser: false })
+    }
+    if (name === 'Match') {
+      dispatch(setHasNotification(false));
     }
     navigation.navigate(name);
   };
@@ -37,19 +41,21 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       }}
       backgroundColor={colors.primary}
       leftComponent={
-        <Icon
-          name="heart"
-          color={colors.primary}
-          size={iconSize}
-          onPress={() => { handleMenuSelect(1, 'Match')}}
-          underlayColor={colors.primary}
-          type="font-awesome"
-          reverse
-          reverseColor={setMenuIdColor(1)}
-        />
+        <View>
+          <RNEIcon
+            name={hasNotification ? "plus" : "heart"}
+            color={colors.primary}
+            size={iconSize}
+            onPress={() => { handleMenuSelect(1, 'Match')}}
+            underlayColor={colors.primary}
+            type="font-awesome"
+            reverse
+            reverseColor={setMenuIdColor(1)}
+          />
+        </View>
       }
       centerComponent={
-        <Icon
+        <RNEIcon
           name="sliders"
           color={colors.primary}
           size={iconSize}
@@ -61,7 +67,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
         />
       }
       rightComponent={
-        <Icon
+        <RNEIcon
           name="user"
           color={colors.primary}
           size={iconSize}

@@ -50,6 +50,22 @@ const subscriptionMatch = async (match: matchType, changeGlobalStateMatch) => {
   return subscription;
 };
 
+const subscriptionRemoveMatch = async (match: matchType, removeFromGlobalStateMatch) => {
+  const subscription = await API.graphql(
+    graphqlOperation(subscriptions.subscribeToRemoveUserMatches, { id: match.id }),
+  ).subscribe({
+    next: (matches) => {
+      console.log(matches);
+      if (typeof removeFromGlobalStateMatch === 'function'
+      && matches.value.data.subscribeToRemoveUserMatches) {
+        return removeFromGlobalStateMatch(match.id);
+      }
+      return false;
+    },
+  });
+  return subscription;
+};
+
 const subscriptionMyFutureMatches = async (cognitoUserName, updateGlobalMatch) => {
   const subscription = await API.graphql(
     graphqlOperation(subscriptions.subscribeToMyMatchesByUser2, { user2: cognitoUserName }),
@@ -113,4 +129,5 @@ export {
   subscriptionMatch,
   setGlobalMatches,
   subscriptionMyFutureMatches,
+  subscriptionRemoveMatch,
 };

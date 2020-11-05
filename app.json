@@ -13,8 +13,8 @@
     "icon": "./src/assets/images/logo.png",
     "splash": {
       "image": "./src/assets/images/splash_peting.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "contain",
+      "backgroundColor": "#808080"
     },
     "notification": {
       "icon": "./src/assets/images/logo.png"
@@ -42,7 +42,7 @@
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
-    "facebookAppId": "583951345538571",
+    "facebookAppId": "756751698208278",
     "android": {
       "package": "host.exp.exponent.android",
       "googleServicesFile": "google-services.json",

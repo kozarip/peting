@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   ImageBackground,
@@ -6,35 +6,38 @@ import {
   Platform,
 } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
-import { setGlobalSearchParams, setUser, setMatches, setChatIds } from './store/action';
+import { setHasNotification } from './store/action';
+import {
+  setGlobalSearchParams,
+  setUser,
+  setMatches,
+  setChatIds,
+} from './store/action';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
 
 const Main = ({ navigation }) => {
   const user = new User();
   const chat = new Chat();
   const dispatch = useDispatch();
 
-/*   registerFetchTask('wow', ()=>{
-    console.log('WOWWW HIIIIIIIII YGNNNNNN');
-  }, 5); */
-
   const registerForPushNotificationsAsync = async () => {
-    return Notifications.getDevicePushTokenAsync();
+    console.log(await Notifications.getExpoPushTokenAsync());
+    return Notifications.getExpoPushTokenAsync();
   };
 
-  async function alertIfRemoteNotificationsDisabledAsync() {
-    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    if (status !== 'granted') {
-      alert('Hey! You might want to enable notifications for my app, they are good.');
-    }
-  }
-
   useEffect(() => {
-    // alertIfRemoteNotificationsDisabledAsync();
+    Notifications.addNotificationReceivedListener(handleNotification);
     const tokenResponse = registerForPushNotificationsAsync();
     tokenResponse.then((token) => {
       console.log(token);
@@ -64,6 +67,13 @@ const Main = ({ navigation }) => {
       });
     });
   }, []);
+
+  const handleNotification = (newNotification) => {
+    console.log(newNotification);
+    if (newNotification) {
+      dispatch(setHasNotification(true));
+    }
+  };
 
   const navigationReset = (defaultScreen, paramsObj?) => {
     navigation.reset({

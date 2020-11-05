@@ -147,13 +147,6 @@ const SearchComponent: React.FC<searchComponentProps> = (
             setValue={setSearchParamsValue}
             value={searchParams.animalTypes}
           />
-          {/* <Selector
-            label={animalType.label}
-            options={animalType.options}
-            type="animalType"
-            setValue={setSearchParamsValue}
-            value={searchParams.animalType}
-          /> */}
           <Text style={styleForm.cardTitle}>Egyéb</Text>
           <Selector
             label={smokeFrequency.label}
@@ -164,9 +157,9 @@ const SearchComponent: React.FC<searchComponentProps> = (
           />
           <Text style={styleForm.cardTitle}>Kereső feltételek</Text>
           <CheckBox
-            title='Csak a jelöletlenek keresése'
-            checkedIcon='dot-circle-o'
-            uncheckedIcon='circle-o'
+            title="Csak a jelöletlenek keresése"
+            checkedIcon="dot-circle-o"
+            uncheckedIcon="circle-o"
             checkedColor={colors.primary}
             size={30}
             uncheckedColor={colors.primary}

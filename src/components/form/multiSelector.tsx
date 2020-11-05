@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
+
 
 type MultiSelectorProps = {
   options: any,
@@ -32,7 +34,8 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
       <SectionedMultiSelect
-        items={transformOptionsForMultiselect(options)}
+        IconRenderer={Icon}
+        items={transformOptionsForMultiselect(options) || []}
         uniqueKey="id"
         selectedText="kiválasztva"
         selectText="Válassz elemeket"

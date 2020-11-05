@@ -8,7 +8,7 @@ class Search {
 
   async search(searchParams: {}, currentCityCoordinates) {
     const intervalValues = ['minHeight', 'maxHeight', 'minAge', 'maxAge'];
-    const equalValues = ['animalSize', 'gender', 'hairColor', 'smokeFrequency'];
+    const equalValues = ['gender', 'smokeFrequency'];
     // const arrayValue = ['animalType']
     const filter = {
       filter: {}

@@ -21,7 +21,6 @@ exports.handler = async (event) => {
         }
       }
     `;
-    console.log({ userByCognitoUserName });
 
     try {
       const graphqlData = await axios({
@@ -37,6 +36,7 @@ exports.handler = async (event) => {
       const body = {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
+
       sendPushNotification(body.graphqlData.items[0].deviceId, type);
     } catch (err) {
       console.log('error posting to appsync: ', err);
@@ -71,6 +71,7 @@ const getUserData = (event) => {
 };
 
 const sendPushNotification = async (token, type) => {
+  console.log(token);
   fetch('https://fcm.googleapis.com/fcm/send', {
     method: 'POST',
     headers: {
@@ -79,7 +80,10 @@ const sendPushNotification = async (token, type) => {
     },
     body: JSON.stringify({
       to: token,
-      priority: 'normal',
+      priority: 'high',
+      messageType: type,
+      collapse_key: type,
+      'apns-collapse-id': type,
       data: {
         experienceId: '@kozarip/peting',
         message: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',

@@ -10,19 +10,28 @@ import {
 import { Overlay } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { styleForm } from '../../assets/styles/form';
-import { fonts, colors, margins, dimensions } from '../../assets/styles/variables';
+import {
+  fonts,
+  colors,
+  margins,
+  dimensions,
+} from '../../assets/styles/variables';
 
 const CitySelector = ({
   label,
   value,
   setValue,
+  mandatory,
 }) => {
   const [isCityOverlayActive, setIsCityOverlayActive] = useState(false);
   const defaultPlaceholder = !value || value === ' ' ? 'Kezd el írni a település nevét' : value;
   if (typeof value !== 'undefined') {
     return (
       <View>
-        <Text style={styleForm.label as any}>{label}</Text>
+        <Text style={styleForm.label as any}>
+          {label}
+          {mandatory && <Text style={styleForm.mandatory}> *</Text>}
+        </Text>
         <Text
           onPress={
             () => { setIsCityOverlayActive(true); }

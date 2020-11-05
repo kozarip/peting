@@ -50,3 +50,10 @@ export function setChatIds(chatIDs) {
     chatIDs,
   };
 }
+
+export function setHasNotification(hasNotification) {
+  return {
+    type: 'Set_Has_Notification',
+    hasNotification: { hasNotification },
+  };
+}

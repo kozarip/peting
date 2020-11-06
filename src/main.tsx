@@ -33,7 +33,7 @@ const Main = ({ navigation }) => {
 
   const registerForPushNotificationsAsync = async () => {
     console.log(await Notifications.getExpoPushTokenAsync());
-    return Notifications.getExpoPushTokenAsync();
+    return Notifications.getDevicePushTokenAsync();
   };
 
   useEffect(() => {

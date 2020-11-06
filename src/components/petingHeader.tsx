@@ -1,7 +1,7 @@
 import React from 'react';
-import { Platform, View, Text } from 'react-native';
+import { Platform, View, Text, StyleSheet } from 'react-native';
 import { Header, Icon as RNEIcon } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/EvilIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '../assets/styles/variables';
 import { setActiveMenuId, setHasNotification } from '../store/action';
@@ -41,9 +41,12 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       }}
       backgroundColor={colors.primary}
       leftComponent={
-        <View>
+        <View style={{ position: 'relative' }}>
+          {hasNotification &&
+            <Icon style={styles.hasNotificationIcon} name="plus-circle" size={15} color="#fff" />
+          }
           <RNEIcon
-            name={hasNotification ? "plus" : "heart"}
+            name="heart"
             color={colors.primary}
             size={iconSize}
             onPress={() => { handleMenuSelect(1, 'Match')}}
@@ -81,5 +84,14 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  hasNotificationIcon: {
+    position: 'absolute',
+    top: 18,
+    right: 15,
+    zIndex: 9999,
+  },
+});
 
 export default PetingHeader;

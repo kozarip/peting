@@ -195,6 +195,9 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     if (valueType === 'string') {
       return value.trim() === '';
     }
+    if (valueType === 'object') {
+      return !value;
+    }
     return false;
   };
 

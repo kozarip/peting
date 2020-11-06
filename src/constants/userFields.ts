@@ -86,3 +86,7 @@ export const hobbies = {
     { label: 'Festés', value: 'painting' },
   ],
 };
+
+export const cityName = {
+  label: 'Városod',
+};

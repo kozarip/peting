@@ -8,7 +8,7 @@ import {
   Platform,
 } from 'react-native';
 import { Card, Button, CheckBox } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setActiveMenuId, setGlobalSearchParams } from '../store/action';
 import Modal from './modal';
 
@@ -58,6 +58,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
 
   const [searchParams, setSearchParams] = useState(initialSearchParams);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
+  const [isProfileModal, setIsProfileModal] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -68,7 +69,14 @@ const SearchComponent: React.FC<searchComponentProps> = (
     setSearchParams({ ...searchParams, ...value });
   };
 
+  const { user } = useSelector((state) => state)
+
   const handleSaveSearch = () => {
+    console.log(user);
+    if (user.cityLat === 0) {
+      setIsProfileModal(true);
+      return;
+    }
     setIsLoaderActive(true);
     const newUserObject = { ...userAttributes, ...{ search: searchParams } };
     setUserAttributes(newUserObject);
@@ -91,6 +99,13 @@ const SearchComponent: React.FC<searchComponentProps> = (
           iconName="spinner"
           isVisible={isLoaderActive}
           description="Adatok betöltése..."
+        />
+        <Modal
+          iconName="exclamation"
+          isVisible={isProfileModal}
+          description="Kérlek elősször a profilodat töltsd ki!"
+          buttonPrimaryText="Bezárás"
+          handlePressButtonPrimary={() => { setIsProfileModal(false); }}
         />
         <Card
           containerStyle={styleForm.cardBlock}
@@ -164,10 +179,10 @@ const SearchComponent: React.FC<searchComponentProps> = (
             size={30}
             uncheckedColor={colors.primary}
             checked={searchParams.isWithMarked}
-            textStyle={{color: colors.separator, fontWeight: 'normal', fontSize: fonts.heading3}}
+            textStyle={{ color: colors.separator, fontWeight: 'normal', fontSize: fonts.heading3 }}
             containerStyle={styleForm.checkBox}
-            onPress={() => setSearchParamsValue({'isWithMarked': !searchParams.isWithMarked})}
-        />
+            onPress={() => setSearchParamsValue({ isWithMarked: !searchParams.isWithMarked })}
+          />
         </Card>
       </ScrollView>
       <Button

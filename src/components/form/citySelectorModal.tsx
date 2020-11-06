@@ -86,7 +86,8 @@ const CitySelector = ({
                 },
               }}
               getDefaultValue={() => {
-                if (value !== ' ') {
+                console.log(value);
+                if (value && value !== ' ') {
                   return value;
                 }
                 return '';

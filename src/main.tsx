@@ -10,12 +10,12 @@ import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
-import { setHasNotification } from './store/action';
 import {
   setGlobalSearchParams,
   setUser,
   setMatches,
   setChatIds,
+  setHasNotification,
 } from './store/action';
 
 Notifications.setNotificationHandler({

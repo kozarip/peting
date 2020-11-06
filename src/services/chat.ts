@@ -3,7 +3,6 @@ import { graphqlOperation, API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 import * as subscriptions from '../graphql/subscriptions';
-import { sendNotificationImmediately } from './notification';
 
 class Chat {
   async getGivenChat(userId, userId2) {
@@ -57,8 +56,6 @@ class Chat {
       next: (messages) => {
         if (typeof setNewChat === 'function' && messages.value.data.subscribeToGivenChat.messages) {
           const newMessages = messages.value.data.subscribeToGivenChat.messages;
-          console.log(newMessages[newMessages.length - 1].text);
-          // sendNotificationImmediately('Üzenet', newMessages[newMessages.length - 1].text);
           return setNewChat(newMessages);
         } else {
           console.log('Chat subscribe else');

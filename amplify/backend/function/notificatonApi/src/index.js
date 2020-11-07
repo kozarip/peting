@@ -76,17 +76,27 @@ const sendPushNotification = async (token, type) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `key=AAAA6k7Pts0:APA91bGU2zi8iMtdOh9tiBajenePX2quaoASe0flPqpVWni9rJANfJdp0MZ82ntwogoaB_-IW1cjeL8hNvhd-V-FKdbe3q4kurlhvS42kE8S4iKMvqbvgloQPgHpbGwMTJ_0ioGiKqLa`,
+      Authorization: 'key=AAAA6k7Pts0:APA91bGU2zi8iMtdOh9tiBajenePX2quaoASe0flPqpVWni9rJANfJdp0MZ82ntwogoaB_-IW1cjeL8hNvhd-V-FKdbe3q4kurlhvS42kE8S4iKMvqbvgloQPgHpbGwMTJ_0ioGiKqLa',
     },
     body: JSON.stringify({
       to: token,
-      priority: 'high',
       messageType: type,
       collapse_key: type,
       'apns-collapse-id': type,
       data: {
         experienceId: '@kozarip/peting',
         message: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+        priority: 'high',
+        badge: 1,
+        categoryId: type,
+      },
+      aps: {
+        alert: {
+          title: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+        },
+        category: type,
+        badge: 1,
+        'thread-id': type,
       },
     }),
   })

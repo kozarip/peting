@@ -204,7 +204,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   const formatMandatoryErrorList = (list) => {
     const translatedLabels = list.map((element) => {
       return userField[element].label;
-    })
+    });
     return translatedLabels.join(', ');
   };
 

@@ -43,7 +43,8 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   const initImage = async () => {
     const imageURLs = await imageStore.fetchImages(images);
     Promise.all(imageURLs).then((compiledImages: string[]) => {
-      setProfileImage(compiledImages[primaryImage]);
+      const image = compiledImages[primaryImage] ? compiledImages[primaryImage] : compiledImages[0];
+      setProfileImage(image);
       setAllImages(compiledImages.join(','));
     });
     const animalImageURLs = await imageStore.fetchImages(animalImages);

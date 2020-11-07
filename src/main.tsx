@@ -33,29 +33,14 @@ const Main = ({ navigation }) => {
   const chat = new Chat();
   const dispatch = useDispatch();
 
-/* async function requestUserPermission() {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
-  } */
-
   const registerForPushNotificationsAsync = async () => {
     console.log(await Notifications.getExpoPushTokenAsync());
     return Notifications.getDevicePushTokenAsync();
   };
 
   useEffect(() => {
-    // requestUserPermission();
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
-  /*   const unsubscribe = messaging().onMessage(async remoteMessage => {
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-    }); */
     const tokenResponse = registerForPushNotificationsAsync();
     tokenResponse.then((token) => {
       console.log(token);

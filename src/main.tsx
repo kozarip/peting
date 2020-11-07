@@ -4,8 +4,10 @@ import {
   ImageBackground,
   StyleSheet,
   Platform,
+  Alert,
 } from 'react-native';
 import * as Notifications from 'expo-notifications';
+import messaging from '@react-native-firebase/messaging';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
@@ -31,13 +33,29 @@ const Main = ({ navigation }) => {
   const chat = new Chat();
   const dispatch = useDispatch();
 
+/* async function requestUserPermission() {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  } */
+
   const registerForPushNotificationsAsync = async () => {
     console.log(await Notifications.getExpoPushTokenAsync());
     return Notifications.getDevicePushTokenAsync();
   };
 
   useEffect(() => {
+    // requestUserPermission();
     Notifications.addNotificationReceivedListener(handleNotification);
+    Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
+  /*   const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    }); */
     const tokenResponse = registerForPushNotificationsAsync();
     tokenResponse.then((token) => {
       console.log(token);
@@ -69,10 +87,14 @@ const Main = ({ navigation }) => {
   }, []);
 
   const handleNotification = (newNotification) => {
-    console.log(newNotification);
     if (newNotification) {
       dispatch(setHasNotification(true));
     }
+  };
+
+  const handleNotificationResponse = (response) => {
+    console.log(response);
+    navigation.navigate('Match');
   };
 
   const navigationReset = (defaultScreen, paramsObj?) => {

@@ -1,7 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { setHasNotification } from '../store/action';
 import { updateMatch } from '../services/match';
 import Chat from '../services/chat';
 import PetingHeader from '../components/petingHeader';
@@ -21,6 +22,7 @@ const ChatScreen = ({ route, navigation }) => {
   let baseMessageData = {};
   const { user } = useSelector((state) => state);
   const chat = new Chat();
+  const dispatch = useDispatch();
 
   const me = {
     _id: userId,
@@ -74,6 +76,7 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
   const onSend = useCallback((messagesFromGiftedChat = []) => {
+    dispatch(setHasNotification(false));
     setMessages((previousMessages) => {
       saveToApi([...previousMessages, messagesFromGiftedChat[0]]);
       updateMatch(createMatchObj(true));

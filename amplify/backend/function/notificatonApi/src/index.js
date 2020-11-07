@@ -37,7 +37,7 @@ exports.handler = async (event) => {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
 
-      sendPushNotification(body.graphqlData.items[0].deviceId, type);
+      await sendPushNotification(body.graphqlData.items[0].deviceId, type);
     } catch (err) {
       console.log('error posting to appsync: ', err);
     }
@@ -72,7 +72,7 @@ const getUserData = (event) => {
 
 const sendPushNotification = async (token, type) => {
   console.log(token);
-  fetch('https://fcm.googleapis.com/fcm/send', {
+  await fetch('https://fcm.googleapis.com/fcm/send', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -100,6 +100,9 @@ const sendPushNotification = async (token, type) => {
       },
     }),
   })
-    .then((res) => res.json()) // expecting a json response
+    .then((res) => {
+      console.log(res);
+      return res.json();
+    })
     .then((json) => console.log(json));
 };

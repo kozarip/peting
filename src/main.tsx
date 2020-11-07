@@ -94,6 +94,7 @@ const Main = ({ navigation }) => {
 
   const handleNotificationResponse = (response) => {
     console.log(response);
+    dispatch(setHasNotification(false));
     navigation.navigate('Match');
   };
 

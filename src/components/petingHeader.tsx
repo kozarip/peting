@@ -43,7 +43,17 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       leftComponent={
         <View style={{ position: 'relative' }}>
           {hasNotification &&
-            <Icon style={styles.hasNotificationIcon} name="plus-circle" size={15} color="#fff" />
+            <Icon
+              style={
+                {
+                  ...styles.hasNotificationIcon,
+                  ...{ backgroundColor: activeMenu === 1 ? '#fff' : colors.darkPrimary },
+                }
+              }
+              name="plus-circle"
+              size={15}
+              color={activeMenu === 1 ? colors.darkPrimary : '#fff'}
+            />
           }
           <RNEIcon
             name="heart"
@@ -91,6 +101,10 @@ const styles = StyleSheet.create({
     top: 18,
     right: 15,
     zIndex: 9999,
+    borderRadius: 50,
+    borderWidth: 0,
+    padding: 0,
+    margin: 0,
   },
 });
 

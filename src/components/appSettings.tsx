@@ -74,7 +74,7 @@ const AppSettings: React.FC = () => {
             handlePressButtonSecondary={() => { setIsActiveConfirmUserDeleteModal(false); }}
           />
           <Text style={styleForm.cardTitle}>Értesítések</Text>
-          <CheckBox
+{/*           <CheckBox
             title="Kérek értesítést (Nem működik)"
             checked={hasNotification}
             onPress={() => setHasNotification(!hasNotification)}
@@ -93,7 +93,7 @@ const AppSettings: React.FC = () => {
             containerStyle={styles.checkBox}
             textStyle={styles.checkBoxText}
             size={30}
-          />
+          /> */}
           <Text style={styleForm.cardTitle}>Felhasználó</Text>
           <Button
             buttonStyle={styles.btnRemoveMyUser}

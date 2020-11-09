@@ -88,7 +88,10 @@ class User {
       graphqlOperation(subscriptions.subscribeToGivenUser, { id: id }),
     ).subscribe({
       next: (resultUser) => {
-        updateUser(resultUser.value.data.subscribeToGivenUser, items);
+        console.log(resultUser.value.data.subscribeToGivenUse);
+        if (resultUser.value.data.subscribeToGivenUse) {
+          updateUser(resultUser.value.data.subscribeToGivenUser, items);
+        }
       },
     });
     return subscription;

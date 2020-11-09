@@ -56,6 +56,9 @@ const ChatScreen = ({ route, navigation }) => {
       const messagesFromAPi: [] = rawMessages.map((message) => addUserObjToMessage(message));
       messagesFromAPi.sort((a, b) => compareMessageDates(a, b));
       setMessages(messagesFromAPi);
+/*       if (messagesFromAPi[messagesFromAPi.length - 1].messagesOwner !== userId) {
+        dispatch(setHasNotification(false));
+      } */
     }
   };
 
@@ -76,7 +79,6 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
   const onSend = useCallback((messagesFromGiftedChat = []) => {
-    dispatch(setHasNotification(false));
     setMessages((previousMessages) => {
       saveToApi([...previousMessages, messagesFromGiftedChat[0]]);
       updateMatch(createMatchObj(true));

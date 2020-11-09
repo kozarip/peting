@@ -127,7 +127,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       }
       return m;
     });
-    dispatch(setHasNotification(true));
+    if (match.lastNewMessageSender !== user.cognitoUserName) {
+      dispatch(setHasNotification(true));
+    }
     dispatch(setMatches(newMatches));
   };
 

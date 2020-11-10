@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   ImageBackground,
   StyleSheet,
   Platform,
-  Alert,
 } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import messaging from '@react-native-firebase/messaging';
 import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
@@ -79,6 +77,7 @@ const Main = ({ navigation }) => {
 
   const handleNotificationResponse = (response) => {
     console.log(response);
+    /* dispatch(setHasNotification(true)); */
     navigation.navigate('Match');
   };
 

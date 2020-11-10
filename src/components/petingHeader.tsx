@@ -47,7 +47,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
               style={
                 {
                   ...styles.hasNotificationIcon,
-                  ...{ backgroundColor: activeMenu === 1 ? '#fff' : colors.darkPrimary },
+                  ...{ },
                 }
               }
               name="plus-circle"
@@ -98,12 +98,12 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
 const styles = StyleSheet.create({
   hasNotificationIcon: {
     position: 'absolute',
-    top: 18,
-    right: 15,
+    top: 25,
+    left: 26.5,
     zIndex: 9999,
-    borderRadius: 50,
+    borderRadius: 100,
     borderWidth: 0,
-    padding: 0,
+    padding: 3,
     margin: 0,
   },
 });

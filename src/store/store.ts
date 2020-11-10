@@ -11,8 +11,7 @@ store.subscribe(() => {
   const previousValue = currentUserValue;
   currentUserValue = store.getState().user as UserType;
   if (
-    !(Object.keys(previousValue).length === 0 && previousValue.constructor === Object)
-    && !deepEqual(previousValue, currentUserValue)
+    !deepEqual(previousValue, currentUserValue)
   ) {
     console.log("User saved to store");
     const user = new User();

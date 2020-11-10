@@ -38,7 +38,7 @@ const TextBox: React.FC<TextBoxProps> = ({
         onChangeText={(changedText) => {
           setValue(createNewTypeObject(type, changedText));
         }}
-        value={value?.toString().trim()}
+        value={value?.toString()}
       />
     </View>
   );

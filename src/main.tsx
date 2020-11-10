@@ -32,8 +32,9 @@ const Main = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const registerForPushNotificationsAsync = async () => {
-    console.log(await Notifications.getExpoPushTokenAsync());
-    return Notifications.getExpoPushTokenAsync();
+    // console.log(await Notifications.getExpoPushTokenAsync());
+    // eslint-disable-next-line no-return-await
+    return await Notifications.getDevicePushTokenAsync();
   };
 
   useEffect(() => {
@@ -77,7 +78,6 @@ const Main = ({ navigation }) => {
 
   const handleNotificationResponse = (response) => {
     console.log(response);
-    /* dispatch(setHasNotification(true)); */
     navigation.navigate('Match');
   };
 

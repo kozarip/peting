@@ -73,17 +73,17 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoaderActive(false);
+    setIsLoaderActive(true);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     let likedUsers = [];
-    let dislikedUsers= []
+    let dislikedUsers = [];
     if (searchParams && searchParams.isWithMarked && user.likes && user.dislikes) {
       likedUsers = user.likes.map((like) => like.cognitoUserName)
       dislikedUsers = user.dislikes.map((dislike) => dislike.cognitoUserName)
     }
     const matchedUsers = matches.map((match) => match.cognitoUserName);
-    const exceptUsers = { 
+    const exceptUsers = {
       exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers] 
     };
     const city = { lat: user.cityLat, lng: user.cityLng };

@@ -40,12 +40,16 @@ const Selector: React.FC<SelectorProps> = (
           placeholder={{
             label: 'Válassz egy elemet',
           }}
+          key={value}
           value={value}
           style={pickerSelectStyles}
           onValueChange={(selectedValue) => {
-            setValue(createNewTypeObject(type, selectedValue));
+            if (selectedValue !== value) {
+              setValue(createNewTypeObject(type, selectedValue));
+            }
           }}
           items={options}
+          useNativeAndroidPickerStyle={false}
         />
       </View>
     </View>

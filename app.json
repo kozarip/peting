@@ -10,7 +10,7 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/images/logo.png",
+    "icon": "./src/assets/images/logo_white.png",
     "splash": {
       "image": "./src/assets/images/splash_peting.png",
       "resizeMode": "contain",

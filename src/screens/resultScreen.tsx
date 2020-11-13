@@ -11,6 +11,7 @@ import { Card, Icon, Button } from 'react-native-elements';
 import Search from '../services/search';
 import Chat from '../services/chat';
 import User from '../services/user';
+import { localizations } from '../services/localizations';
 import { uuidv4 } from '../services/shared';
 import {
   saveNewMatch,
@@ -32,7 +33,6 @@ import { setUser, setMatches, setActiveMenuId, addMatch, setHasNotification } fr
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { styleForm } from '../assets/styles/form';
-import { match } from 'assert';
 
 type ResultScreenProps = {
   navigation: any;
@@ -60,6 +60,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const { searchParams, user, matches } = useSelector((state: any) => state);
 
   const [resultPersons, setResultPersons] = useState([]);
+  const [updatedPersons, setUpdatedPersons] = useState([]);
   const [resultPersonIndex, setResultPersonIndex] = useState(0);
   const [resultPerson, setResultPerson] = useState(initialResultPerson);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
@@ -73,7 +74,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoaderActive(true);
+    setIsLoaderActive(false);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     let likedUsers = [];
@@ -98,7 +99,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       }
       const { items } = res.data.searchUsers;
 
-      setResultPersons(items.sort( () => Math.random() - 0.5));
+      setResultPersons(items.sort(() => Math.random() - 0.5));
       if (items.length !== 0) {
         if (resultPersonIndex > resultPersons.length - 1) {
           setResultPersonIndex(0);
@@ -127,7 +128,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       }
       return m;
     });
-/*     if (match.lastNewMessageSender !== user.cognitoUserName) {
+/* if (match.lastNewMessageSender !== user.cognitoUserName) {
       dispatch(setHasNotification(true));
     } */
     dispatch(setMatches(newMatches));
@@ -145,16 +146,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const updateResultPerson = (rawPerson, items) => {
-    if (items && items.length > 0) {
-      const newResultPersons = items.map((person) => {
-        if (person.cognitoUserName === rawPerson.cognitoUserName) {
-          return updatePersonAttributes(person, rawPerson);
-        }
-        return person;
-      });
-      setResultPersons([...resultPersons, ...newResultPersons]);
-      setCurrentResultPerson(resultPersonIndex, newResultPersons);
-    }
+    const newResultPersons = items
+      .filter((person) => person.cognitoUserName === rawPerson.cognitoUserName)
+      .map((person) => updatePersonAttributes(person, rawPerson));
+
+    setUpdatedPersons([...updatedPersons, ...newResultPersons]);
   };
 
   const updatePersonAttributes = (person, rawPerson) => {
@@ -168,7 +164,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const setCurrentResultPerson = (personIndex, persons?) => {
-    const resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
+    let resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
+    const temp = updatedPersons.find((updatedPerson) => updatedPerson.cognitoUserName === resultFromAPI.cognitoUserName);
+    if (temp) {
+      resultFromAPI = temp;
+    }
     const resultWithValidValues = {};
     if (resultFromAPI) {
       Object.keys(resultFromAPI).forEach((key) => {
@@ -190,7 +190,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       setResultPersonIndex(0);
       index = 0;
     }
-    if(resultPersons.length > 0){
+    if (resultPersons.length > 0) {
       setCurrentResultPerson(index);
     }
   };
@@ -296,7 +296,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           <Modal
             iconName="spinner"
             isVisible={isLoaderActive}
-            description="Adatok betöltése..."
+            description={localizations.t('load')}
           />
           <ImageBackground
             source={image}
@@ -311,8 +311,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             <Modal
               isVisible={isMatchModalActive}
               title="Match!"
-              description="Gratulálunk, jó randit!"
-              buttonSecondaryText="Bezárás"
+              description={localizations.t('congratsDate')}
+              buttonSecondaryText={localizations.t('close')}
               iconName="heart"connectedEmotions
               iconColor={colors.primary}
               handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
@@ -332,11 +332,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                   color={colors.grey}
                   type="font-awesome"
                 />
-                <Text style={styles.title}>Nincs a keresésnek megfelő személy :(</Text>
+                <Text style={styles.title}>{localizations.t('noDate')}</Text>
                 <Button
                   buttonStyle={styleForm.btnPrimary}
                   titleStyle={{ fontSize: fonts.heading2 }}
-                  title="Vissza a kereséshez"
+                  title={localizations.t('backToSearch')}
                   onPress={() => {
                     dispatch(setActiveMenuId(3));
                     navigation.navigate('Settings', { newUser: false });

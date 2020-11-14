@@ -1,4 +1,3 @@
-import { setHasNotification } from './action';
 export const initialState = {
   searchParams: {},
   user: {},

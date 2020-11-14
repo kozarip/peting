@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import { fonts } from '../../assets/styles/variables';
 
@@ -14,7 +15,7 @@ const CitySelector = ({
       <View>
         <Text style={styleForm.label as any}>{label}</Text>
         <GooglePlacesAutocomplete
-          placeholder="Kezd el írni a település nevét"
+          placeholder={localizations.t('placeholderCity')}
           minLength={2}
           autoFocus={false}
           returnKeyType="search"

@@ -2,9 +2,9 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { setHasNotification } from '../store/action';
 import { updateMatch } from '../services/match';
 import Chat from '../services/chat';
+import { localizations } from '../services/localizations';
 import PetingHeader from '../components/petingHeader';
 import { colors, fonts } from '../assets/styles/variables';
 
@@ -113,7 +113,7 @@ const ChatScreen = ({ route, navigation }) => {
       <PetingHeader
         navigation={navigation}
       />
-      <Text style={styles.chatHeader}>Chat vele: {name}</Text>
+      <Text style={styles.chatHeader}>{localizations.t('chatWith')} {name}</Text>
       <GiftedChat
         messages={messages}
         onSend={(messagesFromGiftedChat) => onSend(messagesFromGiftedChat)}

@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
+import { localizations } from '../services/localizations';
 import PetingHeader from '../components/petingHeader';
 import HeaderTriangle from '../components/headerTriangle';
 
@@ -66,9 +67,9 @@ const SettingsScreen = ({ navigation, route }) => {
 
   const [index, setIndex] = React.useState(defaultScreenNumber);
   const [routes] = React.useState([
-    { key: 'search', title: 'Keresés' },
-    { key: 'profile', title: 'Profil' },
-    { key: 'appSettings', title: 'Beállítás' },
+    { key: 'search', title: localizations.t('search') },
+    { key: 'profile', title: localizations.t('profile') },
+    { key: 'appSettings', title: localizations.t('settings') },
   ]);
 
   const renderScene = SceneMap({
@@ -88,14 +89,14 @@ const SettingsScreen = ({ navigation, route }) => {
       <Modal
         iconName="spinner"
         isVisible={isLoaderActive}
-        description="Adatok betöltése..."
+        description={localizations.t('load')}
       />
       <Modal
         iconName="heart"
         isVisible={isNewUser}
-        title="Üdvözöllek"
+        title={localizations.t('welcome')}
         iconColor={colors.primary}
-        description="Kérlek töltsd ki az adataidat"
+        description={localizations.t('fillData')}
         buttonPrimaryText="Rendben"
         handlePressButtonPrimary={() => { setIsNewUser(false); }}
       />

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import {
   fonts,
@@ -24,7 +25,7 @@ const CitySelector = ({
   mandatory,
 }) => {
   const [isCityOverlayActive, setIsCityOverlayActive] = useState(false);
-  const defaultPlaceholder = !value || value === ' ' ? 'Kezd el írni a település nevét' : value;
+  const defaultPlaceholder = !value || value === ' ' ? localizations.t('placeholderCity') : value;
   if (typeof value !== 'undefined') {
     return (
       <View>

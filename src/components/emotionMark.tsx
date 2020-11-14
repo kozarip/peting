@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { localizations } from '../services/localizations';
 import { colors } from '../assets/styles/variables';
 import Modal from './modal';
 
@@ -28,9 +29,9 @@ const EmotionMark: React.FC<emotionMarkProps> = ({ type, handlePressConectedEmot
       <Modal
         isVisible={isActiveRemoveEmotionModal}
         iconName="trash"
-        description="Biztos törölni akarod a jelölést?"
-        buttonPrimaryText="Igen"
-        buttonSecondaryText="Nem"
+        description={localizations.t('removeConfirmMark')}
+        buttonPrimaryText={localizations.t('yes')}
+        buttonSecondaryText={localizations.t('no')}
         handlePressButtonPrimary={() => {
           handlePressConectedEmotions(type);
           setIsActiveRemoveEmotionModal(false);

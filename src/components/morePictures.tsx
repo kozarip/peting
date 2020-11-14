@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Button, Tooltip, Icon } from 'react-native-elements';
 import GallerySwiper from 'react-native-gallery-swiper';
+import { localizations } from '../services/localizations';
 import { styleTitle } from '../assets/styles/base';
 import { margins, dimensions, colors, fonts } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
@@ -35,7 +36,7 @@ const MorePictures = (props) => {
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={styles.infoText}>
-                A képeket két ujjal tudod nagyítani.
+                {localizations.t('imageZoomInfo')}
               </Text>
             }
           >

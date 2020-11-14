@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 import { Auth } from 'aws-amplify';
+import { localizations } from '../services/localizations';
 import {
   dimensions,
   margins,
@@ -25,7 +26,7 @@ const Login: React.FC = () => {
         buttonStyle={styles.button}
         // @ts-ignore
         onPress={() => Auth.federatedSignIn({ provider: 'Facebook' })}
-        title="Facebook bejelentkezés"
+        title={localizations.t('fbLogin')}
       />
       <Button
         icon={
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
         buttonStyle={{ ...styles.button, ...styles.googleButton }}
         // @ts-ignore
         onPress={() => Auth.federatedSignIn({ provider: 'Google' })}
-        title="Google bejelentkezés"
+        title={localizations.t('googleLogin')}
       />
     </View>
 

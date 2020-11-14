@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { useFonts } from '@use-expo/font';
+import { localizations } from '../services/localizations';
 import { fonts, margins, dimensions } from '../assets/styles/variables';
 
 const Welcome = () => {
@@ -19,7 +20,9 @@ const Welcome = () => {
       <View>
         <Text style={styles.title}>PETing</Text>
         <Image resizeMode="contain" style={styles.logo} source={logo} />
-        <Text style={styles.motto}>Az állatbarátok társkeresője</Text>
+        <Text style={styles.motto}>
+          {localizations.t('slogan')}
+        </Text>
       </View>
     );
   } else {

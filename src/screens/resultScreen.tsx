@@ -85,7 +85,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     }
     const matchedUsers = matches.map((match) => match.cognitoUserName);
     const exceptUsers = {
-      exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers] 
+      exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers],
     };
     const city = { lat: user.cityLat, lng: user.cityLng };
     search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
@@ -140,16 +140,15 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const addNewMatch = (matchData) => {
+    dispatch(setHasNotification(true));
     setIsMatchModalActive(true);
     dispatch(addMatch(matchData));
-    dispatch(setHasNotification(true));
   };
 
   const updateResultPerson = (rawPerson, items) => {
     const newResultPersons = items
       .filter((person) => person.cognitoUserName === rawPerson.cognitoUserName)
       .map((person) => updatePersonAttributes(person, rawPerson));
-
     setUpdatedPersons([...updatedPersons, ...newResultPersons]);
   };
 
@@ -165,9 +164,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   const setCurrentResultPerson = (personIndex, persons?) => {
     let resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
-    const temp = updatedPersons.find((updatedPerson) => updatedPerson.cognitoUserName === resultFromAPI.cognitoUserName);
-    if (temp) {
-      resultFromAPI = temp;
+    const temp = updatedPersons.filter((updatedPerson) => updatedPerson.cognitoUserName === resultFromAPI.cognitoUserName);
+    if (temp.length > 0) {
+      resultFromAPI = temp[temp.length - 1];
     }
     const resultWithValidValues = {};
     if (resultFromAPI) {
@@ -178,6 +177,12 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       });
       setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
       setEmotionsWithTheResultPerson(connectedEmotions(resultWithValidValues.cognitoUserName));
+      if (user.likes.find((like) => like.cognitoUserName === resultWithValidValues.cognitoUserName)
+        && resultWithValidValues.likes && Array.isArray(resultWithValidValues.likes) && resultWithValidValues.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
+        setTimeout(() => {
+          newMatchHandler(resultWithValidValues);
+        }, 0);
+      }
     }
   };
 
@@ -197,19 +202,21 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   const handlePressLike = () => {
     if (resultPerson.cognitoUserName) {
-      user.likes = createEmotionObject(user.likes, resultPerson.cognitoUserName);
-      // user.likedUsers = null;
-      checkMatch();
-      dispatch(setUser(user));
+      const newUser = { ...user };
+      newUser.likes = createEmotionObject(newUser.likes, resultPerson.cognitoUserName);
+      dispatch(setUser({ user: newUser }));
+      if (checkMatch()) {
+        newMatchHandler();
+      }
     }
     handlePressNext();
   };
 
   const handlePressDislike = () => {
     if (resultPerson.cognitoUserName) {
-      user.dislikes = createEmotionObject(user.dislikes, resultPerson.cognitoUserName);
-      // user.disLikedUsers = null;
-      dispatch(setUser(user));
+      const newUser = { ...user };
+      newUser.dislikes = createEmotionObject(newUser.dislikes, resultPerson.cognitoUserName);
+      dispatch(setUser({ user: newUser }));
     }
     handlePressNext();
   };
@@ -221,7 +228,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const createEmotionObject = (array, userId) => {
-    const resultArray = array || [];
+    const resultArray = [...array] || [];
     if (!resultArray.find((obj) => obj.cognitoUserName === userId)) {
       resultArray.push({ cognitoUserName: userId, timestamp: new Date() });
     }
@@ -229,34 +236,34 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const checkMatch = () => {
-    if (resultPerson.likes
-      && Array.isArray(resultPerson.likes)
-      && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
-      setIsMatchModalActive(true);
-      const id = uuidv4();
-
-      const matchData: matchType = {
-        id,
-        cognitoUserName: resultPerson.cognitoUserName,
-        name: resultPerson.userName,
-        avatar_url: resultPerson.images[resultPerson.primaryImageIndex],
-        subtitle: new Date().toISOString().split('T', 1).join(''),
-        lastNewMessageSender: '',
-      };
-      dispatch(addMatch(matchData));
-      chat.createNewChat({
-        user1: user.cognitoUserName,
-        user2: resultPerson.cognitoUserName,
-        messages: [],
-      });
-      saveNewMatch({
-        id,
-        user1: user.cognitoUserName,
-        user2: resultPerson.cognitoUserName,
-        timestamp: new Date(),
-      });
-    }
+    return resultPerson.likes && Array.isArray(resultPerson.likes) && resultPerson.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName);
   };
+
+  const newMatchHandler = (person?) => {
+    const matchedPerson = person || resultPerson;
+    setIsMatchModalActive(true);
+    const id = uuidv4();
+    const matchData: matchType = {
+      id,
+      cognitoUserName: matchedPerson.cognitoUserName,
+      name: matchedPerson.userName,
+      avatar_url: matchedPerson.images[matchedPerson.primaryImageIndex],
+      subtitle: new Date().toISOString().split('T', 1).join(''),
+      lastNewMessageSender: '',
+    };
+    dispatch(addMatch(matchData));
+    chat.createNewChat({
+      user1: user.cognitoUserName,
+      user2: matchedPerson.cognitoUserName,
+      messages: [],
+    });
+    saveNewMatch({
+      id,
+      user1: user.cognitoUserName,
+      user2: matchedPerson.cognitoUserName,
+      timestamp: new Date(),
+    });
+  }
 
   const connectedEmotions = (userName) => {
     const resultUserName = userName || resultPerson.cognitoUserName;
@@ -277,11 +284,12 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const handlePressConectedEmotions = (emotionArrayName) => {
-    const newEmotions = user[emotionArrayName].filter(
+    const newUser = { ...user };
+    const newEmotions = newUser[emotionArrayName].filter(
       (emotion) => emotion.cognitoUserName !== resultPerson.cognitoUserName,
     );
-    user[emotionArrayName] = newEmotions;
-    dispatch(setUser(user));
+    newUser[emotionArrayName] = newEmotions;
+    dispatch(setUser({ user: newUser }));
     setEmotionsWithTheResultPerson([]);
   };
 

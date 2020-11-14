@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
@@ -37,10 +38,10 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
         IconRenderer={Icon}
         items={transformOptionsForMultiselect(options) || []}
         uniqueKey="id"
-        selectedText="kiválasztva"
-        selectText="Válassz elemeket"
+        selectedText={localizations.t('selected')}
+        selectText={localizations.t('placeholderMultiSelect')}
         showDropDowns
-        confirmText="Kiválasztom"
+        confirmText={localizations.t('select')}
         onSelectedItemsChange={(selectedValue) => {
           setValue(createNewTypeObject(type, selectedValue));
         }}

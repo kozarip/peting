@@ -13,7 +13,8 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { deleteMatch, setUser, setMatches } from '../store/action';
 import User from '../services/user';
 import ImageStore from '../services/imageStore';
-import { removeMatch, setGlobalMatches } from '../services/match';
+import { localizations } from '../services/localizations';
+import { removeMatch } from '../services/match';
 import Modal from '../components/modal';
 import PersonCard from '../components/personCard';
 import PetingHeader from '../components/petingHeader';
@@ -114,11 +115,12 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   };
 
   const removeUserLike = (removableCongnitoUserName) => {
-    const newLikes = user.likes.filter(
+    const newUser = { ...user };
+    const newLikes = newUser.likes.filter(
       (like) => like.cognitoUserName !== removableCongnitoUserName,
     );
-    user.likes = newLikes;
-    dispatch(setUser(user));
+    newUser.likes = newLikes;
+    dispatch(setUser({ user: newUser }));
   };
 
   const image = require('../assets/images/background.png');
@@ -140,20 +142,20 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
           <Modal
             isVisible={isActiveRemoveMatchModal}
             iconName="trash"
-            description="Biztos törölni akarod a matchet?"
-            buttonPrimaryText="Igen"
-            buttonSecondaryText="Nem"
+            description={localizations.t('removeMatchConfirm')}
+            buttonPrimaryText={localizations.t('yes')}
+            buttonSecondaryText={localizations.t('no')}
             handlePressButtonPrimary={handleRemoveMatch}
             handlePressButtonSecondary={() => { setIsActiveRemoveMatchModal(false); }}
           />
-          <Text style={styles.title}>Matchek</Text>
+          <Text style={styles.title}>{localizations.t('matches')}</Text>
           <Tooltip
             backgroundColor={colors.primary}
             height={80}
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={styles.infoText}>
-                Az avatar képre kattintva, elő tudod hozni a személy profilját
+                {localizations.t('avatarInfo')}
               </Text>
             }
           >
@@ -179,7 +181,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
             </ScrollView>
             <Button
               color={colors.darkPrimary}
-              title="Bezárás"
+              title={localizations.t('close')}
               onPress={() => setIsCardActive(false)}
             />
           </View>
@@ -260,7 +262,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                 ))
               }
             </ScrollView>
-            : <Card><Text>Sajnos még nincs egyezésed</Text></Card>
+            : <Card><Text>{localizations.t('noMatch')}</Text></Card>
         }
       </ImageBackground>
     </View>

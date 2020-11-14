@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
+import { localizations } from '../services/localizations';
 import ImageStore from '../services/imageStore';
 
 import TextBox from './form/textBox';
@@ -70,7 +71,6 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   };
   const mandatoryFields = [
     'images',
-    'animalImages',
     'userName',
     'email',
     'gender',
@@ -210,7 +210,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
 
   const selectNewImages = (imageType: 'images' | 'animalImages') => {
     const images = profileUser[imageType] || [];
-    return images.filter((image) => image.startsWith('file://'));
+    return images.filter((image) => image.startsWith('file:/'));
   };
 
   return (
@@ -222,14 +222,14 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         <Modal
           iconName="spinner"
           isVisible={isLoaderActive}
-          description="Adatok betöltése..."
+          description={localizations.t('load')}
         />
         <Modal
           iconName="exclamation"
           iconColor={colors.darkPrimary}
           isVisible={isActiveRequireModal}
-          description={`Az alábbi mezők kitőltése kötelező: ${formatMandatoryErrorList(errorFields)}`}
-          buttonPrimaryText="Rendben"
+          description={`${localizations.t('mandatory')} ${formatMandatoryErrorList(errorFields)}`}
+          buttonPrimaryText={localizations.t('agree')}
           handlePressButtonPrimary={() => { setIsActiveRequireModal(false); }}
         />
         <Card>
@@ -239,7 +239,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={profileUser.primaryImageIndex || 0}
             setValue={setProfileUserAttribute}
             images={profileUser.images || []}
-            title="Képeid"
+            title={localizations.t('images')}
             removeImage={handleRemoveImage}
           />
           <ImageSelector
@@ -248,45 +248,45 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             primaryImageIndex={0}
             setValue={setProfileUserAttribute}
             images={profileUser.animalImages || []}
-            title="Kedvenced képei"
+            title={localizations.t('animalImages')}
             removeImage={handleRemoveImage}
           />
-          <Text style={styleForm.cardTitle}>Alapadatok</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('baseData')}</Text>
           <TextBox
-            label="Név"
+            label={userField.userName.label}
             type="userName"
             mandatory={mandatoryFields.includes('userName')}
-            placeholder="Ird ide a neved"
+            placeholder={localizations.t('placeholderName')}
             value={profileUser.userName}
             setValue={setProfileUserAttribute}
           />
           <TextBox
-            label="E-mail"
+            label={userField.email.label}
             mandatory={mandatoryFields.includes('email')}
             value={profileUser.email}
             type="email"
             setValue={setProfileUserAttribute}
-            placeholder="E-mail címed"
+            placeholder={localizations.t('placeholderEmail')}
           />
           <RadioButton
             options={gender}
             value={profileUser.gender}
             mandatory={mandatoryFields.includes('gender')}
             type="gender"
-            label="Nemed"
+            label={localizations.t('gender')}
             setValue={setProfileUserAttribute}
           />
           <TextBox
-            label="Korod"
+            label={userField.age.label}
             type="age"
             mandatory={mandatoryFields.includes('age')}
-            placeholder="év"
+            placeholder={localizations.t('year')}
             keyboardType="number-pad"
             value={profileUser.age}
             setValue={setProfileUserAttribute}
           />
           <TextBox
-            label="Bio"
+            label={userField.bio.label}
             type="bio"
             mandatory={mandatoryFields.includes('bio')}
             placeholder=""
@@ -294,32 +294,32 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
           />
           <CitySelector
-            label="Lakhelyed"
+            label={userField.cityName.label}
             mandatory={mandatoryFields.includes('cityName')}
             setValue={setProfileUserAttribute}
             value={profileUser.cityName}
           />
-          <Text style={styleForm.cardTitle}>Kinézet</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('outFit')}</Text>
           <TextBox
-            label="Magasság (cm)"
+            label={userField.height.label}
             mandatory={mandatoryFields.includes('height')}
-            placeholder="? cm"
+            placeholder={`? ${localizations.t('cm')}`}
             type="height"
             keyboardType="number-pad"
             value={profileUser.height}
             setValue={setProfileUserAttribute}
           />
           <Selector
-            label={hairColor.label}
+            label={userField.hairColor.label}
             mandatory={mandatoryFields.includes('hairColor')}
             options={hairColor.options}
             type="hairColor"
             setValue={setProfileUserAttribute}
             value={profileUser.hairColor}
           />
-          <Text style={styleForm.cardTitle}>Kedvenced</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('yourAnimal')}</Text>
           <TextBox
-            label="Kedvenced neve"
+            label={userField.animalName.label}
             type="animalName"
             mandatory={mandatoryFields.includes('animalName')}
             value={profileUser.animalName}
@@ -341,7 +341,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             setValue={setProfileUserAttribute}
             value={profileUser.animalSize}
           />
-          <Text style={styleForm.cardTitle}>Egyéb</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('others')}</Text>
           <Selector
             label={smokeFrequency.label}
             options={smokeFrequency.options}
@@ -351,7 +351,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             value={profileUser.smokeFrequency}
           />
           <MultiSelector
-            label="Hobbijaid"
+            label={userField.hobbies.label}
             options={hobbies.options}
             type="hobbies"
             setValue={setProfileUserAttribute}
@@ -362,7 +362,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
       <Button
         buttonStyle={styles.btnSave}
         titleStyle={{ fontSize: fonts.heading2 }}
-        title="Mentés"
+        title={localizations.t('save')}
         onPress={handleSaveProfile}
       />
     </View>

@@ -8,6 +8,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 import { Icon, Tooltip } from 'react-native-elements';
 // import Tooltip from "rne-modal-tooltip";
+import { localizations } from '../../../services/localizations';
 
 import { createNewTypeObject } from '../formHelpers';
 import { styleForm } from '../../../assets/styles/form';
@@ -87,20 +88,20 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         iconName="image"
         handleClose={closeSelectedImageOverlay}
         isVisible={selectedImageIndex > -1}
-        description="Kérlek válassz a lehetőségek közül"
-        buttonPrimaryText='Kezdőképnek'
+        description={localizations.t('choose')}
+        buttonPrimaryText={localizations.t('forPrimaryImage')}
         handlePressButtonPrimary={setPrimary}
-        buttonSecondaryText='Kép törlése'
+        buttonSecondaryText={localizations.t('removeImage')}
         handlePressButtonSecondary={() => { setIsActiveConfirmImageDeleteModal(true); }}
       />
       <Modal
         iconName="trash"
         isVisible={isActiveConfirmImageDeleteModal}
-        title="Kép törlése"
-        description="Biztos törölni akarod?"
-        buttonPrimaryText='Igen'
+        title={localizations.t('removeImage')}
+        description={localizations.t('removeConfirmImage')}
+        buttonPrimaryText={localizations.t('yes')}
         handlePressButtonPrimary={() => { deleteImage(); setIsActiveConfirmImageDeleteModal(false);}}
-        buttonSecondaryText='Nem'
+        buttonSecondaryText={localizations.t('no')}
         handlePressButtonSecondary={() => { setIsActiveConfirmImageDeleteModal(false); }}
       />
       <View style={styles.titleContainer}>
@@ -114,8 +115,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
-                Egyszere csak egy képet tudsz feltölteni.
-                Nyomd hosszan a képet a beállításokhoz!
+               {localizations.t('imageUploadInfo')}
               </Text>
             }
           >
@@ -131,9 +131,9 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
       <View style={styles.imageCardHeader}>
         {
           maxImageNumber > 0  ?
-            <Text style={styles.imageText}>Még {maxImageNumber} képet tölthetsz fel!</Text>
+            <Text style={styles.imageText}>{localizations.t('imageRemaining')} {maxImageNumber} </Text>
             :
-            <Text style={styles.imageText}>Több képet már nem tölthetsz fel</Text>
+            <Text style={styles.imageText}>{localizations.t('fullImageNumber')}</Text>
         }
       </View>
       <ImageList
@@ -144,7 +144,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
       {
         maxImageNumber > 0 &&
         <Button
-          title="Tölts fel egy képet"
+          title={localizations.t('uploadImage')}
           onPress={pickImage}
           buttonStyle={styles.btnUploadPic}
         />

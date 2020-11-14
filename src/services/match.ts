@@ -55,7 +55,6 @@ const subscriptionRemoveMatch = async (match: matchType, removeFromGlobalStateMa
     graphqlOperation(subscriptions.subscribeToRemoveUserMatches, { id: match.id }),
   ).subscribe({
     next: (matches) => {
-      console.log(matches);
       if (typeof removeFromGlobalStateMatch === 'function'
       && matches.value.data.subscribeToRemoveUserMatches) {
         return removeFromGlobalStateMatch(match.id);

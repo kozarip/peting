@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { CheckBox, Button, Card } from 'react-native-elements';
 import User from '../services/user';
 import Chat from '../services/chat';
+import { localizations } from '../services/localizations';
 import { removeMatch } from '../services/match';
 import ImageStore from '../services/imageStore';
 import { colors, fonts } from '../assets/styles/variables';
@@ -66,15 +67,16 @@ const AppSettings: React.FC = () => {
           <Modal
             iconName="trash"
             isVisible={isActiveConfirmUserDeleteModal}
-            title="Profilom törlése"
-            description="Biztos törölni akarod? Ezzel minden adatod törlésre kerül!"
-            buttonPrimaryText='Igen'
+            title={localizations.t('removeProfile')}
+            description={localizations.t('removeProfileConfirm')}
+            buttonPrimaryText={localizations.t('yes')}
             handlePressButtonPrimary={() => { removeUser(); setIsActiveConfirmUserDeleteModal(false);}}
-            buttonSecondaryText='Nem'
+            buttonSecondaryText={localizations.t('no')}
             handlePressButtonSecondary={() => { setIsActiveConfirmUserDeleteModal(false); }}
           />
-          <Text style={styleForm.cardTitle}>Értesítések</Text>
-{/*           <CheckBox
+          <Text style={styleForm.cardTitle}>{localizations.t('notifications')}</Text>
+{/*
+          <CheckBox
             title="Kérek értesítést (Nem működik)"
             checked={hasNotification}
             onPress={() => setHasNotification(!hasNotification)}
@@ -93,12 +95,13 @@ const AppSettings: React.FC = () => {
             containerStyle={styles.checkBox}
             textStyle={styles.checkBoxText}
             size={30}
-          /> */}
-          <Text style={styleForm.cardTitle}>Felhasználó</Text>
+          />
+*/}
+          <Text style={styleForm.cardTitle}>{localizations.t('user')}</Text>
           <Button
             buttonStyle={styles.btnRemoveMyUser}
             titleStyle={{ fontSize: fonts.heading2 }}
-            title="Profilom törlés"
+            title={localizations.t('removeProfile')}
             onPress={() => {
               setIsActiveConfirmUserDeleteModal(true);
             }}
@@ -109,7 +112,7 @@ const AppSettings: React.FC = () => {
       <Button
         buttonStyle={styles.btnSave}
         titleStyle={{ fontSize: fonts.heading2 }}
-        title="Kijelentkezés"
+        title={localizations.t('logout')}
         onPress={logOut}
       />
     </View>

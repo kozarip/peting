@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useDispatch } from 'react-redux';
+
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';

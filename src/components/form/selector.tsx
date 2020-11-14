@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import { fonts, colors, margins } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
@@ -38,7 +39,7 @@ const Selector: React.FC<SelectorProps> = (
       <View style={{ borderRadius: 20 }}>
         <RNPickerSelect
           placeholder={{
-            label: 'Válassz egy elemet',
+            label: localizations.t('placeholderSelect'),
           }}
           key={value}
           value={value}

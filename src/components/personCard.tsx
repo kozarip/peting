@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { Card, Icon, Tooltip } from 'react-native-elements';
 import { isSmallScreenByHeight } from '../services/shared';
+import { localizations } from '../services/localizations';
 import Bio from './bio';
 import Details from './details';
 import ImagesBox from './imagesBox';
@@ -25,7 +26,7 @@ const PersonCard: React.FC<PersonCardProps> = (
       containerStyle={styles.profileCard}
     >
       <View style={styles.titleContainer}>
-        <View style={styles.titleContainer} >
+        <View style={styles.titleContainer}>
           <Text style={styles.name}>{person.userName.trim()}</Text>
           <Text style={styles.age}>{person.age}</Text>
         </View>
@@ -46,8 +47,7 @@ const PersonCard: React.FC<PersonCardProps> = (
               width={dimensions.fullWidth * 0.8}
               popover={
                 <Text style={styles.toolTipImageText}>
-                  A szív azt jelzi hogy az adott szemére már nyomtál like vagy dislike gombot
-                  Újra rákattintva törölheted ezt.
+                  {localizations.t('markHeartInfo')}
                 </Text>
               }
             >

@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { Card, Button, CheckBox } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
+import { localizations } from '../services/localizations';
 import { setActiveMenuId, setGlobalSearchParams } from '../store/action';
 import Modal from './modal';
 
@@ -18,12 +19,14 @@ import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
 
 import { styleForm } from '../assets/styles/form';
+import * as userField from '../constants/userFields';
 
 import {
   gender,
   animalType,
   smokeFrequency,
 } from '../constants/userFields';
+
 import { fonts, colors } from '../assets/styles/variables';
 
 type searchComponentProps = {
@@ -98,71 +101,71 @@ const SearchComponent: React.FC<searchComponentProps> = (
         <Modal
           iconName="spinner"
           isVisible={isLoaderActive}
-          description="Adatok betöltése..."
+          description={localizations.t('load')}
         />
         <Modal
           iconName="exclamation"
           isVisible={isProfileModal}
-          description="Kérlek elősször a profilodat töltsd ki!"
-          buttonPrimaryText="Bezárás"
+          description={localizations.t('firstProfile')}
+          buttonPrimaryText={localizations.t('close')}
           handlePressButtonPrimary={() => { setIsProfileModal(false); }}
         />
         <Card
           containerStyle={styleForm.cardBlock}
         >
-          <Text style={styleForm.cardTitle}>Alapadatok</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('baseData')}</Text>
           <RadioButton
             options={gender}
             value={searchParams.gender}
             type="gender"
-            label="Nem"
+            label={localizations.t('gender')}
             setValue={setSearchParamsValue}
           />
           <TextBox
-            label="Minimum kor"
+            label={localizations.t('minAge')}
             type="minAge"
             keyboardType="number-pad"
             value={searchParams.minAge}
             setValue={setSearchParamsValue}
           />
           <TextBox
-            label="Maximum kor"
+            label={localizations.t('maxAge')}
             type="maxAge"
             keyboardType="number-pad"
             value={searchParams.maxAge}
             setValue={setSearchParamsValue}
           />
           <TextBox
-            label="Távolság (km)"
+            label={localizations.t('distance')}
             type="distance"
             keyboardType="number-pad"
             value={searchParams.distance}
             setValue={setSearchParamsValue}
           />
-          <Text style={styleForm.cardTitle}>Kinézet</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('outFit')}</Text>
           <TextBox
-            label="Minimum magasság (cm)"
+            label={localizations.t('minHeight')}
             type="minHeight"
             keyboardType="number-pad"
             value={searchParams.minHeight}
             setValue={setSearchParamsValue}
           />
           <TextBox
-            label="Maximum magasság (cm)"
+            label={localizations.t('maxHeight')}
             type="maxHeight"
             keyboardType="number-pad"
             value={searchParams.maxHeight}
             setValue={setSearchParamsValue}
           />
-          <Text style={styleForm.cardTitle}>Kedvenc</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('animal')}</Text>
           <MultiSelector
-            label="Állat fajták"
+            label={localizations.t('species')}
             options={animalType.options}
             type="animalTypes"
             setValue={setSearchParamsValue}
             value={searchParams.animalTypes}
           />
-          <Text style={styleForm.cardTitle}>Egyéb</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('others')}</Text>
           <Selector
             label={smokeFrequency.label}
             options={smokeFrequency.options}
@@ -170,9 +173,9 @@ const SearchComponent: React.FC<searchComponentProps> = (
             setValue={setSearchParamsValue}
             value={searchParams.smokeFrequency}
           />
-          <Text style={styleForm.cardTitle}>Kereső feltételek</Text>
+          <Text style={styleForm.cardTitle}>{localizations.t('searchOptions')}</Text>
           <CheckBox
-            title="Csak a jelöletlenek keresése"
+            title={localizations.t('onlyUnmarked')}
             checkedIcon="dot-circle-o"
             uncheckedIcon="circle-o"
             checkedColor={colors.primary}
@@ -188,7 +191,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
       <Button
         buttonStyle={styles.btnSave}
         titleStyle={{ fontSize: fonts.heading2 }}
-        title="Mentés és keresés"
+        title={localizations.t('saveAndSearch')}
         onPress={handleSaveSearch}
       />
     </View>

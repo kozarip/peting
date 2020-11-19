@@ -5,9 +5,10 @@ import {
   ScrollView,
   Text,
 } from 'react-native';
-import { Auth } from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
+import { withOAuth } from 'aws-amplify-react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { CheckBox, Button, Card } from 'react-native-elements';
+import { Button, Card } from 'react-native-elements';
 import User from '../services/user';
 import Chat from '../services/chat';
 import { localizations } from '../services/localizations';
@@ -20,7 +21,7 @@ import Modal from './modal';
 
 const AppSettings: React.FC = () => {
   const [hasNotification, setHasNotification] = useState(true);
-  const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false)
+  const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false);
   const { matches, user } = useSelector((state) => state);
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const AppSettings: React.FC = () => {
     const chatClass = new Chat();
     const imageStore = new ImageStore(user.cognitoUserName);
 
-    userClass.removeUser(user.id)
+    userClass.removeUser(user.id);
 
     chatClass.getMyChats(user.cognitoUserName).then((rawChats) => {
       const chats = rawChats.data.searchChats.items

@@ -74,7 +74,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoaderActive(false);
+    setIsLoaderActive(true);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     let likedUsers = [];
@@ -177,8 +177,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       });
       setResultPerson({ ...initialResultPerson, ...resultWithValidValues });
       setEmotionsWithTheResultPerson(connectedEmotions(resultWithValidValues.cognitoUserName));
-      if (user.likes.find((like) => like.cognitoUserName === resultWithValidValues.cognitoUserName)
-        && resultWithValidValues.likes && Array.isArray(resultWithValidValues.likes) && resultWithValidValues.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName)) {
+      if (user.likes
+        && user.likes.find((like) => like.cognitoUserName === resultWithValidValues.cognitoUserName)
+        && resultWithValidValues.likes
+        && Array.isArray(resultWithValidValues.likes)
+        && resultWithValidValues.likes.find((obj) => obj.cognitoUserName === user.cognitoUserName
+        && !(matches.find((match) => match.cognitoUserName === resultWithValidValues.cognitoUserName))
+        )) {
         setTimeout(() => {
           newMatchHandler(resultWithValidValues);
         }, 0);
@@ -189,7 +194,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const handlePressNext = () => {
     let index = resultPersonIndex;
     if (resultPersonIndex < resultPersons.length - 1) {
-      setResultPersonIndex((prev) => prev + 1 );
+      setResultPersonIndex((prev) => prev + 1);
       index = resultPersonIndex + 1;
     } else {
       setResultPersonIndex(0);
@@ -228,7 +233,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const createEmotionObject = (array, userId) => {
-    const resultArray = [...array] || [];
+    const resultArray = array ? [...array] : [];
     if (!resultArray.find((obj) => obj.cognitoUserName === userId)) {
       resultArray.push({ cognitoUserName: userId, timestamp: new Date() });
     }
@@ -275,9 +280,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         isExist = Boolean(user[emotionName].find(
           (emotionObj) => emotionObj.cognitoUserName === resultUserName,
         ));
-      }
-      if (isExist) {
-        result.push(emotionName);
+        if (isExist) {
+          result.push(emotionName);
+        }
       }
     });
     return result;
@@ -285,12 +290,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
 
   const handlePressConectedEmotions = (emotionArrayName) => {
     const newUser = { ...user };
-    const newEmotions = newUser[emotionArrayName].filter(
-      (emotion) => emotion.cognitoUserName !== resultPerson.cognitoUserName,
-    );
-    newUser[emotionArrayName] = newEmotions;
-    dispatch(setUser({ user: newUser }));
-    setEmotionsWithTheResultPerson([]);
+    if (newUser[emotionArrayName]) {
+      const newEmotions = newUser[emotionArrayName].filter(
+        (emotion) => emotion.cognitoUserName !== resultPerson.cognitoUserName,
+      );
+      newUser[emotionArrayName] = newEmotions;
+      dispatch(setUser({ user: newUser }));
+      setEmotionsWithTheResultPerson([]);
+    }
   };
 
   const isHasResult = () => {

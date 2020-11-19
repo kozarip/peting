@@ -78,10 +78,6 @@ const SettingsScreen = ({ navigation, route }) => {
     appSettings: appSettingsRoute,
   });
 
- /*  const renderLabel = ({ route }) => (
-    <Text style={styles.tabTitle}>{route.title}</Text>
-  ); */
-
   const image = require('../assets/images/background.png');
 
   return (
@@ -120,7 +116,7 @@ const SettingsScreen = ({ navigation, route }) => {
               indicatorStyle={{backgroundColor: colors.primary}}
               inactiveColor={colors.darkPrimary}
               pressColor={colors.grey}
-              labelStyle={{ fontSize: 15 }}
+              labelStyle={{ fontSize: 14 }}
               activeColor="#fff"
               {...props}
               style={styles.tabBar}
@@ -150,11 +146,6 @@ const styles = StyleSheet.create({
     shadowColor: 'transparent',
     shadowOpacity: 0,
     elevation: 0,
-  },
-  tabTitle: {
-    fontSize: fonts.heading3,
-    color: '#fff',
-    fontWeight: 'bold',
   },
 });
 

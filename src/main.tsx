@@ -41,33 +41,33 @@ const Main = ({ navigation }) => {
   useEffect(() => {
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
-    const tokenResponse = registerForPushNotificationsAsync();
-    tokenResponse.then((token) => {
-      console.log(token);
-      user.crateNewUserIfNotExist().then((exist) => {
-        if (exist) {
-          const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
+    user.crateNewUserIfNotExist().then(async (exist) => {
+      if (exist) {
+        const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
+        if (!userData.deviceId) {
+          const token = await registerForPushNotificationsAsync();
+          console.log(token);
           userData.deviceId = token.data;
-          dispatch(setGlobalSearchParams({
-            searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
-          }));
-          dispatch(setUser({
-            user: userData,
-          }));
-          setGlobalMatches(
-            user,
-            userData.cognitoUserName,
-            setMatchToGlobalState,
-            navigation, navigationReset,
-          );
-          setGlobalChatIDs(userData.cognitoUserName);
-        } else {
-          navigation.navigate('Settings', { newUser: true });
-          if (Platform.OS === 'android') {
-            navigationReset('Settings', { newUser: true });
-          }
         }
-      });
+        dispatch(setGlobalSearchParams({
+          searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
+        }));
+        dispatch(setUser({
+          user: userData,
+        }));
+        setGlobalMatches(
+          user,
+          userData.cognitoUserName,
+          setMatchToGlobalState,
+          navigation, navigationReset,
+        );
+        setGlobalChatIDs(userData.cognitoUserName);
+      } else {
+        navigation.navigate('Settings', { newUser: true });
+        if (Platform.OS === 'android') {
+          navigationReset('Settings', { newUser: true });
+        }
+      }
     });
   }, []);
 

@@ -11,6 +11,7 @@ type TextBoxProps = {
   placeholder?: string
   setValue: any
   mandatory?: boolean
+  maxLength?: number
   keyboardType?: 'default' | 'number-pad' | 'numeric' | 'email-address' | 'phone-pad'
 }
 
@@ -22,6 +23,7 @@ const TextBox: React.FC<TextBoxProps> = ({
   setValue,
   keyboardType,
   mandatory,
+  maxLength,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
 
@@ -39,6 +41,7 @@ const TextBox: React.FC<TextBoxProps> = ({
           setValue(createNewTypeObject(type, changedText));
         }}
         value={value?.toString()}
+        maxLength={maxLength || 500}
       />
     </View>
   );

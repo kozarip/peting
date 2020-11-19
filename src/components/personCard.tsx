@@ -21,14 +21,27 @@ const PersonCard: React.FC<PersonCardProps> = (
 ) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const plusTitleClass = person.userName.trim().length > 14 ? { fontSize: 24 } : {};
   return (
     <Card
       containerStyle={styles.profileCard}
     >
       <View style={styles.titleContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.name}>{person.userName.trim()}</Text>
-          <Text style={styles.age}>{person.age}</Text>
+          <Text style={{
+            ...styles.name,
+            ...plusTitleClass,
+          }}
+          >
+            {person.userName.trim()}
+          </Text>
+          <Text style={{
+            ...styles.age,
+            ...plusTitleClass,
+          }}
+          >
+            {person.age}
+          </Text>
         </View>
         <View style={styles.emotionMarkBox}>
           {

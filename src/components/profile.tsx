@@ -71,6 +71,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
   };
   const mandatoryFields = [
     'images',
+    'animalImages',
     'userName',
     'email',
     'gender',
@@ -259,6 +260,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             placeholder={localizations.t('placeholderName')}
             value={profileUser.userName}
             setValue={setProfileUserAttribute}
+            maxLength={18}
           />
           <TextBox
             label={userField.email.label}

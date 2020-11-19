@@ -19,7 +19,6 @@ import RadioButton from './form/radioButton';
 import MultiSelector from './form/multiSelector';
 
 import { styleForm } from '../assets/styles/form';
-import * as userField from '../constants/userFields';
 
 import {
   gender,

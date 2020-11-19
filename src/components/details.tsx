@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import { margins, fonts, colors } from '../assets/styles/variables';
+import { margins, fonts, colors, dimensions } from '../assets/styles/variables';
 import { styleContainer } from '../assets/styles/base';
 import * as userFields from '../constants/userFields';
 
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   detailValue: {
     color: colors.grey,
     fontSize: fonts.default,
+    maxWidth: dimensions.fullWidth * 0.6,
   },
 });
 

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Platform } from 'react-native';
-import { Linking } from 'expo';
+import * as Linking from 'expo-linking';
 /* import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions'; */
 
@@ -30,9 +30,8 @@ const amplifyConfig = {
       const { type, url: newUrl } = await WebBrowser.openAuthSessionAsync(url, redirectUrl);
 
       if (type === 'success') {
-        await WebBrowser.dismissBrowser();
-
         if (Platform.OS === 'ios') {
+          await WebBrowser.dismissBrowser();
           return Linking.openURL(newUrl);
         }
       }

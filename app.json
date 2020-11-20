@@ -42,7 +42,7 @@
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },
-    "facebookAppId": "583951345538571",
+    "facebookAppId": "858572841358752",
     "android": {
       "package": "host.exp.exponent.android",
       "googleServicesFile": "google-services.json",

@@ -68,7 +68,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     cityLat: 0,
     cityLng: 0,
     deviceId: '',
-    isPushNotificationActive: null,
+    isPushNotificationActive: true,
   };
   const mandatoryFields = [
     'images',

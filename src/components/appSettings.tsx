@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
   ScrollView,
   Text,
 } from 'react-native';
-import Amplify, { Auth } from 'aws-amplify';
-import { withOAuth } from 'aws-amplify-react-native';
+import { Auth } from 'aws-amplify';
 import { useSelector, useDispatch } from 'react-redux';
-import { Button, Card } from 'react-native-elements';
+import { Button, Card, CheckBox } from 'react-native-elements';
 import User from '../services/user';
 import Chat from '../services/chat';
 import { localizations } from '../services/localizations';
@@ -18,12 +17,17 @@ import { colors, fonts } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
 import { clearStore, setUser } from '../store/action';
 import Modal from './modal';
+import { notificationPermission } from '../services/pushNotifications';
 
 const AppSettings: React.FC = () => {
-  const [hasNotification, setHasNotification] = useState(true);
+  const [allowedNotification, setAllowedNotification] = useState(false);
   const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false);
   const { matches, user } = useSelector((state) => state);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setAllowedNotification(user.isPushNotificationActive);
+  }, []);
 
   const removeUser = () => {
     const userClass = new User();
@@ -33,7 +37,7 @@ const AppSettings: React.FC = () => {
     userClass.removeUser(user.id);
 
     chatClass.getMyChats(user.cognitoUserName).then((rawChats) => {
-      const chats = rawChats.data.searchChats.items
+      const chats = rawChats.data.searchChats.items;
       chats.forEach(givenChat => {
         chatClass.removeChat(givenChat.id);
       });
@@ -46,15 +50,33 @@ const AppSettings: React.FC = () => {
     user.images.forEach((image) => {
       imageStore.removeFileFromStore(image);
     });
+
+    logOut();
   };
 
   const logOut = () => {
     clearStore();
-    const newUser = { ...user };
-    newUser.deviceId = '';
-    dispatch(setUser({ user: newUser }));
+    addNewTokenForUser('');
     Auth.signOut();
-  }
+  };
+
+  const switchAllowedNotification = async () => {
+    const permission = await notificationPermission();
+    let tempAllowedNotification = true;
+    if (allowedNotification || permission !== 'granted') {
+      tempAllowedNotification = false;
+    }
+    const newUser = { ...user };
+    newUser.isPushNotificationActive = tempAllowedNotification;
+    dispatch(setUser({ user: newUser }));
+    setAllowedNotification(tempAllowedNotification);
+  };
+
+  const addNewTokenForUser = (token) => {
+    const newUser = { ...user };
+    newUser.deviceId = token;
+    dispatch(setUser({ user: newUser }));
+  };
 
   return (
     <View>
@@ -76,28 +98,15 @@ const AppSettings: React.FC = () => {
             handlePressButtonSecondary={() => { setIsActiveConfirmUserDeleteModal(false); }}
           />
           <Text style={styleForm.cardTitle}>{localizations.t('notifications')}</Text>
-{/*
           <CheckBox
-            title="Kérek értesítést (Nem működik)"
-            checked={hasNotification}
-            onPress={() => setHasNotification(!hasNotification)}
-            uncheckedIcon={colors.primary}
+            title={localizations.t('getNotifications')}
+            checked={allowedNotification}
+            onPress={switchAllowedNotification}
             checkedColor={colors.primary}
             containerStyle={styles.checkBox}
             textStyle={styles.checkBoxText}
             size={30}
           />
-          <CheckBox
-            title="Kérek értesítést (Nem működik)"
-            checked={hasNotification}
-            onPress={() => setHasNotification(!hasNotification)}
-            uncheckedIcon={colors.primary}
-            checkedColor={colors.primary}
-            containerStyle={styles.checkBox}
-            textStyle={styles.checkBoxText}
-            size={30}
-          />
-*/}
           <Text style={styleForm.cardTitle}>{localizations.t('user')}</Text>
           <Button
             buttonStyle={styles.btnRemoveMyUser}

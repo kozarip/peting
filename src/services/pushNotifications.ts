@@ -10,9 +10,10 @@ export const registerForPushNotificationsAsync = async () => {
 };
 
 export const notificationPermission = async (callback = null) => {
+  let finalStatus = '';
   if (Constants.isDevice) {
     const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-    let finalStatus = existingStatus;
+    finalStatus = existingStatus;
     if (existingStatus !== 'granted') {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
@@ -36,4 +37,5 @@ export const notificationPermission = async (callback = null) => {
       lightColor: '#FF231F7C',
     });
   }
+  return finalStatus;
 };

@@ -34,12 +34,17 @@ const Main = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    notificationPermission();
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
     user.crateNewUserIfNotExist().then(async (exist) => {
       if (exist) {
         const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
+        const permission = await notificationPermission();
+        if (userData.isPushNotificationActive === false || permission !== 'granted') {
+          userData.isPushNotificationActive = false;
+        } else {
+          userData.isPushNotificationActive = true;
+        }
         if (!userData.deviceId) {
           const token = await registerForPushNotificationsAsync();
           console.log(token);

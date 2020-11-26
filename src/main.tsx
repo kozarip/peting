@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
+import { notificationPermission, registerForPushNotificationsAsync } from './services/pushNotifications';
 import {
   setGlobalSearchParams,
   setUser,
@@ -21,9 +22,9 @@ import {
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: true,
+    shouldShowAlert: false,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
   }),
 });
 
@@ -32,13 +33,8 @@ const Main = ({ navigation }) => {
   const chat = new Chat();
   const dispatch = useDispatch();
 
-  const registerForPushNotificationsAsync = async () => {
-    // console.log(await Notifications.getExpoPushTokenAsync());
-    // eslint-disable-next-line no-return-await
-    return await Notifications.getDevicePushTokenAsync();
-  };
-
   useEffect(() => {
+    notificationPermission();
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
     user.crateNewUserIfNotExist().then(async (exist) => {

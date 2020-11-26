@@ -26,6 +26,7 @@ type User @model @searchable
   cityLat: Float
   cityLng: Float
   deviceId: String
+  isPushNotificationActive: Boolean
 }
 
 type Search {

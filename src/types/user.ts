@@ -23,4 +23,5 @@ export type UserType = {
   cityLat: number;
   cityLng: number;
   deviceId: string;
+  isPushNotificationActive: boolean;
 };

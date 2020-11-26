@@ -50,6 +50,7 @@ export const getUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -106,6 +107,7 @@ export const listUsers = /* GraphQL */ `
         cityLat
         cityLng
         deviceId
+        isPushNotificationActive
       }
       nextToken
     }
@@ -238,6 +240,7 @@ export const userByCognitoUserName = /* GraphQL */ `
         cityLat
         cityLng
         deviceId
+        isPushNotificationActive
       }
       nextToken
     }
@@ -302,6 +305,7 @@ export const searchUsers = /* GraphQL */ `
         cityLat
         cityLng
         deviceId
+        isPushNotificationActive
       }
       nextToken
       total

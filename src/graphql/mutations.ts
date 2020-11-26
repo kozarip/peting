@@ -53,6 +53,7 @@ export const createUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -107,6 +108,7 @@ export const updateUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -161,6 +163,7 @@ export const deleteUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;

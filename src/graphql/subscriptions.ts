@@ -98,6 +98,7 @@ export const subscribeToGivenUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -160,6 +161,7 @@ export const onCreateUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -211,6 +213,7 @@ export const onUpdateUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;
@@ -262,6 +265,7 @@ export const onDeleteUser = /* GraphQL */ `
       cityLat
       cityLng
       deviceId
+      isPushNotificationActive
     }
   }
 `;

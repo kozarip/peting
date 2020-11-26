@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { Card, Icon, Tooltip } from 'react-native-elements';
 import { isSmallScreenByHeight } from '../services/shared';
 import { localizations } from '../services/localizations';
+import animalImages from '../constants/animalImages';
 import Bio from './bio';
 import Details from './details';
 import ImagesBox from './imagesBox';
@@ -21,7 +22,8 @@ const PersonCard: React.FC<PersonCardProps> = (
 ) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const plusTitleClass = person.userName.trim().length > 14 ? { fontSize: 24 } : {};
+  const plusTitleClass = person.userName.trim().length > 13 && isSmallScreenByHeight() ? { fontSize: 24 } : {};
+
   return (
     <Card
       containerStyle={styles.profileCard}
@@ -87,29 +89,37 @@ const PersonCard: React.FC<PersonCardProps> = (
         animalName={person.animalName}
       />
       <Text style={styles.animal}>{person.animalName}</Text>
-      <TouchableOpacity onPress={() => setIsDetailsOpen((previsious) => !previsious)}>
-        {
-          isDetailsOpen ?
-            <Icon
-              name="angle-up"
-              size={45}
-              color="#ced4da"
-              type="font-awesome"
-            />
-            :
-            <Icon
-              name="angle-down"
-              size={45}
-              color="#ced4da"
-              type="font-awesome"
-            />
-        }
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity onPress={() => setIsDetailsOpen((previsious) => !previsious)}>
+          {
+            isDetailsOpen ?
+              <Icon
+                name="angle-up"
+                size={45}
+                color="#ced4da"
+                type="font-awesome"
+              />
+              :
+              <Icon
+                name="angle-down"
+                size={45}
+                color="#ced4da"
+                type="font-awesome"
+              />
+          }
+        </TouchableOpacity>
+        <Image
+          resizeMode="contain"
+          style={styles.animalIcon}
+          source={animalImages[person.animalType.toLowerCase()]}
+        />
+      </View>
       {isDetailsOpen &&
         <View>
           {person.bio ? <Bio bio={person.bio} /> : <></>}
           <Details details={
             [
+              { animalSize: person.animalSize },
               { height: person.height },
               { smokeFrequency: person.smokeFrequency },
               { hairColor: person.hairColor },
@@ -155,11 +165,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   animal: {
-    color: '#000',
-    fontSize: isSmallScreenByHeight() ? 20 : 26,
     marginLeft: dimensions.fullWidth * 0.45,
     marginTop: dimensions.fullWidth * -0.18,
     marginBottom: 0,
+    color: '#000',
+    fontSize: isSmallScreenByHeight() ? 20 : 26,
+  },
+  animalIcon: {
+    width: 30,
+    height: 30,
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
   toolTipImageText: {
     color: '#fff',

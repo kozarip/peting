@@ -28,7 +28,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "host.exp.exponent.peting",
-      "buildNumber": "0.0.1",
+      "buildNumber": "0.0.2",
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.1006344582861-s8bvjp727k63ir2k7ea0n784r7opje6s"

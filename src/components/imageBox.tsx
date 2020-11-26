@@ -3,7 +3,6 @@ import {
   View,
   Image,
   StyleSheet,
-  Platform,
 } from 'react-native';
 import { isSmallScreenByHeight } from '../services/shared';
 import { dimensions } from '../assets/styles/variables';
@@ -31,7 +30,7 @@ const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
 
 const calcRationNumberBySceenSize = (originalRatio) => {
   return isSmallScreenByHeight() ? originalRatio * 0.8 : originalRatio;
-}
+};
 
 const styles = StyleSheet.create({
   dogImageTouchBox: {

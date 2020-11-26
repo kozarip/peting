@@ -44,7 +44,7 @@ export const animalType = {
     { label: localizations.t('ferret'), value: 'ferret' },
     { label: localizations.t('horse'), value: 'horse' },
     { label: localizations.t('bird'), value: 'bird' },
-    { label: localizations.t('fish'), value: 'Fish' },
+    { label: localizations.t('fish'), value: 'fish' },
     { label: localizations.t('turtle'), value: 'turtle' },
     { label: localizations.t('snake'), value: 'snake' },
     { label: localizations.t('lizard'), value: 'lizard' },
@@ -62,7 +62,7 @@ export const animalType = {
 };
 
 export const animalSize = {
-  label: 'Mérete',
+  label: localizations.t('animalSize'),
   options: [
     { label: localizations.t('small'), value: 'small' },
     { label: localizations.t('medium'), value: 'medium' },

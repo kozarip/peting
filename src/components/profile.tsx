@@ -68,6 +68,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
     cityLat: 0,
     cityLng: 0,
     deviceId: '',
+    isPushNotificationActive: null,
   };
   const mandatoryFields = [
     'images',
@@ -165,8 +166,18 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         if (!modifiedProfileUser.primaryImageIndex) {
           modifiedProfileUser.primaryImageIndex = 0;
         }
-        setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
-        saveUser({ ...userAttributes, ...modifiedProfileUser });
+        if (
+          modifiedProfileUser.animalImages.length === 0
+          || modifiedProfileUser.images.length === 0
+          || modifiedProfileUser.animalImages[0] === '[]'
+          || modifiedProfileUser.images[0] === '[]'
+        ) {
+          setErrorFields(['animalImages', 'images']);
+          setIsActiveRequireModal(true);
+        } else {
+          setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
+          saveUser({ ...userAttributes, ...modifiedProfileUser });
+        }
         setIsLoaderActive(false);
       });
     }
@@ -291,7 +302,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             label={userField.bio.label}
             type="bio"
             mandatory={mandatoryFields.includes('bio')}
-            placeholder=""
+            placeholder={localizations.t('placeholderBio')}
             value={profileUser.bio}
             setValue={setProfileUserAttribute}
           />
@@ -326,6 +337,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             mandatory={mandatoryFields.includes('animalName')}
             value={profileUser.animalName}
             setValue={setProfileUserAttribute}
+            maxLength={12}
           />
           <Selector
             label={animalType.label}

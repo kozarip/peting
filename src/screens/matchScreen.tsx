@@ -75,14 +75,14 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   const orderMatches = (unOrderedMatches: []) => {
     return unOrderedMatches
-      .sort((a, b) => orderByNewMessages(a, b))
-      .sort((a, b) => orderByDate(a, b));
+      .sort((a, b) => orderByDate(a, b))
+      .sort((a, b) => orderByNewMessages(a, b));
   };
 
   const orderByNewMessages = (a, b) => {
-    if (a.lastNewMessageSender !== '' && b.lastNewMessageSender === '') {
+    if (a.lastNewMessageSender !== a.cognitoUseName && a.lastNewMessageSender && !b.lastNewMessageSender) {
       return -1;
-    } else if (b.lastNewMessageSender !== '' && a.lastNewMessageSender === '') {
+    } else if (b.lastNewMessageSender !== b.cognitoUseName && !a.lastNewMessageSender) {
       return 1;
     }
     return 0;

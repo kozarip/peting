@@ -268,7 +268,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       user2: matchedPerson.cognitoUserName,
       timestamp: new Date(),
     });
-  }
+  };
 
   const connectedEmotions = (userName) => {
     const resultUserName = userName || resultPerson.cognitoUserName;

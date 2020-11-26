@@ -6,10 +6,10 @@ Amplify Params - DO NOT EDIT */
 
 const axios = require('axios');
 const fetch = require('node-fetch');
+const apn = require('apn');
 
 exports.handler = async (event) => {
   const { cognitoUserNameText, type } = getUserData(event);
-  console.log({ TYPE: type });
   if (cognitoUserNameText) {
     const userByCognitoUserName = `
       query userByCognitoUserName {
@@ -36,8 +36,9 @@ exports.handler = async (event) => {
       const body = {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
-
-      await sendPushNotification(body.graphqlData.items[0].deviceId, type);
+      if (body.graphqlData.items[0].deviceId) {
+        await sendPushNotification(body.graphqlData.items[0].deviceId, type);
+      }
     } catch (err) {
       console.log('error posting to appsync: ', err);
     }
@@ -71,38 +72,71 @@ const getUserData = (event) => {
 };
 
 const sendPushNotification = async (token, type) => {
-  console.log(token);
-  await fetch('https://fcm.googleapis.com/fcm/send', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'key=AAAA6k7Pts0:APA91bGU2zi8iMtdOh9tiBajenePX2quaoASe0flPqpVWni9rJANfJdp0MZ82ntwogoaB_-IW1cjeL8hNvhd-V-FKdbe3q4kurlhvS42kE8S4iKMvqbvgloQPgHpbGwMTJ_0ioGiKqLa',
-    },
-    body: JSON.stringify({
-      to: token,
-      messageType: type,
-      collapse_key: type,
-      'apns-collapse-id': type,
-      data: {
-        experienceId: '@kozarip/peting',
-        message: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
-        priority: 'high',
-        badge: 1,
-        categoryId: type,
+  // Android sender
+  if (token.length > 64) {
+    console.log(`Android | type: ${type} | Token: ${token}`);
+    await fetch('https://fcm.googleapis.com/fcm/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'key=AAAA6k7Pts0:APA91bGU2zi8iMtdOh9tiBajenePX2quaoASe0flPqpVWni9rJANfJdp0MZ82ntwogoaB_-IW1cjeL8hNvhd-V-FKdbe3q4kurlhvS42kE8S4iKMvqbvgloQPgHpbGwMTJ_0ioGiKqLa',
       },
-      aps: {
-        alert: {
-          title: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+      body: JSON.stringify({
+        to: token,
+        messageType: type,
+        collapse_key: type,
+        'apns-collapse-id': type,
+        data: {
+          experienceId: '@kozarip/peting',
+          message: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+          priority: 'high',
+          badge: 1,
+          categoryId: type,
         },
-        category: type,
-        badge: 1,
-        'thread-id': type,
-      },
-    }),
-  })
-    .then((res) => {
-      console.log(res);
-      return res.json();
+        aps: {
+          alert: {
+            title: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+          },
+          category: type,
+          badge: 1,
+          'thread-id': type,
+        },
+      }),
     })
-    .then((json) => console.log(json));
+      .then((res) => {
+        console.log('Android', res);
+        return res.json();
+      })
+      .then((json) => console.log('Android', json));
+  }
+  // IOS sender
+  else {
+    console.log(`IOS | type: ${type} | Token: ${token}`);
+    const IS_PRODUCTION = true;
+
+    try {
+      const options = {
+        token: {
+          key: 'AuthKey.p8',
+          keyId: 'A28V9T9LTL',
+          teamId: 'RC9PY4VZVL',
+        },
+        production: IS_PRODUCTION,
+      };
+      const notification = new apn.Notification();
+      const apnProvider = await new apn.Provider(options);
+
+      notification.expiry = Math.floor(Date.now() / 1000) + 3600 * 24 * 5;
+      notification.title = type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van';
+      notification.topic = 'host.exp.exponent.peting';
+      notification.urlArgs = [];
+
+      await apnProvider.send(notification, token).then((result) => {
+        console.log('IOS', result);
+        console.log('IOS', JSON.stringify(result.failed));
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

@@ -83,7 +83,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-petingdates-dev-94042-deployment",
-					"S3Key": "amplify-builds/notificatonApi-55446236764e67523141-build.zip"
+					"S3Key": "amplify-builds/notificatonApi-6b2f425138324d747646-build.zip"
 				}
 			}
 		},

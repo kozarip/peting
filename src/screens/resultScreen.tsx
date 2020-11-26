@@ -52,6 +52,8 @@ const initialResultPerson = {
   images: [],
   animalImages: [],
 };
+let oldMatchesNumber = 0;
+let matchNumberChanged = false;
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const image = require('../assets/images/background.png');
@@ -72,6 +74,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const chat = new Chat();
   const userClass = new User();
   const dispatch = useDispatch();
+
+  if (oldMatchesNumber !== matches.length) {
+    matchNumberChanged = !matchNumberChanged;
+  }
+  oldMatchesNumber = matches.length;
 
   useEffect(() => {
     setIsLoaderActive(true);
@@ -119,7 +126,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       subscriptionRemoveMatch(match, removeFromGlobalStateMatch);
     });
     subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
-  }, [searchParams, pressedButton, matches]);
+  }, [searchParams, pressedButton, matchNumberChanged]);
 
   const changeGlobalStateMatch = (match) => {
     const newMatches = matches.map((m) => {
@@ -128,9 +135,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       }
       return m;
     });
-/* if (match.lastNewMessageSender !== user.cognitoUserName) {
-      dispatch(setHasNotification(true));
-    } */
     dispatch(setMatches(newMatches));
   };
 

@@ -280,6 +280,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             type="email"
             setValue={setProfileUserAttribute}
             placeholder={localizations.t('placeholderEmail')}
+            editable={false}
           />
           <RadioButton
             options={gender}
@@ -297,6 +298,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             keyboardType="number-pad"
             value={profileUser.age}
             setValue={setProfileUserAttribute}
+            maxLength={2}
           />
           <TextBox
             label={userField.bio.label}

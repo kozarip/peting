@@ -65,13 +65,13 @@ const SearchComponent: React.FC<searchComponentProps> = (
 
   useEffect(() => {
     setSearchParams({ ...searchParams, ...userAttributes.search });
-  }, []);
+  }, [userAttributes]);
 
   const setSearchParamsValue = (value) => {
     setSearchParams({ ...searchParams, ...value });
   };
 
-  const { user } = useSelector((state) => state)
+  const { user } = useSelector((state) => state);
 
   const handleSaveSearch = () => {
     console.log(user);

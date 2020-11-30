@@ -22,7 +22,7 @@ const PersonCard: React.FC<PersonCardProps> = (
 ) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const plusTitleClass = person.userName.trim().length > 13 && isSmallScreenByHeight() ? { fontSize: 24 } : {};
+  const plusTitleClass = person.userName.length > 14 ? { fontSize: 24 } : {};
 
   return (
     <Card
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreenByHeight() ? 26 : 34,
     marginRight: 10,
     flexShrink: 1,
+    maxWidth: dimensions.fullWidth * 0.65,
   },
   age: {
     color: colors.grey,

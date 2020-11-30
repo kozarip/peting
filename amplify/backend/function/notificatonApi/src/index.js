@@ -17,6 +17,7 @@ exports.handler = async (event) => {
           items {
             deviceId
             userName
+            isPushNotificationActive
           }
         }
       }
@@ -36,7 +37,7 @@ exports.handler = async (event) => {
       const body = {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
-      if (body.graphqlData.items[0].deviceId && body.graphqlData.items[0].isPushNotificationActive != false) {
+      if (body.graphqlData.items[0].deviceId && body.graphqlData.items[0].isPushNotificationActive !== false) {
         await sendPushNotification(body.graphqlData.items[0].deviceId, type);
       }
     } catch (err) {

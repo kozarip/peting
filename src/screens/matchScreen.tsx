@@ -34,7 +34,6 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   const [isActiveRemoveMatchModal, setIsActiveRemoveMatchModal] = useState(false);
   const [removableMatchId, setRemovableMatchId] = useState('');
   const dispatch = useDispatch();
-  const userClass = new User();
 
   const imageStore = new ImageStore('Unknown');
   const friendUser = new User();
@@ -67,7 +66,12 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
             match.avatar_url = compiledImages[compiledImageCounter];
             compiledImageCounter++;
           }
-          setMyMatches((previsous) => [...previsous, ...[match]]);
+          setMyMatches((previsous) => {
+            if (!previsous.includes(match)) {
+              return [...previsous, ...[match]];
+            }
+            return previsous;
+          });
         });
       }
     });

@@ -13,6 +13,7 @@ type TextBoxProps = {
   mandatory?: boolean
   maxLength?: number
   keyboardType?: 'default' | 'number-pad' | 'numeric' | 'email-address' | 'phone-pad'
+  editable?: boolean,
 }
 
 const TextBox: React.FC<TextBoxProps> = ({
@@ -24,9 +25,10 @@ const TextBox: React.FC<TextBoxProps> = ({
   keyboardType,
   mandatory,
   maxLength,
+  editable,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
-
+  console.log(editable);
   return (
     <View style={styleForm.textBoxContainer}>
       <Text style={styleForm.label as any}>
@@ -40,6 +42,10 @@ const TextBox: React.FC<TextBoxProps> = ({
         onChangeText={(changedText) => {
           setValue(createNewTypeObject(type, changedText));
         }}
+        editable={
+          typeof editable !== 'undefined'
+            ? editable : true
+        }
         value={value?.toString()}
         maxLength={maxLength || 500}
       />

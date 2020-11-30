@@ -32,10 +32,10 @@ const SettingsScreen = ({ navigation, route }) => {
   useEffect(() => {
     setIsLoaderActive(true);
     loggedInUser.init().then(() => {
-      setIsLoaderActive(false);
       setUserAttributes(
         loggedInUser.getCurrentUserAttributes().data.userByCognitoUserName.items[0],
       );
+      setIsLoaderActive(false);
     });
   }, []);
 

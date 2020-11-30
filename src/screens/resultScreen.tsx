@@ -136,6 +136,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       return m;
     });
     dispatch(setMatches(newMatches));
+    if (match.lastNewMessageSender !== user.cognitoUserName) {
+      dispatch(setHasNotification(true));
+    }
   };
 
   const removeFromGlobalStateMatch = (matchId) => {
@@ -147,6 +150,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     dispatch(setHasNotification(true));
     setIsMatchModalActive(true);
     dispatch(addMatch(matchData));
+    dispatch(setHasNotification(true));
   };
 
   const updateResultPerson = (rawPerson, items) => {

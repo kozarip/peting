@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, View, Text, StyleSheet } from 'react-native';
 import { Header, Icon as RNEIcon } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { colors } from '../assets/styles/variables';
 import { setActiveMenuId, setHasNotification } from '../store/action';
@@ -43,7 +43,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
       leftComponent={
         <View style={{ position: 'relative' }}>
           {hasNotification &&
-            <Icon
+            <FontAwesome5
               style={
                 {
                   ...styles.hasNotificationIcon,

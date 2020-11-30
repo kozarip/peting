@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-amplify/pushnotification": "^3.2.7",
     "@expo-google-fonts/inter": "^0.1.0",
+    "@expo/vector-icons": "^10.0.0",
     "@ptomasroos/react-native-multi-slider": "^2.2.2",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "5.9.6",
@@ -63,7 +64,6 @@
     "react-native-sectioned-multi-select": "^0.8.0",
     "react-native-simple-radio-button": "^2.7.4",
     "react-native-tab-view": "^2.14.0",
-    "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.7",
     "react-redux": "^7.2.0",
     "react-redux-firebase": "^3.3.0",

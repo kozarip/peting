@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import { MaterialIcons } from '@expo/vector-icons';
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
@@ -35,7 +35,7 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
     <View>
       <Text style={styleForm.label as any}>{label}</Text>
       <SectionedMultiSelect
-        IconRenderer={Icon}
+        IconRenderer={MaterialIcons}
         items={transformOptionsForMultiselect(options) || []}
         uniqueKey="id"
         selectedText={localizations.t('selected')}

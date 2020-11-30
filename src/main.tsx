@@ -60,7 +60,9 @@ const Main = ({ navigation }) => {
           user,
           userData.cognitoUserName,
           setMatchToGlobalState,
-          navigation, navigationReset,
+          handleNotification,
+          navigation,
+          navigationReset,
         );
         setGlobalChatIDs(userData.cognitoUserName);
       } else {
@@ -73,7 +75,9 @@ const Main = ({ navigation }) => {
   }, []);
 
   const handleNotification = (newNotification) => {
-    if (newNotification) {
+    const { index, routes } = navigation.dangerouslyGetState();
+    const screenName = routes[index].name;
+    if (screenName !== 'Chat' && newNotification) {
       dispatch(setHasNotification(true));
     }
   };

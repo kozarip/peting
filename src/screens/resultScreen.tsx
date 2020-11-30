@@ -129,6 +129,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   }, [searchParams, pressedButton, matchNumberChanged]);
 
   const changeGlobalStateMatch = (match) => {
+    const { index, routes } = navigation.dangerouslyGetState();
+    const screenName = routes[index].name;
     const newMatches = matches.map((m) => {
       if (m.id === match.id) {
         return match;
@@ -136,7 +138,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       return m;
     });
     dispatch(setMatches(newMatches));
-    if (match.lastNewMessageSender !== user.cognitoUserName) {
+    if (screenName !== 'Chat'
+      && match.lastNewMessageSender
+      && (match.lastNewMessageSender !== user.cognitoUserName)) {
       dispatch(setHasNotification(true));
     }
   };
@@ -147,10 +151,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const addNewMatch = (matchData) => {
-    dispatch(setHasNotification(true));
     setIsMatchModalActive(true);
     dispatch(addMatch(matchData));
-    dispatch(setHasNotification(true));
   };
 
   const updateResultPerson = (rawPerson, items) => {
@@ -255,6 +257,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const newMatchHandler = (person?) => {
     const matchedPerson = person || resultPerson;
     setIsMatchModalActive(true);
+    dispatch(setHasNotification(true));
     const id = uuidv4();
     const matchData: matchType = {
       id,
@@ -262,7 +265,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       name: matchedPerson.userName,
       avatar_url: matchedPerson.images[matchedPerson.primaryImageIndex],
       subtitle: new Date().toISOString().split('T', 1).join(''),
-      lastNewMessageSender: '',
+      lastNewMessageSender: 'new',
     };
     dispatch(addMatch(matchData));
     chat.createNewChat({
@@ -275,6 +278,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       user1: user.cognitoUserName,
       user2: matchedPerson.cognitoUserName,
       timestamp: new Date(),
+      lastNewMessageSender: 'new',
     });
   };
 

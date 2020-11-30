@@ -28,7 +28,6 @@ const TextBox: React.FC<TextBoxProps> = ({
   editable,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
-  console.log(editable);
   return (
     <View style={styleForm.textBoxContainer}>
       <Text style={styleForm.label as any}>

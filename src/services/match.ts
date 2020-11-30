@@ -39,10 +39,9 @@ const subscriptionMatch = async (match: matchType, changeGlobalStateMatch) => {
   ).subscribe({
     next: (matches) => {
       if (typeof changeGlobalStateMatch === 'function'
-      && matches.value.data.subscribeToUserMatches
-      && match.lastNewMessageSender !== matches.value.data.subscribeToUserMatches.lastNewMessageSender) {
+      && matches.value.data.subscribeToUserMatches) {
         match.lastNewMessageSender = matches.value.data.subscribeToUserMatches.lastNewMessageSender;
-        return changeGlobalStateMatch([match]);
+        return changeGlobalStateMatch(match);
       }
       return false;
     },
@@ -81,7 +80,14 @@ const subscriptionMyFutureMatches = async (cognitoUserName, updateGlobalMatch) =
   return subscription;
 };
 
-const setGlobalMatches = (user, cognitoUserName, setMatchToGlobalState, navigation?, navigationReset?) => {
+const setGlobalMatches = (
+  user,
+  cognitoUserName,
+  setMatchToGlobalState,
+  setNotificationForTrue,
+  navigation?,
+  navigationReset?,
+) => {
   const globalMatches: matchType[] = [];
   getUserMatches(cognitoUserName).then(async (rawMatches) => {
     const matches = rawMatches.data.searchMatchess.items;
@@ -93,6 +99,13 @@ const setGlobalMatches = (user, cognitoUserName, setMatchToGlobalState, navigati
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
           globalMatches.push(createMatchData(matches[i], fullUserData));
+          console.log(matches[i].lastNewMessageSender);
+          if (matches[i].lastNewMessageSender
+            && (matches[i].lastNewMessageSender !== cognitoUserName
+              || (matches[i].lastNewMessageSender === 'new' && matches[i].user2 === cognitoUserName))
+          ) {
+            setNotificationForTrue(true);
+          }
         });
         setMatchToGlobalState(globalMatches);
         if (navigation) {

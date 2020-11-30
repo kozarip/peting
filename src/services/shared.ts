@@ -1,7 +1,7 @@
 import { dimensions } from '../assets/styles/variables';
 
-export const isSmallScreenByHeight = () => {
-  return dimensions.fullHeight < 600;
+export const isSmallScreen = () => {
+  return dimensions.fullHeight < 600 || dimensions.fullWidth < 360;
 };
 
 export const uuidv4 = () => {

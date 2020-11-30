@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import { Card, Icon, Tooltip } from 'react-native-elements';
-import { isSmallScreenByHeight } from '../services/shared';
+import { isSmallScreen } from '../services/shared';
 import { localizations } from '../services/localizations';
 import animalImages from '../constants/animalImages';
 import Bio from './bio';
@@ -26,7 +32,10 @@ const PersonCard: React.FC<PersonCardProps> = (
 
   return (
     <Card
-      containerStyle={styles.profileCard}
+      containerStyle={{
+        ...styles.profileCard,
+        ...isDetailsOpen ? styles.openedProfileCard : {},
+      }}
     >
       <View style={styles.titleContainer}>
         <View style={styles.titleContainer}>
@@ -139,6 +148,10 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: margins.sm,
     paddingBottom: margins.sm,
+    height: dimensions.fullHeight - 182,
+  },
+  openedProfileCard: {
+    height: 'auto',
     minHeight: dimensions.fullHeight - 182,
   },
   titleContainer: {
@@ -149,19 +162,19 @@ const styles = StyleSheet.create({
   },
   name: {
     color: colors.primary,
-    fontSize: isSmallScreenByHeight() ? 26 : 34,
+    fontSize: isSmallScreen() ? 26 : 34,
     marginRight: 10,
     flexShrink: 1,
     maxWidth: dimensions.fullWidth * 0.65,
   },
   age: {
     color: colors.grey,
-    fontSize: isSmallScreenByHeight() ? 26 : 34,
+    fontSize: isSmallScreen() ? 26 : 34,
   },
   city: {
-    fontSize: isSmallScreenByHeight() ? 18 : 22,
+    fontSize: isSmallScreen() ? 18 : 22,
     color: '#999',
-    marginTop: isSmallScreenByHeight() ? -5 : margins.xsm,
+    marginTop: isSmallScreen() ? -5 : margins.xsm,
     marginBottom: margins.sm,
     textAlign: 'center',
   },
@@ -170,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: dimensions.fullWidth * -0.18,
     marginBottom: 0,
     color: '#000',
-    fontSize: isSmallScreenByHeight() ? 20 : 26,
+    fontSize: isSmallScreen() ? 20 : 26,
   },
   animalIcon: {
     width: 30,

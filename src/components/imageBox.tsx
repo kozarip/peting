@@ -4,7 +4,7 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import { isSmallScreenByHeight } from '../services/shared';
+import { isSmallScreen } from '../services/shared';
 import { dimensions } from '../assets/styles/variables';
 
 type ImageBoxProps = {
@@ -29,7 +29,7 @@ const ImageBox: React.FC<ImageBoxProps> = ({ type, source }) => {
 };
 
 const calcRationNumberBySceenSize = (originalRatio) => {
-  return isSmallScreenByHeight() ? originalRatio * 0.8 : originalRatio;
+  return isSmallScreen() ? originalRatio * 0.8 : originalRatio;
 };
 
 const styles = StyleSheet.create({

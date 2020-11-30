@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { setHasNotification } from '../store/action';
 import { updateMatch } from '../services/match';
 import Chat from '../services/chat';
 import { localizations } from '../services/localizations';
@@ -46,7 +47,7 @@ const ChatScreen = ({ route, navigation }) => {
       createGiftedMessageObject(apiObject.data.searchChats.items[0].messages);
       chat.subscriptionChat(apiObject.data.searchChats.items[0].id, createGiftedMessageObject);
     });
-    if (lastNewMessageSender === friendId) {
+    if (lastNewMessageSender === friendId || lastNewMessageSender === 'new') {
       updateMatch(createMatchObj(false));
     }
   }, []);
@@ -56,9 +57,6 @@ const ChatScreen = ({ route, navigation }) => {
       const messagesFromAPi: [] = rawMessages.map((message) => addUserObjToMessage(message));
       messagesFromAPi.sort((a, b) => compareMessageDates(a, b));
       setMessages(messagesFromAPi);
-/*       if (messagesFromAPi[messagesFromAPi.length - 1].messagesOwner !== userId) {
-        dispatch(setHasNotification(false));
-      } */
     }
   };
 

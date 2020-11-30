@@ -26,19 +26,31 @@ type MatchScreenProps = {
   navigation: any
 }
 
+let matchChanged = false;
+let oldMatchLength = 0;
+let oldLastNewMessageSender = false;
+
 const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   const { matches, user } = useSelector((state) => state);
   const [myMatches, setMyMatches] = useState<matchType[]>([]);
   const [friendObject, setFriendObject] = useState({});
   const [isCardActive, setIsCardActive] = useState(false);
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
   const [isActiveRemoveMatchModal, setIsActiveRemoveMatchModal] = useState(false);
   const [removableMatchId, setRemovableMatchId] = useState('');
   const dispatch = useDispatch();
 
   const imageStore = new ImageStore('Unknown');
   const friendUser = new User();
+  if (matches.length !== oldMatchLength
+    || matches.lastNewMessageSender !== oldLastNewMessageSender) {
+    matchChanged = !matchChanged;
+  }
+  oldMatchLength = matches.length;
+  oldLastNewMessageSender = matches.lastNewMessageSender;
 
   useEffect(() => {
+    setIsLoaderActive(true);
     // setGlobalMatches(userClass, user.cognitoUserName, setMatchToGlobalState);
     setMyMatches([]);
     const images: string[] = [];
@@ -50,7 +62,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
       });
       compileImages(images);
     }
-  }, [matches]);
+  }, [matchChanged]);
 /*
   const setMatchToGlobalState = (match) => {
     dispatch(setMatches(match));
@@ -74,6 +86,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
           });
         });
       }
+      setIsLoaderActive(false);
     });
   };
 
@@ -131,11 +144,16 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Modal
+        iconName="spinner"
+        isVisible={isLoaderActive}
+        description={localizations.t('load')}
+      />
       <ImageBackground
         source={image}
         style={styleBackground}
         resizeMode="repeat"
-        imageStyle={{ opacity: 0.3, flex: 1, resizeMode: 'repeat'}}
+        imageStyle={{ opacity: 0.3, flex: 1, resizeMode: 'repeat' }}
       >
         <PetingHeader
           navigation={navigation}
@@ -229,6 +247,16 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
                             raised
                             color={colors.grey}
                             type="font-awesome"
+                          />
+                          : <></>
+                      }
+                      {
+                        item.lastNewMessageSender === 'new' ?
+                          <Icon
+                            name="burst-new"
+                            size={34}
+                            color={colors.grey}
+                            type="foundation"
                           />
                           : <></>
                       }

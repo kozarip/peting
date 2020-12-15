@@ -271,7 +271,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             placeholder={localizations.t('placeholderName')}
             value={profileUser.userName}
             setValue={setProfileUserAttribute}
-            maxLength={18}
+            maxLength={16}
           />
           <TextBox
             label={userField.email.label}

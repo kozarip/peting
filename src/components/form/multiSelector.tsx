@@ -41,6 +41,7 @@ const MultiSelector: React.FC<MultiSelectorProps> = (
         selectedText={localizations.t('selected')}
         selectText={localizations.t('placeholderMultiSelect')}
         showDropDowns
+        hideSearch
         confirmText={localizations.t('select')}
         onSelectedItemsChange={(selectedValue) => {
           setValue(createNewTypeObject(type, selectedValue));

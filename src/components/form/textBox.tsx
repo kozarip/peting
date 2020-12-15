@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Platform } from 'react-native';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
@@ -28,6 +28,9 @@ const TextBox: React.FC<TextBoxProps> = ({
   editable,
 }) => {
   const placeHolderStyle = !value && placeholder ? { color: colors.separator } : {};
+  const defaultKeyBoardType = Platform.OS === 'ios'
+    ? 'ascii-capable' : 'visible-password';
+
   return (
     <View style={styleForm.textBoxContainer}>
       <Text style={styleForm.label as any}>
@@ -36,7 +39,7 @@ const TextBox: React.FC<TextBoxProps> = ({
       </Text>
       <TextInput
         placeholder={placeholder}
-        keyboardType={keyboardType || 'default'}
+        keyboardType={keyboardType || defaultKeyBoardType}
         style={{ ...styleForm.cardInput, ...placeHolderStyle}}
         onChangeText={(changedText) => {
           setValue(createNewTypeObject(type, changedText));

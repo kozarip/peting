@@ -126,6 +126,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             keyboardType="number-pad"
             value={searchParams.minAge}
             setValue={setSearchParamsValue}
+            maxLength={2}
           />
           <TextBox
             label={localizations.t('maxAge')}
@@ -133,6 +134,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
             keyboardType="number-pad"
             value={searchParams.maxAge}
             setValue={setSearchParamsValue}
+            maxLength={2}
           />
           <TextBox
             label={localizations.t('distance')}

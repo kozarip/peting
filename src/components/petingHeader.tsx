@@ -53,6 +53,7 @@ const PetingHeader: React.FC<PetingHeaderProps> = ({ navigation }) => {
               name="plus-circle"
               size={15}
               color={activeMenu === 1 ? colors.darkPrimary : '#fff'}
+              onPress={() => { handleMenuSelect(1, 'Match')}}
             />
           }
           <RNEIcon

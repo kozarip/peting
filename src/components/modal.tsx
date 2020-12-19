@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Overlay, Button, Icon } from 'react-native-elements';
+import { localizations } from '../services/localizations';
 import { colors, fonts, margins, dimensions } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
 
@@ -77,7 +78,7 @@ const Modal: React.FC<modalProps> = (
           <Button
             buttonStyle={styles.btnSecondary}
             titleStyle={{ fontSize: fonts.heading2 }}
-            title="Bezárás"
+            title={localizations.t('close')}
             onPress={handleClose}
           />
         }

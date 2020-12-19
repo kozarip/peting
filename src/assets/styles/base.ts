@@ -30,3 +30,10 @@ export const styleTitle = {
   marginBottom: margins.sm,
   paddingHorizontal: margins.md,
 };
+
+export const styleLink = {
+  fontSize: fonts.heading2,
+  color: '#1a0dab',
+  textDecorationLine: 'underline',
+  marginLeft: margins.md,
+};

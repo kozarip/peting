@@ -12,7 +12,7 @@ const animalImages = {
   hamster: require('../assets/images/animals/mouse.png'),
   degu: require('../assets/images/animals/mouse.png'),
   ferret: require('../assets/images/animals/ferret.jpg'),
-  rabbit: require('../assets/images/animals/ferret.jpg'),
+  rabbit: require('../assets/images/animals/rabbit.jpg'),
   turtle: require('../assets/images/animals/turtle.png'),
   hedgehog: require('../assets/images/animals/hedgehog.jpg'),
   lizard: require('../assets/images/animals/chameleon.jpg'),

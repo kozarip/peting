@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   animal: {
     marginLeft: dimensions.fullWidth * 0.45,
     marginTop: dimensions.fullWidth * -0.18,
-    marginBottom: 0,
+    marginBottom: -5,
     color: '#000',
     fontSize: isSmallScreen() ? 20 : 26,
   },

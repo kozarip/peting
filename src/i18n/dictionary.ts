@@ -131,6 +131,8 @@ const dictionary = {
     other: 'other',
     getNotifications: 'I would like notifications',
     animalSize: 'Animal size',
+    ppLabel: 'I have read the privacy policy.',
+    ppLink: 'Open the privacy policy',
   },
   hu: {
     slogan: 'Az állatbarátok társkeresője',
@@ -264,6 +266,8 @@ const dictionary = {
     other: 'egyéb',
     animalSize: 'Állat mérete',
     getNotifications: 'Kérek értesítést',
+    ppLabel: 'Elolvastam az adatkezelési nyilatkozatot.',
+    ppLink: 'Adatkezelési nyilatkozat megnyítása',
   },
   de: {
     slogan: 'Die Dating-App der Haustierbesitzer',
@@ -397,6 +401,8 @@ const dictionary = {
     other: 'anderer',
     animalSize: 'Größe des Haustieres',
     getNotifications: 'Ich möchte Benachrichtigungen erhalten',
+    ppLabel: 'Ich habe die Datenschutzbestimmungen gelesen.',
+    ppLink: 'Öffnen Sie die Datenschutzrichtlinie',
   },
 };
 

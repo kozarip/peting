@@ -4,22 +4,26 @@ import {
   StyleSheet,
   ScrollView,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Card, CheckBox } from 'react-native-elements';
+import { clearStore, setUser } from '../store/action';
 import User from '../services/user';
 import Chat from '../services/chat';
 import { localizations } from '../services/localizations';
 import { removeMatch } from '../services/match';
 import ImageStore from '../services/imageStore';
-import { colors, fonts } from '../assets/styles/variables';
-import { styleForm } from '../assets/styles/form';
-import { clearStore, setUser } from '../store/action';
-import Modal from './modal';
+import { openLink } from '../services/shared';
 import { notificationPermission } from '../services/pushNotifications';
+import { colors, fonts } from '../assets/styles/variables';
+import { styleLink } from '../assets/styles/base';
+import { styleForm } from '../assets/styles/form';
+import Modal from './modal';
 
 const AppSettings: React.FC = () => {
+  const ppUrl = 'http://peting.hu/adatkezeles.html';
   const [allowedNotification, setAllowedNotification] = useState(false);
   const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false);
   const { matches, user } = useSelector((state) => state);
@@ -116,7 +120,10 @@ const AppSettings: React.FC = () => {
               setIsActiveConfirmUserDeleteModal(true);
             }}
           />
-
+          <Text style={styleForm.cardTitle}>{localizations.t('others')}</Text>
+          <TouchableOpacity onPress={() => { openLink(ppUrl)}}>
+            <Text style={{...styleLink, ...{textAlign: 'center', marginLeft: 0}}}>{localizations.t('ppLink')}</Text>
+          </TouchableOpacity>
         </Card>
       </ScrollView>
       <Button

@@ -4,7 +4,7 @@ import { Card } from 'react-native-elements';
 import Welcome from '../components/welcome';
 import Login from '../components/login';
 import { styleBackground, styleContainer } from '../assets/styles/base';
-import { margins } from '../assets/styles/variables';
+import {  margins } from '../assets/styles/variables';
 
 const LoginScreen = () => {
   const image = require('../assets/images/background.png');

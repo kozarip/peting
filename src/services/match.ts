@@ -98,13 +98,15 @@ const setGlobalMatches = (
       Promise.all(matchPromises).then((resolved) => {
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
-          globalMatches.push(createMatchData(matches[i], fullUserData));
-          console.log(matches[i].lastNewMessageSender);
-          if (matches[i].lastNewMessageSender
-            && (matches[i].lastNewMessageSender !== cognitoUserName
-              || (matches[i].lastNewMessageSender === 'new' && matches[i].user2 === cognitoUserName))
-          ) {
-            setNotificationForTrue(true);
+          if (fullUserData) {
+            globalMatches.push(createMatchData(matches[i], fullUserData));
+            console.log(matches[i].lastNewMessageSender);
+            if (matches[i].lastNewMessageSender
+              && (matches[i].lastNewMessageSender !== cognitoUserName
+                || (matches[i].lastNewMessageSender === 'new' && matches[i].user2 === cognitoUserName))
+            ) {
+              setNotificationForTrue(true);
+            }
           }
         });
         setMatchToGlobalState(globalMatches);

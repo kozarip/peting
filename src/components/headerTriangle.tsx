@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { dimensions, colors } from '../assets/styles/variables';
 
 const HeaderTriangle = () => {
-  return <View style={styles.headerTriangle} />;
+  return dimensions.fullWidth / dimensions.fullHeight < 0.61 && <View style={styles.headerTriangle} />;
 };
 
 const styles = StyleSheet.create({

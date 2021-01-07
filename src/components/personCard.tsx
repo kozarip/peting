@@ -186,8 +186,8 @@ const styles = StyleSheet.create({
     fontSize: isSmallScreen() ? 20 : 26,
   },
   animalIcon: {
-    width: 30,
-    height: 30,
+    width: dimensions.fullWidth * 0.08,
+    height: dimensions.fullWidth * 0.08,
     position: 'absolute',
     bottom: 10,
     right: 10,

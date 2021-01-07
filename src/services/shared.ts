@@ -1,5 +1,6 @@
-import { Linking } from 'react-native';
-import { dimensions } from '../assets/styles/variables';
+import { Linking, Text } from 'react-native';
+import { styleLink } from '../assets/styles/base';
+import { colors, dimensions, fonts } from '../assets/styles/variables';
 
 export const isSmallScreen = () => {
   return dimensions.fullHeight < 650 || dimensions.fullWidth < 360;

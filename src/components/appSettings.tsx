@@ -82,6 +82,24 @@ const AppSettings: React.FC = () => {
     dispatch(setUser({ user: newUser }));
   };
 
+  const renderPPLink = () => {
+    const stylePPLink = {
+      fontSize: fonts.heading2,
+      marginLeft: 0,
+      color: colors.grey,
+    };
+
+    const ppLink = localizations.t('ppLink');
+    const formattedPPLink = ppLink.split('*&/').map((element, i) => {
+      if (i % 2 !== 0) {
+        return <Text style={{...stylePPLink, ...styleLink }}>{element}</Text>;
+      } else {
+        return <Text style={stylePPLink}>{element}</Text>;
+      }
+    });
+    return formattedPPLink;
+  };
+
   return (
     <View>
       <ScrollView
@@ -121,8 +139,10 @@ const AppSettings: React.FC = () => {
             }}
           />
           <Text style={styleForm.cardTitle}>{localizations.t('others')}</Text>
-          <TouchableOpacity onPress={() => { openLink(ppUrl)}}>
-            <Text style={{...styleLink, ...{textAlign: 'center', marginLeft: 0}}}>{localizations.t('ppLink')}</Text>
+          <TouchableOpacity onPress={() => { openLink(ppUrl) }}>
+            <Text style={styles.PPLinkBox}>
+              { renderPPLink() }
+            </Text>
           </TouchableOpacity>
         </Card>
       </ScrollView>
@@ -155,6 +175,9 @@ const styles = StyleSheet.create({
   },
   checkBoxText: {
     color: colors.separator,
+  },
+  PPLinkBox: {
+    textAlign: 'center',
   },
 });
 

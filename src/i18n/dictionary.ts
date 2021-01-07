@@ -131,8 +131,8 @@ const dictionary = {
     other: 'other',
     getNotifications: 'I would like notifications',
     animalSize: 'Animal size',
-    ppLabel: 'I have read the privacy policy.',
-    ppLink: 'Open the privacy policy',
+    ppLabel: 'I have read the *&/Privacy Policy*&/ and the *&/Terms and Conditions.',
+    ppLink: 'Read the *&/Privacy Policy*&/ and the *&/Terms and Conditions',
   },
   hu: {
     slogan: 'Az állatbarátok társkeresője',
@@ -221,7 +221,7 @@ const dictionary = {
     small: 'kicsi',
     medium: 'közepes',
     big: 'nagy',
-    smoking: 'dohányzás',
+    smoking: 'Dohányzás',
     never: 'soha',
     rarely: 'ritkán',
     often: 'rendszeresen',
@@ -266,8 +266,8 @@ const dictionary = {
     other: 'egyéb',
     animalSize: 'Állat mérete',
     getNotifications: 'Kérek értesítést',
-    ppLabel: 'Elolvastam az adatkezelési nyilatkozatot.',
-    ppLink: 'Adatkezelési nyilatkozat megnyítása',
+    ppLabel: 'Elolvastam az *&/Adatvedelmi Nyilatkozatot*&/ és az *&/Altalanos Szerződési Felteteleket',
+    ppLink: 'Elolvasom az *&/Adatvedelmi Nyilatkozatot*&/ és az *&/Altalanos Szerződési Felteteleket',
   },
   de: {
     slogan: 'Die Dating-App der Haustierbesitzer',
@@ -401,8 +401,8 @@ const dictionary = {
     other: 'anderer',
     animalSize: 'Größe des Haustieres',
     getNotifications: 'Ich möchte Benachrichtigungen erhalten',
-    ppLabel: 'Ich habe die Datenschutzbestimmungen gelesen.',
-    ppLink: 'Öffnen Sie die Datenschutzrichtlinie',
+    ppLabel: 'Ich habe die *&/Datenschutzrichtlinie*&/ und die *&/Allgemeinen Geschäftsbedingungen gelesen.',
+    ppLink: 'Ich habe die *&/Datenschutzerklärung*&/ und die *&/Allgemeinen Geschäftsbedingungen gelesen',
   },
 };
 

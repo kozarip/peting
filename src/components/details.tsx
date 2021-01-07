@@ -29,6 +29,10 @@ const Details: React.FC<DetailProps> = ({ details }) => {
         itemObject = userFields[type].options.find((element) => element.value === value);
         result.value = itemObject.label;
         break;
+      case 'animalSize':
+        itemObject = userFields[type].options.find((element) => element.value === value);
+        result.value = itemObject.label;
+        break;
       default:
         break;
     }

@@ -58,6 +58,24 @@ const Login: React.FC = () => {
     }
   };
 
+  const renderPPLabel = () => {
+    const stylePPLink = {
+      fontSize: fonts.heading2,
+      marginLeft: 0,
+      color: colors.grey,
+    };
+
+    const ppLink = localizations.t('ppLabel');
+    const formattedPPLink = ppLink.split('*&/').map((element, i) => {
+      if (i % 2 !== 0) {
+        return <Text style={{...stylePPLink, ...styleLink }}>{element}</Text>;
+      } else {
+        return <Text style={stylePPLink}>{element}</Text>;
+      }
+    });
+    return formattedPPLink;
+  };
+
   return (
     <View style={styles.buttonContainer}>
       <Overlay
@@ -79,7 +97,9 @@ const Login: React.FC = () => {
               onPress={handlePressPPCheckBox}
             />
             <TouchableOpacity onPress={() => { openLink(ppUrl)}}>
-              <Text style={styleLink}>{localizations.t('ppLabel')}</Text>
+              <Text style={styles.PPLinkBox}>
+                { renderPPLabel() }
+              </Text>
             </TouchableOpacity>
           </View>
           <Button
@@ -171,6 +191,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+  },
+  PPLinkBox: {
+    textAlign: 'center',
   },
 });
 

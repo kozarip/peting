@@ -21,14 +21,14 @@ import { colors, fonts } from '../assets/styles/variables';
 import { styleLink } from '../assets/styles/base';
 import { styleForm } from '../assets/styles/form';
 import Modal from './modal';
+import { images } from '../constants/userFields';
 
 const AppSettings: React.FC = () => {
-  const ppUrl = 'http://peting.hu/adatkezeles.html';
+  const ppUrl = 'https://peting.hu/privacy';
   const [allowedNotification, setAllowedNotification] = useState(false);
   const [isActiveConfirmUserDeleteModal, setIsActiveConfirmUserDeleteModal] = useState(false);
   const { matches, user } = useSelector((state) => state);
   const dispatch = useDispatch();
-
   useEffect(() => {
     setAllowedNotification(user.isPushNotificationActive);
   }, []);
@@ -47,13 +47,17 @@ const AppSettings: React.FC = () => {
       });
     });
 
-    matches.forEach((match) => {
-      removeMatch(match.id);
-    });
+    if (matches) {
+      matches.forEach((match) => {
+        removeMatch(match.id);
+      });
+    }
 
-    user.images.forEach((image) => {
-      imageStore.removeFileFromStore(image);
-    });
+    if (user.images) {
+      user.images.forEach((image) => {
+        imageStore.removeFileFromStore(image);
+      });
+    }
 
     logOut();
   };

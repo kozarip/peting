@@ -54,7 +54,7 @@ const SearchComponent: React.FC<searchComponentProps> = (
     minAge: 0,
     maxAge: 99,
     hobbies: [],
-    distance: 20,
+    distance: 600,
     isWithMarked: false,
   };
 
@@ -74,7 +74,6 @@ const SearchComponent: React.FC<searchComponentProps> = (
   const { user } = useSelector((state) => state);
 
   const handleSaveSearch = () => {
-    console.log(user);
     if (user.cityLat === 0) {
       setIsProfileModal(true);
       return;

@@ -105,14 +105,14 @@ const PersonCard: React.FC<PersonCardProps> = (
               <Icon
                 name="angle-up"
                 size={45}
-                color="#ced4da"
+                color={colors.separator}
                 type="font-awesome"
               />
               :
               <Icon
                 name="angle-down"
                 size={45}
-                color="#ced4da"
+                color={colors.separator}
                 type="font-awesome"
               />
           }

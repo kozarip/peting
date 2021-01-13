@@ -86,9 +86,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     setResultPersonIndex(0);
     let likedUsers = [];
     let dislikedUsers = [];
-    if (searchParams && searchParams.isWithMarked && user.likes && user.dislikes) {
-      likedUsers = user.likes.map((like) => like.cognitoUserName)
-      dislikedUsers = user.dislikes.map((dislike) => dislike.cognitoUserName)
+    if (searchParams && searchParams.isWithMarked) {
+      if (user.likes) {
+        likedUsers = user.likes.map((like) => like.cognitoUserName)
+      }
+      if (user.dislikes) {
+        dislikedUsers = user.dislikes.map((dislike) => dislike.cognitoUserName)
+      }
     }
     const matchedUsers = matches.map((match) => match.cognitoUserName);
     const exceptUsers = {

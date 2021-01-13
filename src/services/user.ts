@@ -70,6 +70,7 @@ class User {
       email: this.currentCognitoUserAttributes.attributes.email,
       firstName: this.currentCognitoUserAttributes.attributes.given_name,
       surName: this.currentCognitoUserAttributes.attributes.family_name,
+      isPushNotificationActive: true,
     }
     API.graphql(graphqlOperation(mutations.createUser, { input: newUser }));
   }

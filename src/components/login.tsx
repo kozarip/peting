@@ -17,7 +17,7 @@ import {
 
 const Login: React.FC = () => {
   const ppMarkKey = 'ppMark';
-  const ppUrl = 'http://peting.hu/adatkezeles.html';
+  const ppUrl = 'https://peting.hu/privacy';
   const [ppMark, setPpMark] = useState({
     Google: false,
     Facebook: false,
@@ -68,9 +68,9 @@ const Login: React.FC = () => {
     const ppLink = localizations.t('ppLabel');
     const formattedPPLink = ppLink.split('*&/').map((element, i) => {
       if (i % 2 !== 0) {
-        return <Text style={{...stylePPLink, ...styleLink }}>{element}</Text>;
+        return <Text key={i} style={{...stylePPLink, ...styleLink }}>{element}</Text>;
       } else {
-        return <Text style={stylePPLink}>{element}</Text>;
+        return <Text key={i} style={stylePPLink}>{element}</Text>;
       }
     });
     return formattedPPLink;
@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   },
   PPLinkBox: {
     textAlign: 'center',
+    paddingLeft: 5,
   },
 });
 

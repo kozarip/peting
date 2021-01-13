@@ -37,7 +37,7 @@ const LoveButtons: React.FC<LoveButtonsProps> = (
         <Icon
           name="angle-double-up"
           size={smallIconSize}
-          color="#ced4da"
+          color={colors.separator}
           type="font-awesome"
           raised
         />

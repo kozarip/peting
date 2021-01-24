@@ -39,17 +39,19 @@ exports.handler = async (event) => {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
       if (body.graphqlData.items[0].deviceId && body.graphqlData.items[0].isPushNotificationActive !== false) {
-        country = body.graphqlData.items[0].deviceId.split(',')[1];
+        const country = body.graphqlData.items[0].deviceId.split(',')[1];
         let lang = 'en';
-        switch (country) {
-          case ('Magyarország'):
-            lang = 'hu';
-            break;
-          case ('Deutschland'):
-            lang = 'de';
-            break;
-          default:
-            lang = 'en';
+        if (country) {
+          switch (country) {
+            case ('Magyarország'):
+              lang = 'hu';
+              break;
+            case ('Deutschland'):
+              lang = 'de';
+              break;
+            default:
+              lang = 'en';
+          }
         }
 
         await sendPushNotification(body.graphqlData.items[0].deviceId, type, lang);

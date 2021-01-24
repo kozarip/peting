@@ -62,6 +62,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
       });
       compileImages(images);
     }
+    setIsLoaderActive(false);
   }, [matchChanged]);
 /*
   const setMatchToGlobalState = (match) => {
@@ -97,9 +98,11 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
   };
 
   const orderByNewMessages = (a, b) => {
-    if (a.lastNewMessageSender !== a.cognitoUseName && a.lastNewMessageSender && !b.lastNewMessageSender) {
+    if ((a.lastNewMessageSender !== user.cognitoUserName && a.lastNewMessageSender !== '')
+      || a.lastNewMessageSender === 'new') {
       return -1;
-    } else if (b.lastNewMessageSender !== b.cognitoUseName && !a.lastNewMessageSender) {
+    } else if ((b.lastNewMessageSender !== user.cognitoUserName && b.lastNewMessageSender !== '')
+    || b.lastNewMessageSender === 'new') {
       return 1;
     }
     return 0;
@@ -173,7 +176,7 @@ const MatchScreen: React.FC<MatchScreenProps> = ({ navigation }) => {
           <Text style={styles.title}>{localizations.t('matches')}</Text>
           <Tooltip
             backgroundColor={colors.primary}
-            height={80}
+            height={120}
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={styles.infoText}>

@@ -5,6 +5,9 @@ import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import { fonts } from '../../assets/styles/variables';
 
+/**
+ * NOT USING
+ */
 const CitySelector = ({
   label,
   value,

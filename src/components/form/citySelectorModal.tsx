@@ -18,9 +18,6 @@ import {
   dimensions,
 } from '../../assets/styles/variables';
 
-/**
- * NOT USING
- */
 const CitySelector = ({
   label,
   value,

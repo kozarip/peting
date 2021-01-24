@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Overlay } from 'react-native-elements';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { localizations } from '../../services/localizations';
+import { getLanguage, localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import {
   fonts,
@@ -18,6 +18,9 @@ import {
   dimensions,
 } from '../../assets/styles/variables';
 
+/**
+ * NOT USING
+ */
 const CitySelector = ({
   label,
   value,
@@ -96,7 +99,7 @@ const CitySelector = ({
               query={{
                 // available options: https://developers.google.com/places/web-service/autocomplete
                 key: 'AIzaSyBALxjV_6gBYeTAJLCpEj0rWoF-N3v5t-w',
-                language: 'hu', // language of the results
+                language: getLanguage(), // language of the results
                 types: '(cities)', // default: 'geocode'
               }}
               nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch

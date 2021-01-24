@@ -6,7 +6,7 @@ class Localization {
 
   private localization
 
-  private availableLanguages = ['en', 'hu'];
+  private availableLanguages = ['en', 'hu', 'de'];
 
   private fallbackLanguage = 'en';
 
@@ -14,7 +14,6 @@ class Localization {
 
   private init() {
     i18n.translations = dictionary;
-    console.log(this.language);
     i18n.locale = this.language;
     i18n.fallbacks = true;
     this.localization = i18n;
@@ -22,7 +21,7 @@ class Localization {
 
   private getDefaultLanguage() {
     const expoLanguage = ExpoLocalization.locale.split('-')[0];
-    return this.availableLanguages.includes(expoLanguage) ? expoLanguage : this.fallbackLanguage;
+    return this.validateLanguage(expoLanguage) ? expoLanguage : this.fallbackLanguage;
   }
 
   public getLocalization() {
@@ -33,15 +32,24 @@ class Localization {
   }
 
   public setLanguage(newLanguage) {
-    this.language = newLanguage;
+    this.language = this.validateLanguage(newLanguage) ? newLanguage : this.fallbackLanguage;
+  }
+
+  public getLanguage() {
+    return this.language;
+  }
+
+  private validateLanguage(language) {
+    return this.availableLanguages.includes(language);
   }
 }
 
 const loc = new Localization();
 const localizations = loc.getLocalization();
-const { setLanguage } = loc;
+const { setLanguage, getLanguage } = loc;
 
 export {
   localizations,
   setLanguage,
+  getLanguage,
 };

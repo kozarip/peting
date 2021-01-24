@@ -12,7 +12,6 @@ import { styleTitle } from '../assets/styles/base';
 import { margins, dimensions, colors, fonts } from '../assets/styles/variables';
 import { styleForm } from '../assets/styles/form';
 
-
 const MorePictures = (props) => {
   const personImages = props.allImages.split(',');
   const animalImages = props.allAnimalImages.split(',');
@@ -32,7 +31,7 @@ const MorePictures = (props) => {
           </Text>
           <Tooltip
             backgroundColor={colors.primary}
-            height={80}
+            height={120}
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={styles.infoText}>

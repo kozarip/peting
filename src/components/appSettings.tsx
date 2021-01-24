@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { useSelector, useDispatch } from 'react-redux';
@@ -21,7 +22,6 @@ import { colors, fonts } from '../assets/styles/variables';
 import { styleLink } from '../assets/styles/base';
 import { styleForm } from '../assets/styles/form';
 import Modal from './modal';
-import { images } from '../constants/userFields';
 
 const AppSettings: React.FC = () => {
   const ppUrl = 'https://peting.hu/privacy';
@@ -166,10 +166,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   btnSave: {
+    marginBottom: Platform.OS === 'ios' ? 20 : 0,
     backgroundColor: colors.primary,
   },
   btnRemoveMyUser: {
-    backgroundColor:colors.darkPrimary,
+    backgroundColor: colors.darkPrimary,
   },
   checkBox: {
     backgroundColor: '#fff',

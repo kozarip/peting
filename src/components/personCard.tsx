@@ -67,7 +67,7 @@ const PersonCard: React.FC<PersonCardProps> = (
           {connectedEmotions && connectedEmotions.length > 0 &&
             <Tooltip
               backgroundColor={colors.primary}
-              height={80}
+              height={120}
               width={dimensions.fullWidth * 0.8}
               popover={
                 <Text style={styles.toolTipImageText}>

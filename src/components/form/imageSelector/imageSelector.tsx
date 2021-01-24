@@ -111,7 +111,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         </Text>
         <Tooltip
             backgroundColor={colors.primary}
-            height={80}
+            height={120}
             width={dimensions.fullWidth * 0.8}
             popover={
               <Text style={{...styles.imageText, ...styles.toolTipImageText}}>

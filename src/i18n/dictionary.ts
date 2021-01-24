@@ -1,6 +1,6 @@
 const dictionary = {
   en: {
-    slogan: 'Dating app for animal lovers',
+    slogan: 'Sating app for pet owners ',
     search: 'search',
     profile: 'profile',
     settings: 'settings',
@@ -270,7 +270,7 @@ const dictionary = {
     ppLink: 'Elolvasom az *&/Adatvédelmi Nyilatkozatot*&/ és az *&/Általanos Szerződési Felteteleket',
   },
   de: {
-    slogan: 'Die Dating-App der Haustierbesitzer',
+    slogan: 'Dating-App für Haustierbesitzer',
     search: 'suchen',
     profile: 'Profil',
     settings: 'Einstellungen',

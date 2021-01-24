@@ -18,6 +18,7 @@ exports.handler = async (event) => {
             deviceId
             userName
             isPushNotificationActive
+            cityName
           }
         }
       }
@@ -38,7 +39,20 @@ exports.handler = async (event) => {
         graphqlData: graphqlData.data.data.userByCognitoUserName,
       };
       if (body.graphqlData.items[0].deviceId && body.graphqlData.items[0].isPushNotificationActive !== false) {
-        await sendPushNotification(body.graphqlData.items[0].deviceId, type);
+        country = body.graphqlData.items[0].deviceId.split(',')[1];
+        let lang = 'en';
+        switch (country) {
+          case ('Magyarország'):
+            lang = 'hu';
+            break;
+          case ('Deutschland'):
+            lang = 'de';
+            break;
+          default:
+            lang = 'en';
+        }
+
+        await sendPushNotification(body.graphqlData.items[0].deviceId, type, lang);
       }
     } catch (err) {
       console.log('error posting to appsync: ', err);
@@ -72,7 +86,23 @@ const getUserData = (event) => {
   };
 };
 
-const sendPushNotification = async (token, type) => {
+const sendPushNotification = async (token, type, lang) => {
+  let newMessage = 'New message';
+  let newMatch = 'New match';
+  switch (lang) {
+    case ('de'):
+      newMessage = 'Neue Nachricht';
+      newMatch = 'Neues Spiel';
+      break;
+    case ('hu'):
+      newMessage = 'Új üzeneteted érkezett';
+      newMatch = 'Új üzeneteted érkezett';
+      break;
+    default:
+      newMessage = 'New message';
+      newMatch = 'New match';
+  }
+
   // Android sender
   if (token.length > 64) {
     console.log(`Android | type: ${type} | Token: ${token}`);
@@ -89,14 +119,14 @@ const sendPushNotification = async (token, type) => {
         'apns-collapse-id': type,
         data: {
           experienceId: '@kozarip/peting',
-          message: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+          message: type === 'message' ? newMessage : newMatch,
           priority: 'high',
           badge: 1,
           categoryId: type,
         },
         aps: {
           alert: {
-            title: type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van',
+            title: type === 'message' ? newMessage : newMatch,
           },
           category: type,
           badge: 1,
@@ -128,7 +158,7 @@ const sendPushNotification = async (token, type) => {
       const apnProvider = await new apn.Provider(options);
 
       notification.expiry = Math.floor(Date.now() / 1000) + 3600 * 24 * 5;
-      notification.title = type === 'message' ? 'Új üzeneteted érkezett' : 'Új matched van';
+      notification.title = type === 'message' ? newMessage : newMatch;
       notification.topic = 'host.exp.exponent.peting';
       notification.urlArgs = [];
 

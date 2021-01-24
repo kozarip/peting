@@ -23,6 +23,9 @@
                     "Id": "f9c16ef10fb74cc1955dbaa5972606df",
                     "Region": "eu-central-1"
                 }
+            },
+            "function": {
+                "notificatonApi": {}
             }
         }
     },

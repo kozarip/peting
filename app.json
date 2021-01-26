@@ -47,7 +47,8 @@
       "package": "host.exp.exponent.android",
       "googleServicesFile": "google-services.json",
       "useNextNotificationsApi": true,
-      "versionCode": 4
+      "versionCode": 5,
+      "permissions": ["CAMERA", "NOTIFICATIONS"]
     },
     "description": ""
   }

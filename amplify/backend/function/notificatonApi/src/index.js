@@ -98,7 +98,7 @@ const sendPushNotification = async (token, type, lang) => {
       break;
     case ('hu'):
       newMessage = 'Új üzeneteted érkezett';
-      newMatch = 'Új üzeneteted érkezett';
+      newMatch = 'Új matched érkezett';
       break;
     default:
       newMessage = 'New message';

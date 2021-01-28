@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./src/assets/images/logo_white.png",
     "splash": {
@@ -47,7 +47,7 @@
       "package": "host.exp.exponent.android",
       "googleServicesFile": "google-services.json",
       "useNextNotificationsApi": true,
-      "versionCode": 5,
+      "versionCode": 6,
       "permissions": ["CAMERA", "NOTIFICATIONS"]
     },
     "description": ""

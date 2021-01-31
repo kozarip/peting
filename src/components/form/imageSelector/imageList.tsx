@@ -8,16 +8,22 @@ type ImageListProps = {
   images: string[],
   primaryImageIndex: number,
   setSelectedImageIndex: any,
+  hasPrimaryImageIndex: boolean
 }
 
 const ImageList: React.FC<ImageListProps> = (
-  { images, primaryImageIndex, setSelectedImageIndex },
+  {
+    images,
+    primaryImageIndex,
+    setSelectedImageIndex,
+    hasPrimaryImageIndex,
+  },
 ) => {
   return (
     <View style={styles.imageBox}>
       {
         images.map((image, i) => {
-          const primaryClass = i === primaryImageIndex ? styles.primaryImage : {};
+          const primaryClass = (i === primaryImageIndex) && hasPrimaryImageIndex ? styles.primaryImage : {};
           return (
             <TouchableOpacity
               key={i}

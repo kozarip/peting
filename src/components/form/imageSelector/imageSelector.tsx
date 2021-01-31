@@ -25,10 +25,11 @@ type ImageSelectorProps = {
   type: string,
   removeImage: any,
   mandatory: boolean,
+  hasPrimaryImageIndex: boolean
 }
 
 const ImageSelector: React.FC<ImageSelectorProps> = (
-  { images, primaryImageIndex, setValue, type, removeImage, title, mandatory }
+  { images, primaryImageIndex, setValue, type, removeImage, title, mandatory, hasPrimaryImageIndex }
 ) => {
   const initialMaxImagesNumber = 5;
   const [selectedImageIndex, setSelectedImageIndex] = useState(-1);;
@@ -74,6 +75,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
   }
 
   const setPrimary = () => {
+    console.log(type);
     setValue(createNewTypeObject('primaryImageIndex', selectedImageIndex));
     closeSelectedImageOverlay();
   }
@@ -89,7 +91,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         handleClose={closeSelectedImageOverlay}
         isVisible={selectedImageIndex > -1}
         description={localizations.t('choose')}
-        buttonPrimaryText={localizations.t('forPrimaryImage')}
+        buttonPrimaryText={hasPrimaryImageIndex ? localizations.t('forPrimaryImage') : false}
         handlePressButtonPrimary={setPrimary}
         buttonSecondaryText={localizations.t('removeImage')}
         handlePressButtonSecondary={() => { setIsActiveConfirmImageDeleteModal(true); }}
@@ -109,24 +111,27 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
           {title}
           {mandatory && <Text style={styleForm.mandatory}> *</Text>}
         </Text>
-        <Tooltip
-            backgroundColor={colors.primary}
-            height={120}
-            width={dimensions.fullWidth * 0.8}
-            popover={
-              <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
-               {localizations.t('imageUploadInfo')}
-              </Text>
-            }
-          >
-            <Icon
-              name="info"
-              size={10}
-              reverse
-              color={colors.primary}
-              type="font-awesome"
-            />
-          </Tooltip>
+        {
+          hasPrimaryImageIndex &&
+          <Tooltip
+              backgroundColor={colors.primary}
+              height={120}
+              width={dimensions.fullWidth * 0.8}
+              popover={
+                <Text style={{...styles.imageText, ...styles.toolTipImageText}}>
+                {localizations.t('imageUploadInfo')}
+                </Text>
+              }
+            >
+              <Icon
+                name="info"
+                size={10}
+                reverse
+                color={colors.primary}
+                type="font-awesome"
+              />
+            </Tooltip>
+        }
       </View>
       <View style={styles.imageCardHeader}>
         {
@@ -140,6 +145,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = (
         images={images}
         primaryImageIndex={primaryImageIndex}
         setSelectedImageIndex={setSelectedImageIndex}
+        hasPrimaryImageIndex={hasPrimaryImageIndex}
       />
       {
         maxImageNumber > 0 &&

@@ -26,6 +26,7 @@ const SettingsScreen = ({ navigation, route }) => {
   const [userAttributes, setUserAttributes] = useState({});
   const [isNewUser, setIsNewUser] = useState(route.params.newUser || false);
   const [isLoaderActive, setIsLoaderActive] = useState(false);
+  const [isActiveSaveModal, setIsActiveSaveModal] = useState(false);
   const loggedInUser = new User();
   const dispatch = useDispatch();
 
@@ -39,8 +40,11 @@ const SettingsScreen = ({ navigation, route }) => {
     });
   }, []);
 
-  const saveUser = (modifiedUser) => {
+  const saveUser = (modifiedUser, isWithModal = false) => {
     dispatch(setUser({ user: modifiedUser }));
+    if (isWithModal) {
+      setIsActiveSaveModal(true);
+    }
   };
 
   const searchRoute = () => (
@@ -56,6 +60,8 @@ const SettingsScreen = ({ navigation, route }) => {
       userAttributes={userAttributes}
       saveUser={saveUser}
       setUserAttributes={setUserAttributes}
+      isActiveSaveModal={isActiveSaveModal}
+      setIsActiveSaveModal={setIsActiveSaveModal}
     />
   );
   const appSettingsRoute = () => (

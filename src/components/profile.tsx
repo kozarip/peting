@@ -40,9 +40,17 @@ type profileProps = {
   userAttributes: any,
   saveUser: any,
   setUserAttributes: any,
+  isActiveSaveModal: boolean
+  setIsActiveSaveModal: any,
 }
 
-const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttributes }) => {
+const Profile: React.FC<profileProps> = ({
+  userAttributes,
+  saveUser,
+  setUserAttributes,
+  isActiveSaveModal,
+  setIsActiveSaveModal,
+}) => {
   const initialProfileUser: UserType = {
     userName: '',
     firstName: '',
@@ -154,6 +162,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
         newAnimalImages, profileUser.cognitoUserName,
       );
 
+      setIsActiveRequireModal(true);
       Promise.all([newKeysPromise, newAnimalKeysPromise]).then((newKeys: any) => {
         const modifiedProfileUser = { ...{}, ...profileUser };
         const oldImages = userAttributes.images || [];
@@ -173,10 +182,9 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           || modifiedProfileUser.images[0] === '[]'
         ) {
           setErrorFields(['animalImages', 'images']);
-          setIsActiveRequireModal(true);
         } else {
           setUserAttributes({ ...userAttributes, ...modifiedProfileUser });
-          saveUser({ ...userAttributes, ...modifiedProfileUser });
+          saveUser({ ...userAttributes, ...modifiedProfileUser }, true);
         }
         setIsLoaderActive(false);
       });
@@ -237,6 +245,13 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
           description={localizations.t('load')}
         />
         <Modal
+          iconName="smile-o"
+          isVisible={isActiveSaveModal}
+          description={localizations.t('successfulSave')}
+          buttonPrimaryText={localizations.t('agree')}
+          handlePressButtonPrimary={() => { setIsActiveSaveModal(false); }}
+        />
+        <Modal
           iconName="exclamation"
           iconColor={colors.darkPrimary}
           isVisible={isActiveRequireModal}
@@ -253,6 +268,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             images={profileUser.images || []}
             title={localizations.t('images')}
             removeImage={handleRemoveImage}
+            hasPrimaryImageIndex
           />
           <ImageSelector
             type="animalImages"
@@ -262,6 +278,7 @@ const Profile: React.FC<profileProps> = ({ userAttributes, saveUser, setUserAttr
             images={profileUser.animalImages || []}
             title={localizations.t('animalImages')}
             removeImage={handleRemoveImage}
+            hasPrimaryImageIndex={false}
           />
           <Text style={styleForm.cardTitle}>{localizations.t('baseData')}</Text>
           <TextBox

@@ -344,7 +344,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
               title="Match!"
               description={localizations.t('congratsDate')}
               buttonSecondaryText={localizations.t('close')}
-              iconName="heart"connectedEmotions
+              iconName="heart"
               iconColor={colors.primary}
               handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
             />

@@ -24,7 +24,11 @@ type PersonCardProps = {
 }
 
 const PersonCard: React.FC<PersonCardProps> = (
-  { person, navigation, connectedEmotions, handlePressConectedEmotions }
+  { person,
+    navigation,
+    connectedEmotions,
+    handlePressConectedEmotions
+  }
 ) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);

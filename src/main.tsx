@@ -45,11 +45,9 @@ const Main = ({ navigation }) => {
         } else {
           userData.isPushNotificationActive = true;
         }
-        if (!userData.deviceId) {
-          const token = await registerForPushNotificationsAsync();
-          console.log(token);
-          userData.deviceId = token.data;
-        }
+        const token = await registerForPushNotificationsAsync();
+        console.log(token);
+        userData.deviceId = token.data;
         dispatch(setGlobalSearchParams({
           searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
         }));

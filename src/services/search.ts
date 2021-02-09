@@ -15,7 +15,7 @@ class Search {
     }
     if (searchParams) {
       for (let [key, value] of Object.entries(searchParams)) {
-        if (value || (key === 'gender' && value !== null )) {
+        if (value || (key === 'gender' && value !== null ) ) {
           if (key === 'exceptUsers' && Array.isArray(value)) {
             filter.filter['and'] = value.map((v) => { return {'cognitoUserName': {'ne' : v}}})
           }
@@ -27,7 +27,9 @@ class Search {
             filter.filter['cityLat'] = { gte: distances.minLat, lte: distances.maxLat };
             filter.filter['cityLng'] = { gte: distances.minLng, lte: distances.maxLng };
           }
-          if (equalValues.includes(key)) {
+          if (key === 'gender' && value === -1) {
+            filter.filter['or'] = [0, 1].map((v) => { return {'gender': {'eq' : v}}})
+          } else if (equalValues.includes(key)) {
             filter.filter[key] = { eq: value }
           }
           if (intervalValues.includes(key)) {
@@ -50,10 +52,15 @@ class Search {
         }
       }
     }
+    // console.log(filter);
     return await API.graphql(graphqlOperation(queries.searchUsers, filter));
   };
 
   calculateCoordinates(currentCity, distance) {
+    if (currentCity.lat === null || currentCity.lng === null) {
+      currentCity.lat = 47.7883949;
+      currentCity.lng = 18.7434452;
+    }
     const distanceLat = 0.005360631 * distance;
     const distanceLng = 0.010580781 * distance;
     const maxLat = currentCity.lat + distanceLat;

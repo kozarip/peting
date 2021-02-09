@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Overlay } from 'react-native-elements';
-import ImageView from 'react-native-image-view';
 import ImageBox from './imageBox';
 import ImageStore from '../services/imageStore';
 import MorePictures from './morePictures';

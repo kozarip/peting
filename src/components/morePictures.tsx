@@ -16,7 +16,6 @@ const MorePictures = (props) => {
   const personImages = props.allImages.split(',');
   const animalImages = props.allAnimalImages.split(',');
   const name = props.name || '';
-  const age = props.age > 0 ? props.age : '';
   const animalName = props.animalName || '';
   const { handleClose } = props;
   const [acticveImageNumber, setActicveImageNumber] = useState(1);

@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, TextInput, Platform } from 'react-native';
+import { View, Text, TextInput, Platform, Alert } from 'react-native';
+import { localizations } from '../../services/localizations';
 import { styleForm } from '../../assets/styles/form';
 import { colors } from '../../assets/styles/variables';
 import { createNewTypeObject } from './formHelpers';
@@ -42,6 +43,10 @@ const TextBox: React.FC<TextBoxProps> = ({
         keyboardType={keyboardType || defaultKeyBoardType}
         style={{ ...styleForm.cardInput, ...placeHolderStyle}}
         onChangeText={(changedText) => {
+          if (type === 'age' && changedText.length >= 2 && parseInt(changedText, 10) < 18) {
+            Alert.alert(localizations.t('underAge'));
+            return false;
+          }
           setValue(createNewTypeObject(type, changedText));
         }}
         editable={

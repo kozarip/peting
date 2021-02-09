@@ -134,6 +134,7 @@ const dictionary = {
     animalSize: 'Animal size',
     ppLabel: 'I have read and accept the *&/Privacy Policy*&/ and the *&/Terms and Conditions.',
     ppLink: 'Read the *&/Privacy Policy*&/ and the *&/Terms and Conditions',
+    underAge: 'Minimum age: 18',
   },
   hu: {
     slogan: 'Az állatbarátok társkeresője',
@@ -270,6 +271,7 @@ const dictionary = {
     getNotifications: 'Kérek értesítést',
     ppLabel: 'Elolvastam és elfogadom az *&/Adatvédelmi Nyilatkozatot*&/ és az *&/Általanos Szerződési Felteteleket',
     ppLink: 'Elolvasom az *&/Adatvédelmi Nyilatkozatot*&/ és az *&/Általanos Szerződési Felteteleket',
+    underAge: 'Minimum életkor: 18',
   },
   de: {
     slogan: 'Dating-App für Haustierbesitzer',
@@ -406,6 +408,7 @@ const dictionary = {
     getNotifications: 'Ich möchte Benachrichtigungen erhalten',
     ppLabel: 'Ich habe es gelesen und akzeptiere die *&/Datenschutzrichtlinie*&/ und die *&/Allgemeinen Geschäftsbedingungen gelesen.',
     ppLink: 'Ich habe die *&/Datenschutzerklärung*&/ und die *&/Allgemeinen Geschäftsbedingungen gelesen',
+    underAge: 'Mindestalter: 18',
   },
 };
 

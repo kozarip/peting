@@ -13,6 +13,46 @@
           "package_name": "host.exp.exponent.android"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "1006344582861-nj9ivgr3gosg8ucbokohsnama3mdq9lv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "host.exp.exponent.android",
+            "certificate_hash": "e169c1b4bad556732a5160add50b2271dbd15409"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn1yyzhe6WAWhipzp1S7snQvxFf9hYND8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1006344582861-favl7llics7gkb9dvgped0l563e0lg7e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1006344582861-a9eq9kdad4leab41lmm5112ilq7dgo5q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "host.exp.exponent.peting"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1006344582861:android:bf5a1c74f85e6c04f75b84",
+        "android_client_info": {
+          "package_name": "host.exp.exponent.peting"
+        }
+      },
       "oauth_client": [],
       "api_key": [
         {
@@ -27,10 +67,10 @@
               "client_type": 3
             },
             {
-              "client_id": "1006344582861-s8bvjp727k63ir2k7ea0n784r7opje6s.apps.googleusercontent.com",
+              "client_id": "1006344582861-a9eq9kdad4leab41lmm5112ilq7dgo5q.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "host.exp.exponent.ios"
+                "bundle_id": "host.exp.exponent.peting"
               }
             }
           ]

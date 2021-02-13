@@ -15,6 +15,7 @@ export const colors = {
   separator: '#999',
   facebook: '#4267B2',
   google: '#DB4437',
+  apple: '#313131',
 };
 
 export const margins = {

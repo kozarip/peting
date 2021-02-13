@@ -99,7 +99,7 @@ const SettingsScreen = ({ navigation, route }) => {
         title={localizations.t('welcome')}
         iconColor={colors.primary}
         description={localizations.t('fillData')}
-        buttonPrimaryText="Rendben"
+        buttonPrimaryText={localizations.t('agree')}
         handlePressButtonPrimary={() => { setIsNewUser(false); }}
       />
       <ImageBackground

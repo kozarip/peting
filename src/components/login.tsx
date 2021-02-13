@@ -21,6 +21,7 @@ const Login: React.FC = () => {
   const [ppMark, setPpMark] = useState({
     Google: false,
     Facebook: false,
+    SignInWithApple: false,
   });
   const [isActivePpModal, setIsActivePpModal] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState('');
@@ -28,15 +29,17 @@ const Login: React.FC = () => {
   useEffect(() => {
     const savedPpMarkGoogle = LocalStorage.getItem(`${ppMarkKey}Google`);
     const savedPpMarkFacebook = LocalStorage.getItem(`${ppMarkKey}Facebook`);
-    Promise.all([savedPpMarkGoogle, savedPpMarkFacebook]).then((values) => {
+    const savedPpMarkApple = LocalStorage.getItem(`${ppMarkKey}SignInWithApple`);
+    Promise.all([savedPpMarkGoogle, savedPpMarkFacebook, savedPpMarkApple]).then((values) => {
       setPpMark({
         Google: values[0] === 'true',
         Facebook: values[1] === 'true',
+        SignInWithApple: values[2] === 'true',
       });
     });
   }, []);
 
-  const handlePressLoginButton = (provider: 'Google' | 'Facebook') => {
+  const handlePressLoginButton = (provider: 'Google' | 'Facebook' | 'SignInWithApple') => {
     if (ppMark[provider]) {
       if (provider) {
         Auth.federatedSignIn({ provider: provider });
@@ -144,6 +147,23 @@ const Login: React.FC = () => {
         }}
         title={localizations.t('googleLogin')}
       />
+      <Button
+        icon={
+          <Icon
+            iconStyle={styles.googleIcon}
+            name="apple"
+            size={30}
+            color="white"
+            type="font-awesome"
+          />
+        }
+        buttonStyle={{ ...styles.button, ...styles.appleButton }}
+        // @ts-ignore
+        onPress={() => {
+          handlePressLoginButton('SignInWithApple');
+        }}
+        title={localizations.t('appleLogin')}
+      />
     </View>
 
   );
@@ -171,6 +191,9 @@ const styles = StyleSheet.create({
   },
   googleButton: {
     backgroundColor: colors.google,
+  },
+  appleButton: {
+    backgroundColor: colors.apple,
   },
   icon: {
     marginRight: margins.sm,

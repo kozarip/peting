@@ -19,7 +19,7 @@
     "@react-native-community/netinfo": "5.9.6",
     "@react-native-community/push-notification-ios": "^1.6.0",
     "@react-navigation/native": "^5.1.5",
-    "@react-navigation/stack": "^5.2.10",
+    "@react-navigation/stack": "^5.6.0",
     "@types/": "ptomasroos/react-native-multi-slider",
     "@types/node": "^13.11.0",
     "@types/react-native-tab-view": "^2.3.0",

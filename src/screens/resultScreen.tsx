@@ -317,7 +317,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const isHasResult = () => {
-    return resultPerson.age > -1 && resultPerson.userName !== '';
+    return (resultPerson.age > -1 && resultPerson.userName !== '') && user.cityName !== null;
   };
 
   return (
@@ -363,14 +363,26 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                   color={colors.grey}
                   type="font-awesome"
                 />
-                <Text style={styles.title}>{localizations.t('noDate')}</Text>
+                <Text style={styles.title}>
+                  {
+                    user.cityName
+                      ? localizations.t('noDate')
+                      : localizations.t('noProfileSave')
+                  }
+                </Text>
                 <Button
                   buttonStyle={styleForm.btnPrimary}
                   titleStyle={{ fontSize: fonts.heading2 }}
-                  title={localizations.t('backToSearch')}
+                  title={
+                    user.cityName
+                      ? localizations.t('backToSearch')
+                      : localizations.t('backToProfile')
+                  }
                   onPress={() => {
                     dispatch(setActiveMenuId(3));
-                    navigation.navigate('Settings', { newUser: false });
+                    user.cityName
+                      ? navigation.navigate('Settings', { newUser: false })
+                      : navigation.navigate('Settings', { newUser: true });
                   }}
                 />
               </Card>

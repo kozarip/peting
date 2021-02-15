@@ -7,8 +7,9 @@ import {
   Image,
 } from 'react-native';
 import { Card, Icon, Tooltip } from 'react-native-elements';
+import Communications from 'react-native-communications';
 import { isSmallScreen } from '../services/shared';
-import { localizations } from '../services/localizations';
+import { getLanguage, localizations } from '../services/localizations';
 import animalImages from '../constants/animalImages';
 import Bio from './bio';
 import Details from './details';
@@ -24,15 +25,23 @@ type PersonCardProps = {
 }
 
 const PersonCard: React.FC<PersonCardProps> = (
-  { person,
+  {
+    person,
     navigation,
     connectedEmotions,
-    handlePressConectedEmotions
-  }
+    handlePressConectedEmotions,
+  },
 ) => {
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const plusTitleClass = person.userName.length > 14 ? { fontSize: 24 } : {};
+
+  const handlePressUndesired = () => {
+    const subject = localizations.t('undesiredSubject');
+    const message = localizations.t('undesiredMessage') + person.id;
+    const to = 'info@peting.hu';
+    Communications.email([to], null, null, subject, message);
+  };
 
   return (
     <Card
@@ -42,6 +51,12 @@ const PersonCard: React.FC<PersonCardProps> = (
       }}
     >
       <View style={styles.titleContainer}>
+        <View style={styles.undesiredBox}>
+          <EmotionMark
+            type="undesired"
+            handlePressConectedEmotions={handlePressUndesired}
+          />
+        </View>
         <View style={styles.titleContainer}>
           <Text style={{
             ...styles.name,
@@ -163,6 +178,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  undesiredBox: {
+    position: 'absolute',
+    left: -15,
+    top: -20,
   },
   name: {
     color: colors.primary,

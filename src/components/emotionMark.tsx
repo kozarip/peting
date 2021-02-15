@@ -6,7 +6,7 @@ import { colors } from '../assets/styles/variables';
 import Modal from './modal';
 
 type emotionMarkProps = {
-  type: 'dislikes' | 'likes',
+  type: 'dislikes' | 'likes' | 'undesired',
   handlePressConectedEmotions: any,
 }
 
@@ -20,16 +20,17 @@ const EmotionMark: React.FC<emotionMarkProps> = ({ type, handlePressConectedEmot
       >
         <Icon
           containerStyle={styles.emotionMark}
-          name="heart"
-          size={20}
-          color={type === 'dislikes' ? '#000' : colors.primary}
+          name={type === 'undesired' ? 'exclamation-circle' : 'heart'}
+          size={type === 'undesired' ? 12 : 20}
+          color={type === 'dislikes' || type === 'undesired' ? '#000' : colors.primary}
           type="font-awesome"
+          raised={type === 'undesired'}
         />
       </TouchableOpacity>
       <Modal
         isVisible={isActiveRemoveEmotionModal}
         iconName="trash"
-        description={localizations.t('removeConfirmMark')}
+        description={type === 'undesired' ? localizations.t('undesired') : localizations.t('removeConfirmMark')}
         buttonPrimaryText={localizations.t('yes')}
         buttonSecondaryText={localizations.t('no')}
         handlePressButtonPrimary={() => {

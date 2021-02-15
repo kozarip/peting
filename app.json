@@ -35,10 +35,7 @@
         }
       },
       "infoPlist": {
-        "UIBackgroundModes": [
-          "location",
-          "fetch"
-        ]
+        "NSPhotoLibraryUsageDescription": "Peting needs to access your camera roll so that you can upload images. Images are necessary to create your own profile. Your images will not be shared with any 3rd party services.",
       },
       "googleServicesFile": "./GoogleService-Info.plist"
     },

@@ -1,6 +1,6 @@
 const dictionary = {
   en: {
-    slogan: 'Sating app for pet owners ',
+    slogan: 'Dating app for pet owners ',
     search: 'search',
     profile: 'profile',
     settings: 'settings',
@@ -22,9 +22,9 @@ const dictionary = {
     user: 'User',
     removeProfile: 'Delete my profile',
     notifications: 'Notifications',
-    fbLogin: 'Facebook login',
-    googleLogin: 'Google login',
-    appleLogin: 'Apple login',
+    fbLogin: 'Sign in with Facebook',
+    googleLogin: 'Sign in with Google',
+    appleLogin: 'Sign in with Apple',
     imageZoomInfo: 'You can zoom with two fingers',
     markHeartInfo: 'The heart indicates that you have already pressed the like or dislike button. You can delete this by clicking again.',
     chatWith: 'Chat with:',

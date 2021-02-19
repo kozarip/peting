@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./src/assets/images/logo_white.png",
     "splash": {
@@ -28,7 +28,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "host.exp.exponent.peting",
-      "buildNumber": "1.0.5",
+      "buildNumber": "1.0.6",
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.1006344582861-s8bvjp727k63ir2k7ea0n784r7opje6s"
@@ -44,7 +44,7 @@
       "package": "host.exp.exponent.peting",
       "googleServicesFile": "google-services.json",
       "useNextNotificationsApi": true,
-      "versionCode": 10,
+      "versionCode": 11,
       "permissions": ["CAMERA", "NOTIFICATIONS"]
     },
     "description": ""

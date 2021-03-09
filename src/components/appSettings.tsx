@@ -105,7 +105,7 @@ const AppSettings: React.FC = () => {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <ScrollView
         keyboardShouldPersistTaps="always"
         style={styles.container}
@@ -159,7 +159,6 @@ const AppSettings: React.FC = () => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

@@ -41,7 +41,7 @@
     },
     "facebookAppId": "858572841358752",
     "android": {
-      "package": "host.exp.exponent.peting",
+      "package": "host.exp.exponent.android",
       "googleServicesFile": "google-services.json",
       "useNextNotificationsApi": true,
       "versionCode": 11,

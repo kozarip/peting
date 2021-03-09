@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  Text,
   View,
   StyleSheet,
   ImageBackground,
@@ -17,7 +16,7 @@ import AppSettings from '../components/appSettings';
 import SearchComponent from '../components/search';
 
 import { styleTitle, styleBackground } from '../assets/styles/base';
-import { margins, colors, fonts } from '../assets/styles/variables';
+import { margins, colors } from '../assets/styles/variables';
 import { setUser } from '../store/action';
 import User from '../services/user';
 import Modal from '../components/modal';

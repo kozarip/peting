@@ -132,14 +132,18 @@ const setGlobalMatches = (
 };
 
 const createMatchData = (match, fullUserData) => {
-  return {
-    id: match.id,
-    cognitoUserName: fullUserData.cognitoUserName,
-    name: fullUserData.userName,
-    avatar_url: fullUserData.images[fullUserData.primaryImageIndex],
-    subtitle: match.timestamp.split('T', 1).join(''),
-    lastNewMessageSender: match.lastNewMessageSender,
-  };
+  if (match && fullUserData && fullUserData.userName) {
+    const primaryIndex = fullUserData.primaryImageIndex ? fullUserData.primaryImageIndex : 0;
+    const avatarUrl = fullUserData.images ? fullUserData.images[primaryIndex] : '';
+    return {
+      id: match.id,
+      cognitoUserName: fullUserData.cognitoUserName,
+      name: fullUserData.userName,
+      avatar_url: avatarUrl,
+      subtitle: match.timestamp.split('T', 1).join(''),
+      lastNewMessageSender: match.lastNewMessageSender,
+    };
+  }
 };
 
 export {

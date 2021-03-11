@@ -45,7 +45,7 @@ const amplifyConfig = {
 const expoScheme = "peting://"
 // Technically you need to pass the correct redirectUrl to the web browser.
 let redirectUrl = Linking.makeUrl();
-if (redirectUrl.startsWith('exp://1')) {
+if (redirectUrl.startsWith('exp://1') || redirectUrl.startsWith('exp://fc')) {
   // handle simulator(localhost) and device(Lan)
   redirectUrl = redirectUrl + '/--/';
 } else

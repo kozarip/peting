@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Alert } from 'react-native';
 import { graphqlOperation, API } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
@@ -116,8 +116,17 @@ const setGlobalMatches = (
               navigationReset('Result', {});
             }
           }
+        } else {
+          Alert.alert('There has been a problem with the match id downloading');
         }
       });
+    } else {
+      navigation.navigate('Result');
+      if (Platform.OS === 'android') {
+        if (typeof navigationReset === 'function') {
+          navigationReset('Result', {});
+        }
+      }
     }
   });
 };

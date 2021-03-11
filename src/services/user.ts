@@ -6,6 +6,8 @@ import * as queries from '../graphql/queries';
 import * as mutations from '../graphql/mutations';
 import * as subscriptions from '../graphql/subscriptions';
 import { UserType } from '../types/user';
+import { exception } from 'console';
+import { Alert } from 'react-native';
 
 class User {
   private currentCognitoUserAttributes: any;
@@ -50,8 +52,12 @@ class User {
           return false;
         }
         return true;
-      })
-    })
+      }).catch((error) => {
+        Alert.alert('There has been a problem with user exist checking: ' + error.message);
+      });
+    }).catch((error) => {
+      Alert.alert('There has been a problem with the init: ' + error.message);
+    });
   }
 
   public async isCurrentUserExist() {

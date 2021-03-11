@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   ImageBackground,
   StyleSheet,
   Platform,
+  Alert,
 } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { useDispatch } from 'react-redux';
@@ -11,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import User from './services/user';
 import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
+import { localizations } from './services/localizations';
 import { notificationPermission, registerForPushNotificationsAsync } from './services/pushNotifications';
 import {
   setGlobalSearchParams,
@@ -19,6 +21,7 @@ import {
   setChatIds,
   setHasNotification,
 } from './store/action';
+import Modal from './components/modal';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -32,44 +35,55 @@ const Main = ({ navigation }) => {
   const user = new User();
   const chat = new Chat();
   const dispatch = useDispatch();
+  const [isLoaderActive, setIsLoaderActive] = useState(false);
 
   useEffect(() => {
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
-    user.crateNewUserIfNotExist().then(async (exist) => {
-      if (exist) {
-        const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
-        const permission = await notificationPermission();
-        if (userData.isPushNotificationActive === false || permission !== 'granted') {
-          userData.isPushNotificationActive = false;
+    try {
+      user.crateNewUserIfNotExist().then(async (exist) => {
+        if (exist) {
+          if (user.getCurrentUserAttributes()) {
+            const userData = user.getCurrentUserAttributes().data.userByCognitoUserName.items[0];
+            const permission = await notificationPermission();
+            if (userData.isPushNotificationActive === false || permission !== 'granted') {
+              userData.isPushNotificationActive = false;
+            } else {
+              userData.isPushNotificationActive = true;
+            }
+            const token = await registerForPushNotificationsAsync();
+            console.log(token);
+            userData.deviceId = token.data;
+            dispatch(setGlobalSearchParams({
+              searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
+            }));
+            dispatch(setUser({
+              user: userData,
+            }));
+            setGlobalChatIDs(userData.cognitoUserName);
+            setGlobalMatches(
+              user,
+              userData.cognitoUserName,
+              setMatchToGlobalState,
+              handleNotification,
+              navigation,
+              navigationReset,
+            );
+          } else {
+            Alert.alert('The user doesn\'t have properties');
+          }
         } else {
-          userData.isPushNotificationActive = true;
+          navigation.navigate('Settings', { newUser: true });
+          if (Platform.OS === 'android') {
+            navigationReset('Settings', { newUser: true });
+          }
         }
-        const token = await registerForPushNotificationsAsync();
-        console.log(token);
-        userData.deviceId = token.data;
-        dispatch(setGlobalSearchParams({
-          searchParams: user.getCurrentUserAttributes().data.userByCognitoUserName.items[0].search,
-        }));
-        dispatch(setUser({
-          user: userData,
-        }));
-        setGlobalMatches(
-          user,
-          userData.cognitoUserName,
-          setMatchToGlobalState,
-          handleNotification,
-          navigation,
-          navigationReset,
-        );
-        setGlobalChatIDs(userData.cognitoUserName);
-      } else {
-        navigation.navigate('Settings', { newUser: true });
-        if (Platform.OS === 'android') {
-          navigationReset('Settings', { newUser: true });
-        }
-      }
-    });
+      }).catch((error) => {
+        Alert.alert('There has been a problem with the user properties downloading ' + error.message);
+      });
+    } catch (error) {
+      Alert.alert(`Error: ${error.message}`);
+    }
   }, []);
 
   const handleNotification = (newNotification) => {
@@ -103,6 +117,8 @@ const Main = ({ navigation }) => {
         IDs.push(myChat.id);
       });
       dispatch(setChatIds({ chatIDs: IDs }));
+    }).catch((error) => {
+      Alert.alert('There has been a problem with set global chat ids: ' + error.message);
     });
   };
 
@@ -110,6 +126,11 @@ const Main = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <Modal
+        iconName="spinner"
+        isVisible={isLoaderActive}
+        description={localizations.t('load')}
+      />
       <ImageBackground
         source={image}
         style={styles.container}

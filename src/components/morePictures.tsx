@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { Button, Tooltip, Icon } from 'react-native-elements';
 import GallerySwiper from 'react-native-gallery-swiper';
+import { SliderBox } from 'react-native-image-slider-box';
 import { localizations } from '../services/localizations';
 import { styleTitle } from '../assets/styles/base';
 import { margins, dimensions, colors, fonts } from '../assets/styles/variables';
@@ -47,25 +48,25 @@ const MorePictures = (props) => {
             />
           </Tooltip>
         </View>
-        <GallerySwiper
-          style={styles.slider}
-          enableTranslate={false}
-          pageMargin={margins.sm}
-          onPageScroll={({position}) => setActicveImageNumber(position + 1)}
-          images={personImages.map((image) => { return { uri: image }; })}
+        <SliderBox
+          resizeMethod="resize"
+          resizeMode="cover"
+          images={personImages}
+          parentWidth={dimensions.fullWidth}
+          sliderBoxHeight={dimensions.fullWidth}
         />
-        <Text style={styles.counter}>{acticveImageNumber} / {personImages.length}</Text>
+        {/* <Text style={styles.counter}>{acticveImageNumber} / {personImages.length}</Text> */}
         <Text style={styles.title}>
           {animalName}
         </Text>
-        <GallerySwiper
-          style={styles.slider}
-          enableTranslate={false}
-          pageMargin={margins.sm}
-          onPageScroll={({position}) => setActicveAnimalImageNumber(position + 1)}
-          images={animalImages.map((image) => { return { uri: image }; })}
+        <SliderBox
+          resizeMethod="resize"
+          resizeMode="cover"
+          images={animalImages}
+          parentWidth={dimensions.fullWidth}
+          sliderBoxHeight={dimensions.fullWidth}
         />
-        <Text style={styles.counter}>{acticveAnimalImageNumber} / {animalImages.length}</Text>
+        {/* <Text style={styles.counter}>{acticveAnimalImageNumber} / {animalImages.length}</Text> */}
         <Button
           buttonStyle={{ ...styleForm.btnPrimary, ...{ marginHorizontal: 50 } }}
           titleStyle={{ fontSize: fonts.heading2 }}

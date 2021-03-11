@@ -157,7 +157,7 @@ const dictionary = {
     avatarInfo: 'Az avatar képre kattintva, elő tudod hozni a személy profilját',
     close: 'Bezárás',
     noMatch: 'Sajnos még nincs egyezésed',
-    load: 'Loading...',
+    load: 'Betöltés...',
     welcome: 'Üdvözöllek',
     agree: 'Rendben',
     fillData: 'Kérlek töltsd ki az adataidat',

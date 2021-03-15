@@ -81,55 +81,56 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   oldMatchesNumber = matches.length;
 
   useEffect(() => {
-    setIsLoaderActive(true);
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     let likedUsers = [];
     let dislikedUsers = [];
-    if (searchParams && searchParams.isWithMarked) {
-      if (user.likes) {
-        likedUsers = user.likes.map((like) => like.cognitoUserName)
+    if (userHasFilledProfie()) {
+      setIsLoaderActive(true);
+      if (searchParams && searchParams.isWithMarked) {
+        if (user.likes) {
+          likedUsers = user.likes.map((like) => like.cognitoUserName)
+        }
+        if (user.dislikes) {
+          dislikedUsers = user.dislikes.map((dislike) => dislike.cognitoUserName)
+        }
       }
-      if (user.dislikes) {
-        dislikedUsers = user.dislikes.map((dislike) => dislike.cognitoUserName)
-      }
+      const matchedUsers = matches.map((match) => match.cognitoUserName);
+      const exceptUsers = {
+        exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers],
+      };
+      const city = { lat: user.cityLat, lng: user.cityLng };
+      search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
+        userSubscribes.forEach(subscribe => {
+          subscribe.unsubscribe();
+        });
+        if (pressedButton) {
+          if (typeof ResultScreen.loveButtonHandlers[pressedButton] === 'function') {
+            ResultScreen.loveButtonHandlers[pressedButton]
+          }
+        }
+        const { items } = res.data.searchUsers;
+
+        setResultPersons(items.sort(() => Math.random() - 0.5));
+        if (items.length !== 0) {
+          if (resultPersonIndex > resultPersons.length - 1) {
+            setResultPersonIndex(0);
+          }
+          setCurrentResultPerson(0, items);
+        }
+        const subscribes = [];
+        items.forEach((item) => {
+          subscribes.push(userClass.subscribeToUser(item.id, updateResultPerson, items));
+        });
+        setUserSubscribes(subscribes);
+        setIsLoaderActive(false);
+      });
+      matches.forEach((match) => {
+        subscriptionMatch(match, changeGlobalStateMatch);
+        subscriptionRemoveMatch(match, removeFromGlobalStateMatch);
+      });
+      subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
     }
-    const matchedUsers = matches.map((match) => match.cognitoUserName);
-    const exceptUsers = {
-      exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers],
-    };
-    const city = { lat: user.cityLat, lng: user.cityLng };
-    search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
-      userSubscribes.forEach(subscribe => {
-        subscribe.unsubscribe();
-      });
-      if (pressedButton) {
-        if (typeof ResultScreen.loveButtonHandlers[pressedButton] === 'function') {
-          ResultScreen.loveButtonHandlers[pressedButton]
-        }
-      }
-      const { items } = res.data.searchUsers;
-
-      setResultPersons(items.sort(() => Math.random() - 0.5));
-      if (items.length !== 0) {
-        if (resultPersonIndex > resultPersons.length - 1) {
-          setResultPersonIndex(0);
-        }
-        setCurrentResultPerson(0, items);
-      }
-      const subscribes = [];
-      items.forEach((item) => {
-        subscribes.push(userClass.subscribeToUser(item.id, updateResultPerson, items));
-      });
-      setUserSubscribes(subscribes);
-      setIsLoaderActive(false);
-    });
-
-    matches.forEach((match) => {
-      subscriptionMatch(match, changeGlobalStateMatch);
-      subscriptionRemoveMatch(match, removeFromGlobalStateMatch);
-    });
-    subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
   }, [searchParams, pressedButton, matchNumberChanged]);
 
   const changeGlobalStateMatch = (match) => {
@@ -320,6 +321,10 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     return (resultPerson.age > -1 && resultPerson.userName !== '') && user.cityName !== null;
   };
 
+  const userHasFilledProfie = () => {
+    return !!user.cityName;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView style={styles.userContainer}>
@@ -365,7 +370,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                 />
                 <Text style={styles.title}>
                   {
-                    user.cityName
+                    userHasFilledProfie()
                       ? localizations.t('noDate')
                       : localizations.t('noProfileSave')
                   }
@@ -374,13 +379,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                   buttonStyle={styleForm.btnPrimary}
                   titleStyle={{ fontSize: fonts.heading2 }}
                   title={
-                    user.cityName
+                    userHasFilledProfie()
                       ? localizations.t('backToSearch')
                       : localizations.t('backToProfile')
                   }
                   onPress={() => {
                     dispatch(setActiveMenuId(3));
-                    user.cityName
+                    userHasFilledProfie()
                       ? navigation.navigate('Settings', { newUser: false })
                       : navigation.navigate('Settings', { newUser: true });
                   }}

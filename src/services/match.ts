@@ -99,7 +99,9 @@ const setGlobalMatches = (
         resolved.forEach((fullUser: any, i) => {
           const fullUserData = fullUser.data.userByCognitoUserName.items[0];
           if (fullUserData) {
-            globalMatches.push(createMatchData(matches[i], fullUserData));
+            if (fullUserData.userName) {
+              globalMatches.push(createMatchData(matches[i], fullUserData));
+            }
             if (matches[i].lastNewMessageSender
               && (matches[i].lastNewMessageSender !== cognitoUserName
                 || (matches[i].lastNewMessageSender === 'new' && matches[i].user2 === cognitoUserName))

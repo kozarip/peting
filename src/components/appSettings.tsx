@@ -96,9 +96,9 @@ const AppSettings: React.FC = () => {
     const ppLink = localizations.t('ppLink');
     const formattedPPLink = ppLink.split('*&/').map((element, i) => {
       if (i % 2 !== 0) {
-        return <Text style={{...stylePPLink, ...styleLink }}>{element}</Text>;
+        return <Text key={i} style={{...stylePPLink, ...styleLink }}>{element}</Text>;
       } else {
-        return <Text style={stylePPLink}>{element}</Text>;
+        return <Text key={i} style={stylePPLink}>{element}</Text>;
       }
     });
     return formattedPPLink;

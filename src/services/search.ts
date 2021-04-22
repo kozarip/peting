@@ -56,7 +56,7 @@ class Search {
         }
       }
     }
-    console.log(filter);
+    // console.log(filter);
     return await API.graphql(graphqlOperation(queries.searchUsers, filter));
   };
 

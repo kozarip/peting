@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
@@ -71,6 +72,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [userSubscribes, setUserSubscribes] = useState([]);
   const [nextToken, setNextToken] = useState('');
   const [reSearch, setReSearch] = useState(false);
+  const [isResultEnd, setIsResultEnd] = useState(false);
 
   const search = new Search();
   const chat = new Chat();
@@ -81,7 +83,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     matchNumberChanged = !matchNumberChanged;
   }
   oldMatchesNumber = matches.length;
-
   useEffect(() => {
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
@@ -111,17 +112,22 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             ResultScreen.loveButtonHandlers[pressedButton]
           }
         }
-        const { items, nextToken: apiNextToken } = res.data.searchUsers;
+        const { items, nextToken: apiNextToken, total } = res.data.searchUsers;
+        console.log(total);
         setNextToken(apiNextToken);
-        console.log(apiNextToken);
-
         setResultPersons(items.sort(() => Math.random() - 0.5));
         if (items.length !== 0) {
           if (resultPersonIndex > resultPersons.length - 1) {
             setResultPersonIndex(0);
           }
           setCurrentResultPerson(0, items);
+          if (total > 0) {
+            setIsResultEnd(false);
+          }
         } else if (items.length === 0 && nextToken !== '') {
+          if (total > 0) {
+            setIsResultEnd(true);
+          }
           setNextToken('');
           setReSearch((prev) => !prev);
         }
@@ -339,7 +345,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         <View>
           <Modal
             iconName="spinner"
-            isVisible={isLoaderActive}
+            isVisible={isLoaderActive || isResultEnd}
             description={localizations.t('load')}
           />
           <ImageBackground
@@ -361,13 +367,23 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
               iconColor={colors.primary}
               handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
             />
-            {isHasResult() ?
-              <PersonCard
-                person={resultPerson}
-                navigation={navigation}
-                connectedEmotions={emotionsWithTheResultPerson}
-                handlePressConectedEmotions={handlePressConectedEmotions}
-              />
+            {isResultEnd ?
+              <Card containerStyle={styles.noResultBox}>
+                <Icon
+                  name="search"
+                  size={60}
+                  color={colors.grey}
+                  type="font-awesome"
+                />
+              </Card>
+              :
+              isHasResult() ?
+                <PersonCard
+                  person={resultPerson}
+                  navigation={navigation}
+                  connectedEmotions={emotionsWithTheResultPerson}
+                  handlePressConectedEmotions={handlePressConectedEmotions}
+                />
               :
               <Card containerStyle={styles.noResultBox}>
                 <Icon
@@ -398,7 +414,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                       : navigation.navigate('Settings', { newUser: true });
                   }}
                 />
-              </Card>
+                </Card>
             }
             {
               isHasResult() &&

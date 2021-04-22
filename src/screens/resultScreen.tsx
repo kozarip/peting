@@ -69,6 +69,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [isMatchModalActive, setIsMatchModalActive] = useState(false);
   const [emotionsWithTheResultPerson, setEmotionsWithTheResultPerson] = useState([]);
   const [userSubscribes, setUserSubscribes] = useState([]);
+  const [nextToken, setNextToken] = useState('');
+  const [reSearch, setReSearch] = useState(false);
 
   const search = new Search();
   const chat = new Chat();
@@ -100,7 +102,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
         exceptUsers: [...[user.cognitoUserName], ...matchedUsers, ...likedUsers, ...dislikedUsers],
       };
       const city = { lat: user.cityLat, lng: user.cityLng };
-      search.search({ ...searchParams, ...exceptUsers }, city).then((res: any) => {
+      search.search({ ...searchParams, ...exceptUsers }, city, nextToken).then((res: any) => {
         userSubscribes.forEach(subscribe => {
           subscribe.unsubscribe();
         });
@@ -109,7 +111,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             ResultScreen.loveButtonHandlers[pressedButton]
           }
         }
-        const { items } = res.data.searchUsers;
+        const { items, nextToken: apiNextToken } = res.data.searchUsers;
+        setNextToken(apiNextToken);
+        console.log(apiNextToken);
 
         setResultPersons(items.sort(() => Math.random() - 0.5));
         if (items.length !== 0) {
@@ -117,6 +121,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             setResultPersonIndex(0);
           }
           setCurrentResultPerson(0, items);
+        } else if (items.length === 0 && nextToken !== '') {
+          setNextToken('');
+          setReSearch((prev) => !prev);
         }
         const subscribes = [];
         items.forEach((item) => {
@@ -131,7 +138,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       });
       subscriptionMyFutureMatches(user.cognitoUserName, addNewMatch);
     }
-  }, [searchParams, pressedButton, matchNumberChanged]);
+  }, [searchParams, pressedButton, matchNumberChanged, reSearch]);
 
   const changeGlobalStateMatch = (match) => {
     const { index, routes } = navigation.dangerouslyGetState();
@@ -212,8 +219,9 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       setResultPersonIndex((prev) => prev + 1);
       index = resultPersonIndex + 1;
     } else {
-      setResultPersonIndex(0);
-      index = 0;
+      setReSearch((prev) => !prev);
+      //setResultPersonIndex(0);
+      //index = 0;
     }
     if (resultPersons.length > 0) {
       setCurrentResultPerson(index);

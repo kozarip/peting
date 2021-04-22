@@ -4,14 +4,18 @@
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import * as queries from '../graphql/queries';
 import { animalType } from '../constants/userFields';
+import { SEARCH_LIMIT } from '../constants/constanst';
 class Search {
-
-  async search(searchParams: {}, currentCityCoordinates) {
+  async search(searchParams: {}, currentCityCoordinates, nextToken) {
     const intervalValues = ['minHeight', 'maxHeight', 'minAge', 'maxAge'];
     const equalValues = ['gender', 'smokeFrequency'];
     // const arrayValue = ['animalType']
     const filter = {
-      filter: {}
+      filter: { "userName": { "ne": " ", } },
+      limit: SEARCH_LIMIT,
+    }
+    if (nextToken != "") {
+      filter['nextToken'] = nextToken;
     }
     if (searchParams) {
       for (let [key, value] of Object.entries(searchParams)) {
@@ -52,7 +56,7 @@ class Search {
         }
       }
     }
-    // console.log(filter);
+    console.log(filter);
     return await API.graphql(graphqlOperation(queries.searchUsers, filter));
   };
 

@@ -35,6 +35,7 @@ const PersonCard: React.FC<PersonCardProps> = (
   const onlyCityName = person.cityName ? person.cityName.split(',')[0] : '';
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const plusTitleClass = person.userName.length > 14 ? { fontSize: 24 } : {};
+  const plusAnimalTitleClass = person.animalName.length > 10 ? { fontSize: 21 } : {};
 
   const handlePressUndesired = () => {
     const subject = localizations.t('undesiredSubject');
@@ -86,7 +87,7 @@ const PersonCard: React.FC<PersonCardProps> = (
           {connectedEmotions && connectedEmotions.length > 0 &&
             <Tooltip
               backgroundColor={colors.primary}
-              height={120}
+              height={200}
               width={dimensions.fullWidth * 0.8}
               popover={
                 <Text style={styles.toolTipImageText}>
@@ -116,7 +117,7 @@ const PersonCard: React.FC<PersonCardProps> = (
         age={person.age}
         animalName={person.animalName}
       />
-      <Text style={styles.animal}>{person.animalName}</Text>
+      <Text style={{ ...styles.animal, ...plusAnimalTitleClass }}>{person.animalName}</Text>
       <View>
         <TouchableOpacity onPress={() => setIsDetailsOpen((previsious) => !previsious)}>
           {

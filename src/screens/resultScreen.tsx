@@ -252,7 +252,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
       newUser.dislikes = createEmotionObject(newUser.dislikes, resultPerson.cognitoUserName);
       dispatch(setUser({ user: newUser }));
     }
-    handlePressNext();
+    setEmotionsWithTheResultPerson(['dislikes']);
   };
 
   ResultScreen.loveButtonHandlers = {

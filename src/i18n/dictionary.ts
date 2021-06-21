@@ -11,6 +11,7 @@ const dictionary = {
     removeConfirmImage: 'Are you sure you want to delete?',
     yes: 'Yes',
     no: 'No',
+    noAnimal: 'no',
     avatarInfo: 'By pressing on the avatar image, you can open the person\'s profile',
     close: 'Close',
     noMatch: 'Unfortunately, you don\'t have any match',
@@ -26,7 +27,9 @@ const dictionary = {
     googleLogin: 'Sign in with Google',
     appleLogin: 'Sign in with Apple',
     imageZoomInfo: 'You can zoom with two fingers',
-    markHeartInfo: 'The heart indicates that you have already pressed the like or dislike button. You can delete this by clicking again.',
+    markHeartInfo: 'The heart indicates that you have already pressed the like or dislike button. You can delete this by clicking again. \n'
+      + 'If you both like to communicate with each other only after that, the only one-sided marking will not be seen by the other party. \n'
+      + "If you don't want to see again and again people you've checked once, select 'search only unmarked' in the search.",
     chatWith: 'Chat with:',
     congratsDate: 'Congrats, Have a nice date!',
     noDate: 'No result :(',
@@ -154,6 +157,7 @@ const dictionary = {
     removeConfirmImage: 'Biztos törölni akarod?',
     yes: 'Igen',
     no: 'Nem',
+    noAnimal: 'nincs',
     avatarInfo: 'Az avatar képre kattintva, elő tudod hozni a személy profilját',
     close: 'Bezárás',
     noMatch: 'Sajnos még nincs egyezésed',
@@ -169,7 +173,9 @@ const dictionary = {
     googleLogin: 'Google bejelentkezés',
     appleLogin: 'Apple bejelentkezés',
     imageZoomInfo: 'A képeket két ujjal tudod nagyítani.',
-    markHeartInfo: 'A szív azt jelzi, hogy az adott személyre már nyomtál like vagy dislike gombot. Újra rákattintva törölheted ezt.',
+    markHeartInfo: 'A szív azt jelzi, hogy az adott személyre már nyomtál like vagy dislike gombot. Újra rákattintva törölheted ezt. \n'
+      + 'Ha mindketten likeoltátok egymást csak azután tudtok kommunikálni, a csak egyoldalú jelölést a másik fél nem látja. \n'
+      + ' Amennyiben nem akarod újra és újra látni, akiket már egyszer bejelöltél akkor válaszd a keresésben a "csak jelöletlenek keresése" opciót. \n',
     chatWith: 'Chat vele:',
     congratsDate: 'Gratulálunk, jó randit',
     noDate: 'Nincs a keresésnek megfelő személy :(',
@@ -297,6 +303,7 @@ const dictionary = {
     removeConfirmImage: 'Bist du sicher, dass du löschen möchtest?',
     yes: 'Ja',
     no: 'Nein',
+    noAnimal: 'nein',
     avatarInfo: 'Klicke auf das Bild, um das Profil zu sehen.',
     close: 'abbrechnen',
     noMatch: 'Leider hast du noch kein Match',
@@ -312,7 +319,9 @@ const dictionary = {
     googleLogin: 'Google Login',
     appleLogin: 'Apple Login',
     imageZoomInfo: 'Du kannst die Bilder mit zwei Fingern zoomen',
-    markHeartInfo: 'Das Herz bedeutet, dass dir die Person bereits "gefallen" oder "nicht gefallen" hat. Klicke noch einmal, um es zu löschen.',
+    markHeartInfo: 'Das Herz bedeutet, dass dir die Person bereits "gefallen" oder "nicht gefallen" hat. Klicke noch einmal, um es zu löschen. \n'
+      + 'Wenn Sie beide erst danach miteinander kommunizieren möchten, wird die einzige einseitige Markierung von der anderen Partei nicht gesehen. \n'
+      + 'Wenn Sie einmal überprüfte Personen nicht immer wieder sehen möchten, wählen Sie in der Suche "nur unmarkierte suchen".',
     chatWith: 'Chat mit',
     congratsDate: 'Glückwunsch. Hab ein gutes Date',
     noDate: 'Es gibt keine solche Person. :(',

@@ -213,7 +213,7 @@ const Profile: React.FC<profileProps> = ({
       return value < 1;
     }
     if (valueType === 'string') {
-      return value.trim() === '';
+      return value.trim() === '' || value.trim === '[]';
     }
     if (valueType === 'object') {
       return !value;
@@ -231,6 +231,15 @@ const Profile: React.FC<profileProps> = ({
   const selectNewImages = (imageType: 'images' | 'animalImages') => {
     const images = profileUser[imageType] || [];
     return images.filter((image) => image.startsWith('file:/'));
+  };
+
+  const handleAnimalTypeChange = (value) => {
+    if (value.animalType === 'no') {
+      setProfileUserAttribute({ ...value, ...{ animalName: localizations.t('noAnimal') } });
+    } else {
+      setProfileUserAttribute(value);
+    }
+
   };
 
   return (
@@ -356,14 +365,15 @@ const Profile: React.FC<profileProps> = ({
             mandatory={mandatoryFields.includes('animalName')}
             value={profileUser.animalName}
             setValue={setProfileUserAttribute}
-            maxLength={12}
+            maxLength={11}
+            editable={profileUser.animalType !== 'no'}
           />
           <Selector
             label={animalType.label}
             options={animalType.options}
             type="animalType"
             mandatory={mandatoryFields.includes('animalType')}
-            setValue={setProfileUserAttribute}
+            setValue={handleAnimalTypeChange}
             value={profileUser.animalType}
           />
           <Selector

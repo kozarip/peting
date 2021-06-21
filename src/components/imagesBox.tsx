@@ -55,7 +55,7 @@ const ImagesBox: React.FC<ImagesBoxProps> = (
   return (
     <TouchableOpacity
       style={styles.imageContainer}
-      onPress={() => { console.log('click'); setIsActiveMorePicture(true); }}
+      onPress={() => { setIsActiveMorePicture(true); }}
     >
       <ImageBox
         type="person"

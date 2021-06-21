@@ -29,24 +29,6 @@ const MorePictures = (props) => {
           <Text style={styles.title}>
             {name}
           </Text>
-          <Tooltip
-            backgroundColor={colors.primary}
-            height={120}
-            width={dimensions.fullWidth * 0.8}
-            popover={
-              <Text style={styles.infoText}>
-                {localizations.t('imageZoomInfo')}
-              </Text>
-            }
-          >
-            <Icon
-              name="info"
-              size={12}
-              raised
-              color={colors.primary}
-              type="font-awesome"
-            />
-          </Tooltip>
         </View>
         <SliderBox
           resizeMethod="resize"

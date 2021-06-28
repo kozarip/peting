@@ -41,7 +41,6 @@ export const animalType = {
   options: [
     { label: localizations.t('dog'), value: 'dog' },
     { label: localizations.t('cat'), value: 'cat' },
-    { label: localizations.t('noAnimal'), value: 'no' },
     { label: localizations.t('ferret'), value: 'ferret' },
     { label: localizations.t('horse'), value: 'horse' },
     { label: localizations.t('bird'), value: 'bird' },
@@ -59,6 +58,7 @@ export const animalType = {
     { label: localizations.t('mouse'), value: 'mouse' },
     { label: localizations.t('rat'), value: 'rat' },
     { label: localizations.t('other'), value: 'other' },
+    { label: localizations.t('noAnimal'), value: 'no' },
   ],
 };
 

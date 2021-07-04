@@ -34,6 +34,7 @@ import { setUser, setMatches, setActiveMenuId, addMatch, setHasNotification } fr
 import HeaderTriangle from '../components/headerTriangle';
 import Modal from '../components/modal';
 import { styleForm } from '../assets/styles/form';
+import Advertisement from '../components/advertisement';
 
 type ResultScreenProps = {
   navigation: any;
@@ -55,12 +56,13 @@ const initialResultPerson = {
 };
 let oldMatchesNumber = 0;
 let matchNumberChanged = false;
+let numberOfPerson = 1;
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const image = require('../assets/images/background.png');
   const pressedButton = route.params ? route.params.pressedButton : '';
 
-  const { searchParams, user, matches } = useSelector((state: any) => state);
+  const { searchParams, user, matches, advertisements } = useSelector((state: any) => state);
 
   const [resultPersons, setResultPersons] = useState([]);
   const [updatedPersons, setUpdatedPersons] = useState([]);
@@ -73,6 +75,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   const [nextToken, setNextToken] = useState('');
   const [reSearch, setReSearch] = useState(false);
   const [isResultEnd, setIsResultEnd] = useState(false);
+  const [activeAdvertisement, setActiveAdvertisement] = useState({});
 
   const search = new Search();
   const chat = new Chat();
@@ -83,12 +86,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
     matchNumberChanged = !matchNumberChanged;
   }
   oldMatchesNumber = matches.length;
+
   useEffect(() => {
     setResultPerson(initialResultPerson);
     setResultPersonIndex(0);
     let likedUsers = [];
     let dislikedUsers = [];
-    if (userHasFilledProfie()) {
+    if (userHasFilledProfile()) {
       setIsLoaderActive(true);
       if (searchParams && searchParams.isWithMarked) {
         if (user.likes) {
@@ -113,7 +117,6 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
           }
         }
         const { items, nextToken: apiNextToken, total } = res.data.searchUsers;
-        console.log(total);
         setNextToken(apiNextToken);
         setResultPersons(items.sort(() => Math.random() - 0.5));
         if (items.length !== 0) {
@@ -191,6 +194,16 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const setCurrentResultPerson = (personIndex, persons?) => {
+    advertisements.every((add) => {
+      if (numberOfPerson % add.frequency === 0) {
+        setActiveAdvertisement(add);
+        return false;
+      } else {
+        setActiveAdvertisement({});
+        setIsResultEnd(false);
+        return true;
+      }
+    });
     let resultFromAPI = persons ? persons[personIndex] : resultPersons[personIndex];
     const temp = updatedPersons.filter((updatedPerson) => updatedPerson.cognitoUserName === resultFromAPI.cognitoUserName);
     if (temp.length > 0) {
@@ -220,6 +233,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const handlePressNext = () => {
+    ++numberOfPerson;
     let index = resultPersonIndex;
     if (resultPersonIndex < resultPersons.length - 1) {
       setResultPersonIndex((prev) => prev + 1);
@@ -332,10 +346,11 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
   };
 
   const isHasResult = () => {
-    return (resultPerson.age > -1 && resultPerson.userName !== '') && user.cityName !== null;
+    return ((resultPerson.age > -1 && resultPerson.userName !== '') && user.cityName !== null)
+      || Object.keys(activeAdvertisement).length !== 0;
   };
 
-  const userHasFilledProfie = () => {
+  const userHasFilledProfile = () => {
     return !!user.cityName;
   };
 
@@ -367,7 +382,14 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
               iconColor={colors.primary}
               handlePressButtonSecondary={() => { setIsMatchModalActive(false); }}
             />
-            {isResultEnd ?
+            {
+              Object.keys(activeAdvertisement).length !== 0 ?
+                <Advertisement
+                  link={activeAdvertisement.link}
+                  image={activeAdvertisement.image}
+                />
+              :
+              isResultEnd ?
               <Card containerStyle={styles.noResultBox}>
                 <Icon
                   name="search"
@@ -394,7 +416,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                 />
                 <Text style={styles.title}>
                   {
-                    userHasFilledProfie()
+                    userHasFilledProfile()
                       ? localizations.t('noDate')
                       : localizations.t('noProfileSave')
                   }
@@ -403,13 +425,13 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
                   buttonStyle={styleForm.btnPrimary}
                   titleStyle={{ fontSize: fonts.heading2 }}
                   title={
-                    userHasFilledProfie()
+                    userHasFilledProfile()
                       ? localizations.t('backToSearch')
                       : localizations.t('backToProfile')
                   }
                   onPress={() => {
                     dispatch(setActiveMenuId(3));
-                    userHasFilledProfie()
+                    userHasFilledProfile()
                       ? navigation.navigate('Settings', { newUser: false })
                       : navigation.navigate('Settings', { newUser: true });
                   }}
@@ -419,7 +441,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ navigation, route }) => {
             {
               isHasResult() &&
               <LoveButtons
-                isShowEmotionButtons={emotionsWithTheResultPerson.length === 0}
+                isShowEmotionButtons={emotionsWithTheResultPerson.length === 0 && Object.keys(activeAdvertisement).length === 0}
                 handlePressLike={handlePressLike}
                 handlePressNext={handlePressNext}
                 handlePressDislike={handlePressDislike}

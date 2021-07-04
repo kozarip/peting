@@ -144,6 +144,7 @@ const dictionary = {
     undesired: 'Unwanted user report. Your request will be processed within 24 hours. Do you want to report?',
     undesiredSubject: 'Undesired user report',
     undesiredMessage: 'Undesired user. Id: ',
+    advertisement: 'Advertisement',
   },
   hu: {
     slogan: 'Az állatbarátok társkeresője',
@@ -290,6 +291,7 @@ const dictionary = {
     undesired: 'Nem kivánt felhaszáló jelentése. Kérésedet 24 órán belül elbíráljuk. Szeretnéd jelenteni?',
     undesiredSubject: 'Nem kivánt felhaszáló jelentése',
     undesiredMessage: 'Nem kivánt felhaszáló. Id: ',
+    advertisement: 'Hirdetés',
   },
   de: {
     slogan: 'Dating-App für Haustierbesitzer',
@@ -436,6 +438,7 @@ const dictionary = {
     undesired: 'Unerwünschter Benutzerbericht. Ihre Anfrage wird innerhalb von 24 Stunden bearbeitet. Möchten Sie berichten?',
     undesiredSubject: 'Unerwünschter Benutzerbericht',
     undesiredMessage: 'Unerwünschter Benutzer. Id: ',
+    advertisement: 'Werbung',
   },
 };
 

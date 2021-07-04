@@ -57,3 +57,10 @@ export function setHasNotification(hasNotification) {
     hasNotification: { hasNotification },
   };
 }
+
+export function setAdvertisement(advertisements) {
+  return {
+    type: 'Set_Advertisement',
+    advertisements,
+  };
+};

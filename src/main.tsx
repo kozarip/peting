@@ -14,12 +14,14 @@ import Chat from './services/chat';
 import { setGlobalMatches } from './services/match';
 import { localizations } from './services/localizations';
 import { notificationPermission, registerForPushNotificationsAsync } from './services/pushNotifications';
+import { fetchAdvertisements } from './services/advertisements';
 import {
   setGlobalSearchParams,
   setUser,
   setMatches,
   setChatIds,
   setHasNotification,
+  setAdvertisement,
 } from './store/action';
 import Modal from './components/modal';
 
@@ -40,6 +42,9 @@ const Main = ({ navigation }) => {
   useEffect(() => {
     Notifications.addNotificationReceivedListener(handleNotification);
     Notifications.addNotificationResponseReceivedListener(handleNotificationResponse);
+    fetchAdvertisements().then((res) => {
+      dispatch(setAdvertisement({ advertisements: res }));
+    });
     try {
       user.crateNewUserIfNotExist().then(async (exist) => {
         if (exist) {

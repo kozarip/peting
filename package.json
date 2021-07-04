@@ -39,6 +39,7 @@
     "expo-localization": "^9.0.0",
     "expo-notifications": "~0.7.2",
     "expo-permissions": "~9.3.0",
+    "expo-sqlite": "~8.4.0",
     "expo-task-manager": "~8.5.0",
     "expo-web-browser": "~8.5.0",
     "firebase": "7.9.0",

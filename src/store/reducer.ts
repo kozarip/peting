@@ -5,6 +5,7 @@ export const initialState = {
   chatIDs: [],
   activeMenu: 2,
   hasNotification: false,
+  advertisements: [],
 };
 
 export function reducer(state = initialState, action) {
@@ -54,6 +55,11 @@ export function reducer(state = initialState, action) {
       return {
         ...state,
         ...action.hasNotification,
+      };
+    case 'Set_Advertisement':
+      return {
+        ...state,
+        ...action.advertisements,
       };
     case 'clear_store':
       return initialState;
